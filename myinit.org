@@ -1,6 +1,6 @@
 #+STARTUP: overview
 
-* Global tweaks
+* Global settings
 #+BEGIN_SRC emacs-lisp
 ;; Copy/Paste they way I am used to
 (global-unset-key (kbd "C-c c"))
@@ -51,6 +51,10 @@
 
 ;; y/n instead of yes/no
 (fset 'yes-or-no-p 'y-or-n-p)
+
+;; Kill current buffer
+(global-unset-key (kbd "C-<end>"))
+(global-set-key (kbd "C-<end>") 'kill-this-buffer)
 #+END_SRC
 
 * Mac specific
@@ -81,21 +85,6 @@
 			  (split-window-horizontally)
 			  (other-window 1)))
 #+END_SRC
-;  (use-package swiper
-;  :ensure t
-;  :bind (("C-s" . swiper)
-;	 ("C-r" . swiper)
-;	 ("C-c C-r" . ivy-resume)
-;	 ("M-x" . counsel-M-x)
-;	 ("C-x C-f" . counsel-find-file))
-;  :config
-;  (progn
-;    (ivy-mode 1)
-;    (setq ivy-use-virtual-buffers t)
-;    (setq ivy-display-style 'fancy)
-;    (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
-;    ))
-
 * Helm
 #+BEGIN_SRC emacs-lisp
 (use-package helm
@@ -133,6 +122,18 @@
   ;; Kill selection or line (in case nothing is selected)
   (global-unset-key (kbd "C-w"))
   (global-set-key (kbd "C-w") 'whole-line-or-region-kill-region)
+))
+#+END_SRC
+
+* Zoom-window
+#+BEGIN_SRC emacs-lisp
+(use-package zoom-window
+:ensure t
+:config
+(progn
+  ;; Zoom-in/Zoom-out
+  (global-unset-key (kbd "C-M-z"))
+  (global-set-key (kbd "C-M-z") 'zoom-window-zoom)
 ))
 #+END_SRC
 
