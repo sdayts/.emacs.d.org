@@ -1,0 +1,101 @@
+#+STARTUP: overview
+
+* Global tweaks
+#+BEGIN_SRC emacs-lisp
+;; Copy/Paste they way I am used to
+(global-unset-key (kbd "C-c c"))
+(global-set-key (kbd "C-c c") 'kill-ring-save)
+
+;; Paste the way I am used to
+(global-unset-key (kbd "C-v"))
+(global-set-key (kbd "C-v") 'yank)
+
+;; Map F6 to describe-key
+(global-unset-key (kbd "<f6>"))
+(global-set-key (kbd "<f6>") 'describe-key)
+
+;; Move mode line to top
+(setq-default header-line-format mode-line-format)
+;; Hide the bottom mode line
+(setq-default mode-line-format nil)
+
+;; display full screen
+(global-unset-key (kbd "C-M-+"))
+(global-set-key (kbd "C-M-+") 'toggle-frame-maximized)
+
+;; Show corresponding paren
+(show-paren-mode 1)
+
+;; Don't wrap lines
+(setq-default truncate-lines t)
+
+;; keyboard scroll one line at a time
+(setq scroll-step 1)
+
+;; suppress splash screen
+(setq inhibit-startup-message t)
+
+;; disable scrollbar, menu bar and tool bar
+(scroll-bar-mode -1)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+
+;; turn off blinking cursor
+(blink-cursor-mode -1)
+
+;; turn off the annoying beep
+(setq visible-bell nil)
+
+;; turn off line wrapping
+(set-default 'truncate-lines t)
+
+;; y/n instead of yes/no
+(fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
+* Mac specific
+#+BEGIN_SRC emacs-lisp
+;; make command a meta key on Macs
+(when (eq system-type 'darwin)
+  (setq mac-command-modifier 'meta)
+  )
+#+END_SRC
+
+* Window related
+#+BEGIN_SRC emacs-lisp
+;; Kill current window
+(global-unset-key (kbd "M-<end>"))
+(global-set-key (kbd "M-<end>") 'delete-window)
+
+;; Got to other window after horizontal/vertial split
+(global-unset-key (kbd "\C-x2"))
+(global-set-key "\C-x2"
+		(lambda ()
+		  (interactive)
+		  (split-window-vertically)
+		  (other-window 1)))
+
+(global-unset-key (kbd "\C-x3"))
+(global-set-key "\C-x3" (lambda ()
+			  (interactive)
+			  (split-window-horizontally)
+			  (other-window 1)))
+#+END_SRC
+
+
+# 'ace-jump-mode
+# 'auto-complete-c-headers
+# 'expand-region
+# 'ensime
+# 'helm
+# 'helm-projectile
+# 'helm-swoop
+# 'hl-anything
+# 'move-text
+# 'paredit
+# 'projectile
+# 'rtags
+# 'rtags-ac
+# 'yasnippet
+# 'zoom-window
+# 'whole-line-or-region
