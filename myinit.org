@@ -81,7 +81,60 @@
 			  (split-window-horizontally)
 			  (other-window 1)))
 #+END_SRC
+;  (use-package swiper
+;  :ensure t
+;  :bind (("C-s" . swiper)
+;	 ("C-r" . swiper)
+;	 ("C-c C-r" . ivy-resume)
+;	 ("M-x" . counsel-M-x)
+;	 ("C-x C-f" . counsel-find-file))
+;  :config
+;  (progn
+;    (ivy-mode 1)
+;    (setq ivy-use-virtual-buffers t)
+;    (setq ivy-display-style 'fancy)
+;    (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
+;    ))
 
+* Helm
+#+BEGIN_SRC emacs-lisp
+(use-package helm
+:ensure t
+:config
+(progn
+  ;; List Buffers
+  (global-unset-key (kbd "C-S-b"))
+  (global-set-key (kbd "C-S-b") 'helm-buffers-list)
+
+  ;; meta-X is handled by Helm
+  (global-unset-key (kbd "M-x"))
+  (global-set-key (kbd "M-x") 'helm-M-x)
+
+  ;; Map F1 to helm-imenu
+  (global-unset-key (kbd "<f1>"))
+  (global-set-key (kbd "<f1>") 'helm-imenu)
+
+  (setq helm-full-frame                       t ; make helm alway open in a full frame
+      helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+      helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+      helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+      helm-ff-file-name-history-use-recentf t
+      helm-mode-reverse-history           nil ; place helm command history on top
+      ))
+)
+#+END_SRC
+
+* Whole-line-or-region
+#+BEGIN_SRC emacs-lisp
+(use-package whole-line-or-region
+:ensure t
+:config
+(progn
+  ;; Kill selection or line (in case nothing is selected)
+  (global-unset-key (kbd "C-w"))
+  (global-set-key (kbd "C-w") 'whole-line-or-region-kill-region)
+))
+#+END_SRC
 
 # 'ace-jump-mode
 # 'auto-complete-c-headers
@@ -98,4 +151,3 @@
 # 'rtags-ac
 # 'yasnippet
 # 'zoom-window
-# 'whole-line-or-region
