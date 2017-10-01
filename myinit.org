@@ -122,6 +122,10 @@
 (global-set-key (kbd "M-<down>") 'windmove-down)
 #+END_SRC
 * Modes
+** Minor mode hooks
+#+BEGIN_SRC emacs-lisp
+(add-hook 'rectangle-mark-mode-hook (lambda() (define-key rectangle-mark-mode-map (kbd "C-w") 'delete-rectangle)) )
+#+END_SRC
 ** Helm
 #+BEGIN_SRC emacs-lisp
 (use-package helm
@@ -185,13 +189,6 @@
   (global-unset-key (kbd "C-w"))
   (global-set-key (kbd "C-w") 'whole-line-or-region-kill-region)
 ))
-#+END_SRC
-
-** Rectange-mark-mode
-#+BEGIN_SRC emacs-lisp
-(use-package rectangle-mark-mode
-:bind ("C-w" . delete-rectangle)
-)
 #+END_SRC
 
 ** Zoom-window
