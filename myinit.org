@@ -125,7 +125,18 @@
 ** Minor mode hooks
 #+BEGIN_SRC emacs-lisp
 (add-hook 'rectangle-mark-mode-hook (lambda() (define-key rectangle-mark-mode-map (kbd "C-w") 'delete-rectangle)) )
+(add-hook 'shell-mode-hook (lambda() (set-process-query-on-exit-flag (get-process "shell") nil)) )
 #+END_SRC
+** Expand-region
+#+BEGIN_SRC emacs-lisp
+(use-package expand-region
+:ensure t
+:bind (("C-=" . er/expand-region))
+)
+#+END_SRC
+
+
+:bind (("C-x g" . magit-status))
 ** Helm
 #+BEGIN_SRC emacs-lisp
 (use-package helm
@@ -213,4 +224,4 @@
 # 'projectile
 # 'rtags
 # 'rtags-ac
-# 'yasnippet
+   # 'yasnippet
