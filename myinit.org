@@ -127,7 +127,26 @@
 (add-hook 'rectangle-mark-mode-hook (lambda() (define-key rectangle-mark-mode-map (kbd "C-w") 'delete-rectangle)) )
 (add-hook 'shell-mode-hook (lambda() (set-process-query-on-exit-flag (get-process "shell") nil)) )
 #+END_SRC
-** Expand-region
+** ace-jump-mode
+#+BEGIN_SRC emacs-lisp
+(use-package ace-jump-mode
+:ensure t
+:config
+(progn
+;; ace-jump-mode
+(global-unset-key (kbd "M-SPC"))
+(define-key global-map (kbd "M-SPC") 'ace-jump-word-mode)
+(global-unset-key (kbd "C-M-r"))
+(define-key global-map (kbd "C-M-r") 'redraw-display) ; sometimes needed when doing ace jump
+;(setq ace-jump-mode-scope 'window)       ; jump within one window only
+;(setq ace-jump-mode-gray-background nil) ; disable gray background
+(custom-set-faces
+ '(ace-jump-face-foreground
+   ((t (:inherit ace-jump-face-foreground :height 1.1 :foreground "yellow" :background "black" )))))
+))
+#+END_SRC
+
+** expand-region
 #+BEGIN_SRC emacs-lisp
 (use-package expand-region
 :ensure t
@@ -137,7 +156,7 @@
 
 
 :bind (("C-x g" . magit-status))
-** Helm
+** helm
 #+BEGIN_SRC emacs-lisp
 (use-package helm
 :ensure t
@@ -169,14 +188,14 @@
 )
 #+END_SRC
 
-** Magit
+** magit
 #+BEGIN_SRC emacs-lisp
 (use-package magit
 :ensure t
 :bind (("C-x g" . magit-status))
 )
 #+END_SRC
-** Move-text
+** move-text
 #+BEGIN_SRC emacs-lisp
 (use-package move-text
 :ensure t
@@ -190,7 +209,7 @@
 ))
 #+END_SRC
 
-** Whole-line-or-region
+** whole-line-or-region
 #+BEGIN_SRC emacs-lisp
 (use-package whole-line-or-region
 :ensure t
@@ -202,7 +221,7 @@
 ))
 #+END_SRC
 
-** Zoom-window
+** zoom-window
 #+BEGIN_SRC emacs-lisp
 (use-package zoom-window
 :ensure t
@@ -216,7 +235,6 @@
 
 # 'ace-jump-mode
 # 'auto-complete-c-headers
-# 'expand-region
 # 'ensime
 # 'helm-projectile
 # 'hl-anything
@@ -224,4 +242,4 @@
 # 'projectile
 # 'rtags
 # 'rtags-ac
-   # 'yasnippet
+# 'yasnippet
