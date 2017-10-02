@@ -182,6 +182,9 @@ If region is active, apply to active region instead."
 
 ;; hilight current line
 (global-hl-line-mode +1)
+
+;; save desktop on exit
+(desktop-save-mode 1)
 #+END_SRC
 
 * Mac specific
