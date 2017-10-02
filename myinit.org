@@ -179,6 +179,9 @@ If region is active, apply to active region instead."
 ;; Duplicate line
 (global-unset-key (kbd "C-c C-v"))
 (global-set-key (kbd "C-c C-v") 'sd/duplicate-line-or-region)
+
+;; hilight current line
+(global-hl-line-mode +1)
 #+END_SRC
 
 * Mac specific
@@ -331,6 +334,14 @@ If region is active, apply to active region instead."
 ))
 #+END_SRC
 
+** yasnippet
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet
+:ensure t
+:config
+(progn
+))
+#+END_SRC
 ** zoom-window
 #+BEGIN_SRC emacs-lisp
 (use-package zoom-window
@@ -342,13 +353,11 @@ If region is active, apply to active region instead."
   (global-set-key (kbd "C-M-z") 'zoom-window-zoom)
 ))
 #+END_SRC
-
+** Modes to explore in the future
 # 'auto-complete-c-headers
 # 'ensime
 # 'helm-projectile
-# 'hl-anything
 # 'paredit
 # 'projectile
 # 'rtags
 # 'rtags-ac
-# 'yasnippet
