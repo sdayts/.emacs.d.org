@@ -157,20 +157,8 @@ If region is active, apply to active region instead."
 (global-unset-key (kbd "C-<end>"))
 (global-set-key (kbd "C-<end>") 'kill-this-buffer)
 
-;; Select vertical region
-(global-unset-key (kbd "C-M-<down>"))
-(global-set-key (kbd "C-M-<down>") 'rectangle-mark-mode)
-
 ;; Enable deleting of selected text by subsequent input
 (delete-selection-mode 1)
-
-;; Run shell mode
-(global-unset-key (kbd "C-S-m"))
-(global-set-key (kbd "C-S-m") 'shell)
-
-;; Display shell buffer in the current window
-(add-to-list 'display-buffer-alist
-      '("^\\*shell\\*$" . (display-buffer-same-window)))
 
 ;; Match parens
 (global-unset-key (kbd "C-]"))
@@ -238,11 +226,6 @@ If region is active, apply to active region instead."
 (global-set-key (kbd "M-<down>") 'windmove-down)
 #+END_SRC
 * Modes
-** Minor mode hooks
-#+BEGIN_SRC emacs-lisp
-(add-hook 'rectangle-mark-mode-hook (lambda() (define-key rectangle-mark-mode-map (kbd "C-w") 'delete-rectangle)) )
-(add-hook 'shell-mode-hook (lambda() (set-process-query-on-exit-flag (get-process "shell") nil)) )
-#+END_SRC
 ** ace-jump-mode
 #+BEGIN_SRC emacs-lisp
 (use-package ace-jump-mode
@@ -262,6 +245,20 @@ If region is active, apply to active region instead."
 ))
 #+END_SRC
 
+** dired
+#+BEGIN_SRC emacs-lisp
+; Kick off dired with Ctrl-l
+(global-unset-key (kbd "C-l"))
+(global-set-key (kbd "C-l") 
+		(lambda ()
+		  (interactive)
+		  (dired ".") ))
+(add-hook 'dired-mode-hook
+          (lambda ()
+            (setq-local ace-jump-search-filter
+                        (lambda ()
+                          (get-text-property (point) 'dired-filename)))))
+#+END_SRC
 ** expand-region
 #+BEGIN_SRC emacs-lisp
 (use-package expand-region
@@ -269,9 +266,6 @@ If region is active, apply to active region instead."
 :bind (("C-=" . er/expand-region))
 )
 #+END_SRC
-
-
-:bind (("C-x g" . magit-status))
 ** helm
 #+BEGIN_SRC emacs-lisp
 (use-package helm
@@ -325,6 +319,27 @@ If region is active, apply to active region instead."
 ))
 #+END_SRC
 
+** rectangle-mark-mode
+#+BEGIN_SRC emacs-lisp
+;; Select vertical region
+(global-unset-key (kbd "C-M-<down>"))
+(global-set-key (kbd "C-M-<down>") 'rectangle-mark-mode)
+
+;; Use Control-w to kill selections in rectangle mode
+(add-hook 'rectangle-mark-mode-hook (lambda() (define-key rectangle-mark-mode-map (kbd "C-w") 'delete-rectangle)) )
+#+END_SRC
+** shell
+#+BEGIN_SRC emacs-lisp
+;; Run shell mode
+(global-unset-key (kbd "C-S-m"))
+(global-set-key (kbd "C-S-m") 'shell)
+
+;; Display shell buffer in the current window
+(add-to-list 'display-buffer-alist
+      '("^\\*shell\\*$" . (display-buffer-same-window)))
+;; Don't ask to kill the shell buffer
+(add-hook 'shell-mode-hook (lambda() (set-process-query-on-exit-flag (get-process "shell") nil)) )
+#+END_SRC
 ** whole-line-or-region
 #+BEGIN_SRC emacs-lisp
 (use-package whole-line-or-region
