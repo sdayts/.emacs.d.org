@@ -231,7 +231,6 @@ If region is active, apply to active region instead."
 (use-package ace-jump-mode
 :ensure t
 :config
-(progn
 ;; ace-jump-mode
 (global-unset-key (kbd "M-SPC"))
 (define-key global-map (kbd "M-SPC") 'ace-jump-word-mode)
@@ -242,7 +241,7 @@ If region is active, apply to active region instead."
 (custom-set-faces
  '(ace-jump-face-foreground
    ((t (:inherit ace-jump-face-foreground :height 1.1 :foreground "yellow" :background "black" )))))
-))
+)
 #+END_SRC
 
 ** dired
@@ -271,7 +270,6 @@ If region is active, apply to active region instead."
 (use-package helm
 :ensure t
 :config
-(progn
   ;; List Buffers
   (global-unset-key (kbd "C-S-b"))
   (global-set-key (kbd "C-S-b") 'helm-buffers-list)
@@ -294,7 +292,7 @@ If region is active, apply to active region instead."
       helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
       helm-ff-file-name-history-use-recentf t
       helm-mode-reverse-history           nil ; place helm command history on top
-      ))
+      )
 )
 #+END_SRC
 
@@ -310,13 +308,12 @@ If region is active, apply to active region instead."
 (use-package move-text
 :ensure t
 :config
-(progn
   ;; Text movement
   (global-unset-key (kbd "C-S-<up>"))
   (global-set-key (kbd "C-S-<up>") 'move-text-up)
   (global-unset-key (kbd "C-S-<down>"))
   (global-set-key (kbd "C-S-<down>") 'move-text-down)
-))
+)
 #+END_SRC
 
 ** rectangle-mark-mode
@@ -345,11 +342,10 @@ If region is active, apply to active region instead."
 (use-package whole-line-or-region
 :ensure t
 :config
-(progn
   ;; Kill selection or line (in case nothing is selected)
   (global-unset-key (kbd "C-w"))
   (global-set-key (kbd "C-w") 'whole-line-or-region-kill-region)
-))
+)
 #+END_SRC
 
 ** yasnippet
@@ -357,19 +353,17 @@ If region is active, apply to active region instead."
 (use-package yasnippet
 :ensure t
 :config
-(progn
-))
+)
 #+END_SRC
 ** zoom-window
 #+BEGIN_SRC emacs-lisp
 (use-package zoom-window
 :ensure t
 :config
-(progn
   ;; Zoom-in/Zoom-out
   (global-unset-key (kbd "C-M-z"))
   (global-set-key (kbd "C-M-z") 'zoom-window-zoom)
-))
+)
 #+END_SRC
 ** Modes to explore in the future
 # 'auto-complete-c-headers
