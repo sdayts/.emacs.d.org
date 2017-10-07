@@ -290,11 +290,22 @@ If region is active, apply to active region instead."
 ;; should no longer be needed
 (define-key global-map (kbd "C-M-r") 'redraw-display) ; sometimes needed when doing ace jump
 ;(setq ace-jump-mode-scope 'window)       ; jump within one window only
-;(setq ace-jump-mode-gray-background nil) ; disable gray background
+(setq ace-jump-mode-gray-background nil) ; disable gray background
 (custom-set-faces
  '(ace-jump-face-foreground
-   ((t (:inherit ace-jump-face-foreground :height 1.1 :foreground "yellow" :background "black" )))))
+   ((t (:inherit ace-jump-face-foreground :height 1.0 :foreground "yellow" :background "black" )))))
 )
+#+END_SRC
+
+** autocomplete
+#+BEGIN_SRC 
+(use-package auto-complete
+  :ensure t
+  :init
+  (progn
+    (ac-config-default)
+    (global-auto-complete-mode t)
+    ))
 #+END_SRC
 
 ** dired
