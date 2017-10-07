@@ -169,9 +169,6 @@ If region is active, apply to active region instead."
 (global-unset-key (kbd "C-c C-v"))
 (global-set-key (kbd "C-c C-v") 'sd/duplicate-line-or-region)
 
-;; hilight current line
-(global-hl-line-mode +1)
-
 ;; save desktop on exit
 (desktop-save-mode 1)
 #+END_SRC
@@ -201,6 +198,12 @@ If region is active, apply to active region instead."
 (set-face-attribute 'mode-line nil :background "black" :foreground "yellow" )
 (set-face-attribute 'mode-line-inactive nil :background "dimgray" :foreground "white" )
 ;; (set-face-attribute 'header-line nil :background "black" :foreground "yellow" )
+
+;; hilight current line
+(global-hl-line-mode +1)
+;; (set-face-background hl-line-face "#005A64")
+;; slightly prefer this color for the current line
+(set-face-background hl-line-face "#345858")
 #+END_SRC
 
 * Mac specific
