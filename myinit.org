@@ -94,6 +94,12 @@ If region is active, apply to active region instead."
 
 * Global settings
 #+BEGIN_SRC emacs-lisp
+
+;; fontify code in code blocks for org mode
+;; somehow this does not work if I place this line
+;; in the mode codfiguration section
+(setq org-src-fontify-natively t)
+
 ;; Copy/Paste they way I am used to
 (global-unset-key (kbd "C-c c"))
 (global-set-key (kbd "C-c c") 'kill-ring-save)
@@ -307,7 +313,6 @@ If region is active, apply to active region instead."
     (global-auto-complete-mode t)
     ))
 #+END_SRC
-
 ** dired
 #+BEGIN_SRC emacs-lisp
 ; Kick off dired with Ctrl-l
@@ -383,6 +388,10 @@ If region is active, apply to active region instead."
 )
 #+END_SRC
 
+** org
+#+BEGIN_SRC 
+#+END_SRC
+
 ** rectangle-mark-mode
 #+BEGIN_SRC emacs-lisp
 ;; Select vertical region
@@ -440,3 +449,4 @@ If region is active, apply to active region instead."
 # 'projectile
 # 'rtags
 # 'rtags-ac
+
