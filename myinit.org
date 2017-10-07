@@ -50,6 +50,7 @@ Can be customized for each major mode.")
 
 ;;;###autoload
 (defun sd/update-header()
+  (interactive)
   (mapc
    (lambda (window)
      (with-current-buffer (window-buffer window)
@@ -175,6 +176,33 @@ If region is active, apply to active region instead."
 (desktop-save-mode 1)
 #+END_SRC
 
+* Color customizations
+#+BEGIN_SRC emacs-lisp
+;; Color customization
+;; Set cursor color to white
+(set-cursor-color "cyan")
+;; set background colors
+(set-background-color "#2F4F4F")
+;; color of border of buffer separator
+(set-face-background 'fringe "#2F4F4F")
+;; color of comments
+(set-face-foreground 'font-lock-comment-face "#FA8278")
+;; color of keyword
+(set-face-foreground 'font-lock-keyword-face "#FF9664")
+;; color of background
+(set-face-foreground 'default "#FFF8DC")
+;; color of srings
+(set-face-foreground 'font-lock-string-face "#00ECC8")
+;; selection/search background/foreground
+(set-face-attribute 'region nil :background "black" :foreground "yellow" )
+(set-face-attribute 'isearch nil :background "black" :foreground "yellow" )
+(set-face-attribute 'lazy-highlight nil :background "black" :foreground "cyan" )
+;; mode line colors
+(set-face-attribute 'mode-line nil :background "black" :foreground "yellow" )
+(set-face-attribute 'mode-line-inactive nil :background "dimgray" :foreground "white" )
+;; (set-face-attribute 'header-line nil :background "black" :foreground "yellow" )
+#+END_SRC
+
 * Mac specific
 #+BEGIN_SRC emacs-lisp
 ;; make command a meta key on Macs
@@ -224,6 +252,12 @@ If region is active, apply to active region instead."
 (global-unset-key (kbd "M-<down>"))
 (global-set-key (kbd "M-j") 'windmove-down)
 (global-set-key (kbd "M-<down>") 'windmove-down)
+
+;; update header line's color every time the buffer is switched
+(add-hook 'buffer-list-update-hook
+           'sd/update-header
+)
+
 #+END_SRC
 * Modes
 ** ace-jump-mode
@@ -301,6 +335,9 @@ If region is active, apply to active region instead."
 (use-package magit
 :ensure t
 :bind (("C-x g" . magit-status))
+:config
+;; update magit heading line to yellow on black, the way I like it...  
+(set-face-attribute 'magit-diff-hunk-heading-highlight nil :background "black" :foreground "yellow" )
 )
 #+END_SRC
 ** move-text
