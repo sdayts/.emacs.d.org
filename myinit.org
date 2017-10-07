@@ -128,9 +128,6 @@ If region is active, apply to active region instead."
 ;; Show corresponding paren
 (show-paren-mode 1)
 
-;; Don't wrap lines
-(setq-default truncate-lines t)
-
 ;; keyboard scroll one line at a time
 (setq scroll-step 1)
 
@@ -168,6 +165,23 @@ If region is active, apply to active region instead."
 ;; Duplicate line
 (global-unset-key (kbd "C-c C-v"))
 (global-set-key (kbd "C-c C-v") 'sd/duplicate-line-or-region)
+
+
+;; Backup file configuration
+;; back
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+
+(setq make-backup-files t               ; backup of a file the first time it is saved.
+      backup-by-copying t               ; don't clobber symlinks
+      version-control t                 ; version numbers for backup files
+      delete-old-versions t             ; delete excess backup files silently
+      delete-by-moving-to-trash t
+      kept-old-versions 6               ; oldest versions to keep when a new numbered backup is made (default: 2)
+      kept-new-versions 9               ; newest versions to keep when a new numbered backup is made (default: 2)
+      auto-save-default t               ; auto-save every buffer that visits a file
+      auto-save-timeout 20              ; number of seconds idle time before auto-save (default: 30)
+      auto-save-interval 200            ; number of keystrokes between auto-saves (default: 300)
+      )
 
 ;; save desktop on exit
 (desktop-save-mode 1)
@@ -265,6 +279,7 @@ If region is active, apply to active region instead."
 * Modes
 ** ace-jump-mode
 #+BEGIN_SRC emacs-lisp
+;; might want to consider switching to ivyy
 (use-package ace-jump-mode
 :ensure t
 :config
@@ -272,6 +287,7 @@ If region is active, apply to active region instead."
 (global-unset-key (kbd "M-SPC"))
 (define-key global-map (kbd "M-SPC") 'ace-jump-word-mode)
 (global-unset-key (kbd "C-M-r"))
+;; should no longer be needed
 (define-key global-map (kbd "C-M-r") 'redraw-display) ; sometimes needed when doing ace jump
 ;(setq ace-jump-mode-scope 'window)       ; jump within one window only
 ;(setq ace-jump-mode-gray-background nil) ; disable gray background
