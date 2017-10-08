@@ -355,13 +355,27 @@ If region is active, apply to active region instead."
   (global-unset-key (kbd "M-i"))
   (global-set-key (kbd "M-i") 'helm-occur)
 
-  (setq helm-full-frame                       t ; make helm alway open in a full frame
+  (setq helm-full-frame                     t ; make helm alway open in a full frame
       helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
       helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
       helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
       helm-ff-file-name-history-use-recentf t
       helm-mode-reverse-history           nil ; place helm command history on top
-      )
+
+      ;; need to investigate what these do
+      ;; just copied them from: https://github.com/yveszoundi/emacs.d/blob/master/bootstrap/startup.org
+      helm-ff-transformer-show-only-basename nil
+      ;helm-adaptive-history-file             ers-helm-adaptive-history-file
+      ;helm-boring-file-regexp-list           '("\\.git$" "\\.svn$" "\\.elc$" "*~$")
+      helm-yank-symbol-first                 t
+      helm-buffers-fuzzy-matching            t
+      helm-ff-auto-update-initial-value      t
+      helm-input-idle-delay                  0.1
+      helm-idle-delay                        0.1)
+:init
+   (use-package helm-projectile
+                    :ensure    helm-projectile
+                    :bind      ("M-o" . helm-projectile))
 )
 #+END_SRC
 
@@ -392,6 +406,17 @@ If region is active, apply to active region instead."
 #+BEGIN_SRC 
 #+END_SRC
 
+** projectile
+#+BEGIN_SRC 
+(use-package projectile
+  :ensure    projectile
+  :config    (projectile-global-mode t)
+  :init      
+  (progn
+    (setq projectile-completion-system 'helm)
+  )
+  :diminish   projectile-mode)
+#+END_SRC
 ** rectangle-mark-mode
 #+BEGIN_SRC emacs-lisp
 ;; Select vertical region
