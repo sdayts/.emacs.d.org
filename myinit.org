@@ -191,6 +191,11 @@ If region is active, apply to active region instead."
 
 ;; save desktop on exit
 (desktop-save-mode 1)
+
+
+;; toggle h-cpp
+(global-unset-key (kbd "C-<return>"))
+(global-set-key (kbd "C-<return>") 'ff-find-other-file)
 #+END_SRC
 
 * Color customizations
@@ -289,11 +294,17 @@ If region is active, apply to active region instead."
 (use-package ace-jump-mode
 :ensure t
 :config
+;(setq ace-jump-sync-emacs-mark-ring t)
+;; use this to always push onto the global mark ring
+;; when jumping
+(add-hook 'ace-jump-mode-before-jump-hook (lambda ()
+                                            (back-button-push-mark-local-and-global)))
+
 ;; ace-jump-mode
 (global-unset-key (kbd "M-SPC"))
 (define-key global-map (kbd "M-SPC") 'ace-jump-word-mode)
-(global-unset-key (kbd "C-M-r"))
 ;; should no longer be needed
+(global-unset-key (kbd "C-M-r"))
 (define-key global-map (kbd "C-M-r") 'redraw-display) ; sometimes needed when doing ace jump
 ;(setq ace-jump-mode-scope 'window)       ; jump within one window only
 (setq ace-jump-mode-gray-background nil) ; disable gray background
@@ -304,13 +315,29 @@ If region is active, apply to active region instead."
 #+END_SRC
 
 ** autocomplete
-#+BEGIN_SRC 
+#+BEGIN_SRC emacs-lisp
 (use-package auto-complete
   :ensure t
   :init
   (progn
     (ac-config-default)
     (global-auto-complete-mode t)
+    ))
+#+END_SRC
+** backbutton
+#+BEGIN_SRC emacs-lisp
+(defun sd/pop-global-mark-ring()
+  (interactive)
+  (back-button-global-backward)
+  (setq global-mark-ring (butlast global-mark-ring 1))
+)
+
+(use-package back-button
+  :ensure t
+  :init
+  :config
+  (progn
+;    (global-set-key (kbd "C-,") 'sd/pop-global-mark-ring)
     ))
 #+END_SRC
 ** dired
@@ -371,7 +398,8 @@ If region is active, apply to active region instead."
       helm-buffers-fuzzy-matching            t
       helm-ff-auto-update-initial-value      t
       helm-input-idle-delay                  0.1
-      helm-idle-delay                        0.1)
+      helm-idle-delay                        0.1
+)
 :init
    (use-package helm-projectile
                     :ensure    helm-projectile
@@ -403,7 +431,7 @@ If region is active, apply to active region instead."
 #+END_SRC
 
 ** multiple-cursors
-#+BEGIN_SRC 
+#+BEGIN_SRC emacs-lisp
 (use-package multiple-cursors
   :ensure t
 ;  :bind ()
@@ -414,19 +442,27 @@ If region is active, apply to active region instead."
 #+END_SRC
 
 ** org
-#+BEGIN_SRC 
+#+BEGIN_SRC emacs-lisp
 #+END_SRC
 
 ** projectile
-#+BEGIN_SRC 
+#+BEGIN_SRC  emacs-lisp
+;; solves a performance issue
+;; without this, every cursor movement is incredibly slow
+
 (use-package projectile
   :ensure    projectile
   :config    (projectile-global-mode t)
   :init      
   (progn
     (setq projectile-completion-system 'helm)
+    (setq projectile-mode-line
+       '(:eval (if (projectile-project-p)
+                  (format " Projectile[%s]"
+                          (projectile-project-name))
+                "")))
   )
-  :diminish   projectile-mode)
+)
 #+END_SRC
 ** rectangle-mark-mode
 #+BEGIN_SRC emacs-lisp
