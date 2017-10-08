@@ -402,6 +402,17 @@ If region is active, apply to active region instead."
 )
 #+END_SRC
 
+** multiple-cursors
+#+BEGIN_SRC 
+(use-package multiple-cursors
+  :ensure t
+;  :bind ()
+  :init
+  (global-unset-key (kbd "M-<down-mouse-1>"))
+  :config
+  )
+#+END_SRC
+
 ** org
 #+BEGIN_SRC 
 #+END_SRC
