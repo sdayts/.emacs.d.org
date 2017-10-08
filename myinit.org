@@ -457,12 +457,12 @@ If region is active, apply to active region instead."
   (progn
     (setq projectile-completion-system 'helm)
     (setq projectile-mode-line
-       '(:eval (if (projectile-project-p)
-                  (format " Projectile[%s]"
+        '(:eval (if (projectile-project-p)
+                   (format " Proj[%s]"
                           (projectile-project-name))
                 "")))
   )
-)
+ )
 #+END_SRC
 ** rectangle-mark-mode
 #+BEGIN_SRC emacs-lisp
