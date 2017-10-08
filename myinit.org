@@ -337,7 +337,7 @@ If region is active, apply to active region instead."
   :init
   :config
   (progn
-;    (global-set-key (kbd "C-,") 'sd/pop-global-mark-ring)
+    (global-set-key (kbd "C-,") 'sd/pop-global-mark-ring)
     ))
 #+END_SRC
 ** dired
