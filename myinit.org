@@ -485,6 +485,11 @@ If region is active, apply to active region instead."
 ;; Don't ask to kill the shell buffer
 (add-hook 'shell-mode-hook (lambda() (set-process-query-on-exit-flag (get-process "shell") nil)) )
 #+END_SRC
+** try
+#+BEGIN_SRC emacs-lisp
+(use-package try 
+:ensure t)
+#+END_SRC
 ** whole-line-or-region
 #+BEGIN_SRC emacs-lisp
 (use-package whole-line-or-region
