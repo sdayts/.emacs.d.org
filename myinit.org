@@ -439,33 +439,33 @@ If region is active, apply to active region instead."
 
 ** multiple-cursors
 #+BEGIN_SRC emacs-lisp
+;; Keeping this code for now so I know how to do this in the future
+(defvar multiple-cursors-mode-enabled-hook nil
+      "Hook that is run after `multiple-cursors-mode' is enabled.")
+(defvar multiple-cursors-mode-disabled-hook nil
+      "Hook that is run after `multiple-cursors-mode' is disabled.")
+
+(defun sd/mc-when-enabled ()
+      "Function to be added to `multiple-cursors-mode-enabled-hook'."
+   (set-cursor-color "red")
+)
+
+(defun sd/mc-when-disabled ()
+      "Function to be added to `multiple-cursors-mode-disabled-hook'."
+  (set-cursor-color "white"))
+
 (use-package multiple-cursors
   :ensure t
-  ;:bind 
   :init
-  (global-unset-key (kbd "M-<down-mouse-1>"))
+  (global-unset-key (kbd "C--"))
+  (global-set-key (kbd "C--") 'mc/mark-next-like-this)
   :config
   (set-face-background 'mc/cursor-bar-face "#2F4F4F")
+  (set-face-foreground 'mc/cursor-bar-face "red")
+  (add-hook 'multiple-cursors-mode-enabled-hook #'sd/mc-when-enabled)
+  (add-hook 'multiple-cursors-mode-disabled-hook #'sd/mc-when-disabled)
 )
 #+END_SRC
-
-*** Commented out code, keeping it so I know how to do this in the future
-;; Keeping this code for now so I know how to do this in the future
-;(defvar multiple-cursors-mode-enabled-hook nil
-;      "Hook that is run after `multiple-cursors-mode' is enabled.")
-;(defvar multiple-cursors-mode-disabled-hook nil
-;      "Hook that is run after `multiple-cursors-mode' is disabled.")
-;(defun sd/mc-when-enabled ()
-;      "Function to be added to `multiple-cursors-mode-enabled-hook'.")
-;(defun sd/mc-when-disabled ()
-;      "Function to be added to `multiple-cursors-mode-disabled-hook'."
-;      (setq-default cursor-type 'box)
-;      (message "multiple cursors disabled")
-;)
-
-;  (add-hook 'multiple-cursors-mode-enabled-hook #'sd/mc-when-enabled)
-;  (add-hook 'multiple-cursors-mode-disabled-hook #'sd/mc-when-disabled)
-
 ** org
 #+BEGIN_SRC emacs-lisp
 #+END_SRC
