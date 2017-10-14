@@ -473,7 +473,6 @@ If region is active, apply to active region instead."
 
 ** projectile
 #+BEGIN_SRC  emacs-lisp
-
 (use-package projectile
   :ensure    projectile
   :config    (projectile-global-mode t)
@@ -498,6 +497,15 @@ If region is active, apply to active region instead."
 
 ;; Use Control-w to kill selections in rectangle mode
 (add-hook 'rectangle-mark-mode-hook (lambda() (define-key rectangle-mark-mode-map (kbd "C-w") 'delete-rectangle)) )
+#+END_SRC
+** rtags
+#+BEGIN_SRC emacs-lisp
+(use-package rtags
+:ensure t
+:bind (("C-." . rtags-find-symbol-at-point)
+       ("C-," . rtags-location-stack-back)
+      )
+)
 #+END_SRC
 ** shell
 #+BEGIN_SRC emacs-lisp
