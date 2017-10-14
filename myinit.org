@@ -504,6 +504,7 @@ If region is active, apply to active region instead."
 :ensure t
 :bind (("C-." . rtags-find-symbol-at-point)
        ("C-," . rtags-location-stack-back)
+       ("C-x r" . rtags-find-references-at-point)
       )
 )
 #+END_SRC
