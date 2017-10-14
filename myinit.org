@@ -439,16 +439,15 @@ If region is active, apply to active region instead."
 
 ** multiple-cursors
 #+BEGIN_SRC emacs-lisp
-;; Keeping this code for now so I know how to do this in the future
 (defvar multiple-cursors-mode-enabled-hook nil
       "Hook that is run after `multiple-cursors-mode' is enabled.")
+
 (defvar multiple-cursors-mode-disabled-hook nil
       "Hook that is run after `multiple-cursors-mode' is disabled.")
 
 (defun sd/mc-when-enabled ()
       "Function to be added to `multiple-cursors-mode-enabled-hook'."
-   (set-cursor-color "red")
-)
+  (set-cursor-color "red"))
 
 (defun sd/mc-when-disabled ()
       "Function to be added to `multiple-cursors-mode-disabled-hook'."
@@ -459,11 +458,13 @@ If region is active, apply to active region instead."
   :init
   (global-unset-key (kbd "C--"))
   (global-set-key (kbd "C--") 'mc/mark-next-like-this)
+
+  (add-hook 'multiple-cursors-mode-enabled-hook #'sd/mc-when-enabled)
+  (add-hook 'multiple-cursors-mode-disabled-hook #'sd/mc-when-disabled)
+
   :config
   (set-face-background 'mc/cursor-bar-face "#2F4F4F")
   (set-face-foreground 'mc/cursor-bar-face "red")
-  (add-hook 'multiple-cursors-mode-enabled-hook #'sd/mc-when-enabled)
-  (add-hook 'multiple-cursors-mode-disabled-hook #'sd/mc-when-disabled)
 )
 #+END_SRC
 ** org
