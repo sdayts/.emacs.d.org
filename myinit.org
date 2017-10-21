@@ -290,8 +290,7 @@ If region is active, apply to active region instead."
 
 ;; update header line's color every time the buffer is switched
 (add-hook 'buffer-list-update-hook
-           'sd/update-header
-)
+           'sd/update-header)
 
 #+END_SRC
 * Modes
@@ -329,6 +328,7 @@ If region is active, apply to active region instead."
   (progn
     (ac-config-default)
     (global-auto-complete-mode t)
+    (setq ac-use-menu-map t)
     ))
 #+END_SRC
 ** backbutton
@@ -525,6 +525,13 @@ If region is active, apply to active region instead."
 (use-package try 
 :ensure t)
 #+END_SRC
+** which-key
+#+BEGIN_SRC emacs-lisp
+(use-package which-key
+  :ensure t 
+  :config
+    (which-key-mode))
+#+END_SRC
 ** whole-line-or-region
 #+BEGIN_SRC emacs-lisp
 (use-package whole-line-or-region
@@ -551,12 +558,11 @@ If region is active, apply to active region instead."
   ;; Zoom-in/Zoom-out
   (global-unset-key (kbd "C-M-z"))
   (global-set-key (kbd "C-M-z") 'zoom-window-zoom)
-)
+  (setq zoom-window-mode-line-color "SteelBlue"))
 #+END_SRC
 ** Modes to explore in the future
 # 'auto-complete-c-headers
 # 'ensime
 # 'paredit
-# 'rtags
 # 'rtags-ac
 
