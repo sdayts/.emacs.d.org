@@ -347,6 +347,13 @@ If region is active, apply to active region instead."
     (global-set-key (kbd "C-,") 'sd/pop-global-mark-ring)
     ))
 #+END_SRC
+** beacon
+#+BEGIN_SRC emacs-lisp
+(use-package beacon
+:ensure t
+:config
+(beacon-mode))
+#+END_SRC
 ** dired
 #+BEGIN_SRC emacs-lisp
 ; Kick off dired with Ctrl-l
