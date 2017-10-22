@@ -305,6 +305,9 @@ If region is active, apply to active region instead."
 ;; when jumping
 (add-hook 'ace-jump-mode-before-jump-hook (lambda ()
                                             (back-button-push-mark-local-and-global)))
+;; beacon blink after ace-jump
+(add-hook 'ace-jump-mode-end-hook (lambda ()
+                                    (beacon-blink)))
 
 ;; ace-jump-mode
 (global-unset-key (kbd "M-SPC"))
