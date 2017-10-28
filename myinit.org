@@ -204,7 +204,7 @@ If region is active, apply to active region instead."
 * Highlighting related customizations
 #+BEGIN_SRC emacs-lisp
 
-; adopted from the excellent exordium, by Philippe Grenet. All credit is his.
+; adopted from the excellent exordium, by Philippe Grenet. All the credit is his.
 (defvar sd/highlighted-symbols ()
   "list of regexps for the currently highlighted symbols. This
   variable is buffer-local.")
@@ -239,11 +239,14 @@ highlighted using different colors at one time."
 
 (global-set-key (kbd "<f2>") 'sd/highlight-symbol)
 
+;; hilight current line
+(global-hl-line-mode +1)
+;; (set-face-background hl-line-face "#005A64")
+;; slightly prefer this color for the current line
+(set-face-background hl-line-face "#345858")
 #+END_SRC
 * Color customizations
 #+BEGIN_SRC emacs-lisp
-;; Color customizations
-
 ;; Set cursor color to white
 (set-cursor-color "cyan")
 ;; Make cursor a thin bar
@@ -268,12 +271,6 @@ highlighted using different colors at one time."
 (set-face-attribute 'mode-line nil :background "black" :foreground "yellow" )
 (set-face-attribute 'mode-line-inactive nil :background "dimgray" :foreground "white" )
 ;; (set-face-attribute 'header-line nil :background "black" :foreground "yellow" )
-
-;; hilight current line
-(global-hl-line-mode +1)
-;; (set-face-background hl-line-face "#005A64")
-;; slightly prefer this color for the current line
-(set-face-background hl-line-face "#345858")
 #+END_SRC
 
 * Mac specific
