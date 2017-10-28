@@ -196,12 +196,50 @@ If region is active, apply to active region instead."
 ;; save desktop on exit
 (desktop-save-mode 1)
 
-
 ;; toggle h-cpp
 (global-unset-key (kbd "C-<return>"))
 (global-set-key (kbd "C-<return>") 'ff-find-other-file)
 #+END_SRC
 
+* Highlighting related customizations
+#+BEGIN_SRC emacs-lisp
+
+; adopted from the excellent exordium, by Philippe Grenet. All credit is his.
+(defvar sd/highlighted-symbols ()
+  "list of regexps for the currently highlighted symbols. This
+  variable is buffer-local.")
+
+(make-variable-buffer-local 'sd/highlighted-symbols)
+
+(defun sd/highlight-symbol ()
+  "Toggles highlighting of occurrences of the symbol under point
+in the current buffer. Up to 4 different symbols can be
+highlighted using different colors at one time."
+  (interactive)
+  (let ((regex (find-tag-default-as-symbol-regexp)))
+    (cond ((member regex sd/highlighted-symbols)
+           ;; Remove highlight for this symbol.
+           (setq sd/highlighted-symbols (remove regex sd/highlighted-symbols))
+           (hi-lock-unface-buffer regex))
+          (t
+           ;; Add highlight for this symbol.
+           (setq sd/highlighted-symbols (cons regex sd/highlighted-symbols))
+           (hi-lock-face-symbol-at-point)))
+    ; disable hl-mode when there are highlighted symbols as the
+    ; hl-line face background interferes witht he highlighting
+    (if sd/highlighted-symbols
+      (progn
+        (global-hl-line-mode 0)
+	(setq-default cursor-type '(bar . 10))
+        )
+      (progn
+        (setq-default cursor-type '(bar . 1))
+        (global-hl-line-mode +1))
+)))
+
+(global-set-key (kbd "<f2>") 'sd/highlight-symbol)
+
+#+END_SRC
 * Color customizations
 #+BEGIN_SRC emacs-lisp
 ;; Color customizations
@@ -370,6 +408,14 @@ If region is active, apply to active region instead."
             (setq-local ace-jump-search-filter
                         (lambda ()
                           (get-text-property (point) 'dired-filename)))))
+#+END_SRC
+** iedit
+#+BEGIN_SRC emacs-lisp
+(use-package iedit
+:ensure t
+:bind (("C-;" . iedit-mode))
+:config
+)
 #+END_SRC
 ** expand-region
 #+BEGIN_SRC emacs-lisp
