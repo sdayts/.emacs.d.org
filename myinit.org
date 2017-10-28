@@ -131,6 +131,12 @@ If region is active, apply to active region instead."
 ;; Hide the bottom mode line
 (setq-default mode-line-format nil)
 
+;; display the fully qualified path in the frame title
+(setq frame-title-format
+      '((:eval (if (buffer-file-name)
+		   (buffer-file-name))
+	       "%b")))
+
 ;; display full screen
 (global-unset-key (kbd "C-M-+"))
 (global-set-key (kbd "C-M-+") 'toggle-frame-maximized)
