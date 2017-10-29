@@ -205,6 +205,9 @@ If region is active, apply to active region instead."
 ;; toggle h-cpp
 (global-unset-key (kbd "C-<return>"))
 (global-set-key (kbd "C-<return>") 'ff-find-other-file)
+
+;; the following buffers should open in the same emacs window
+(add-to-list 'same-window-buffer-names "*Help*")
 #+END_SRC
 
 * Highlighting related customizations
