@@ -606,6 +606,8 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
 (use-package yasnippet
 :ensure t
+:init
+(yas-global-mode 1)
 :config
 )
 #+END_SRC
