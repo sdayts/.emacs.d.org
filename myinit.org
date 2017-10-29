@@ -208,6 +208,8 @@ If region is active, apply to active region instead."
 
 ;; the following buffers should open in the same emacs window
 (add-to-list 'same-window-buffer-names "*Help*")
+(add-to-list 'same-window-buffer-names "*Backtrace*")
+(add-to-list 'same-window-buffer-names "*shell*")
 #+END_SRC
 
 * Highlighting related customizations
@@ -451,7 +453,8 @@ highlighted using different colors at one time."
   (global-unset-key (kbd "M-i"))
   (global-set-key (kbd "M-i") 'helm-occur)
 
-  (setq helm-full-frame                     t ; make helm alway open in a full frame
+  (setq helm-split-window-default-side 'same ; display helm in the same window
+      ;helm-full-frame                     t ; make helm alway open in a full frame
       helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
       helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
       helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
@@ -467,8 +470,7 @@ highlighted using different colors at one time."
       helm-buffers-fuzzy-matching            t
       helm-ff-auto-update-initial-value      t
       helm-input-idle-delay                  0.1
-      helm-idle-delay                        0.1
-)
+      helm-idle-delay                        0.1)
 :init
    (use-package helm-projectile
                     :ensure    helm-projectile
@@ -575,10 +577,6 @@ highlighted using different colors at one time."
 ;; Run shell mode
 (global-unset-key (kbd "C-S-m"))
 (global-set-key (kbd "C-S-m") 'shell)
-
-;; Display shell buffer in the current window
-(add-to-list 'display-buffer-alist
-      '("^\\*shell\\*$" . (display-buffer-same-window)))
 ;; Don't ask to kill the shell buffer
 (add-hook 'shell-mode-hook (lambda() (set-process-query-on-exit-flag (get-process "shell") nil)) )
 #+END_SRC
