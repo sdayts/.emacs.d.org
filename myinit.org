@@ -368,111 +368,97 @@ highlighted using different colors at one time."
 
 ** autocomplete
 #+BEGIN_SRC emacs-lisp
-(use-package auto-complete
-  :ensure t
-  :init
-  (progn
+  (use-package auto-complete
+    :ensure t
+    :init
     (ac-config-default)
     (global-auto-complete-mode t)
     (setq ac-use-menu-map t)
-    ))
+    )
 #+END_SRC
 ** backbutton
 #+BEGIN_SRC emacs-lisp
-(defun sd/pop-global-mark-ring()
-  (interactive)
-  (back-button-global-backward)
-  (setq global-mark-ring (butlast global-mark-ring 1))
-)
+  (defun sd/pop-global-mark-ring()
+    (interactive)
+    (back-button-global-backward)
+    (setq global-mark-ring (butlast global-mark-ring 1))
+  )
 
-(use-package back-button
-  :ensure t
-  :init
-  :config
-  (progn
-    (global-set-key (kbd "C-,") 'sd/pop-global-mark-ring)
-    ))
+  (use-package back-button
+    :ensure t
+    :bind (("C-," . sd/pop-global-mark-ring )
+	     )
+    :init
+    :config
+    )
 #+END_SRC
 ** beacon
 #+BEGIN_SRC emacs-lisp
-(use-package beacon
-:ensure t
-:config
-(beacon-mode))
+  (use-package beacon
+    :ensure t
+    :config
+    (beacon-mode))
 #+END_SRC
 ** dired
 #+BEGIN_SRC emacs-lisp
-; Kick off dired with Ctrl-l
-(global-unset-key (kbd "C-l"))
-(global-set-key (kbd "C-l") 
-		(lambda ()
-		  (interactive)
-		  (dired ".") ))
-(add-hook 'dired-mode-hook
-          (lambda ()
-            (setq-local ace-jump-search-filter
-                        (lambda ()
-                          (get-text-property (point) 'dired-filename)))))
+  ;; Kick off dired with Ctrl-l
+  (global-unset-key (kbd "C-l"))
+  (global-set-key (kbd "C-l") 
+		  (lambda ()
+		    (interactive)
+		    (dired ".") ))
+  (add-hook 'dired-mode-hook
+	    (lambda ()
+	      (setq-local ace-jump-search-filter
+			  (lambda ()
+			    (get-text-property (point) 'dired-filename)))))
 #+END_SRC
 ** iedit
 #+BEGIN_SRC emacs-lisp
-(use-package iedit
-:ensure t
-:bind (("C-;" . iedit-mode))
-:config
-)
+  (use-package iedit
+    :ensure t
+    :bind (("C-;" . iedit-mode))
+    :config
+    )
 #+END_SRC
 ** expand-region
 #+BEGIN_SRC emacs-lisp
-(use-package expand-region
-:ensure t
-:bind (("C-=" . er/expand-region))
-)
+  (use-package expand-region
+    :ensure t
+    :bind (("C-=" . er/expand-region))
+    )
 #+END_SRC
 ** helm
 #+BEGIN_SRC emacs-lisp
-(use-package helm
-:ensure t
-:config
-  ;; List Buffers
-  (global-unset-key (kbd "C-S-b"))
-  (global-set-key (kbd "C-S-b") 'helm-buffers-list)
+  (use-package helm
+    :ensure t
+    :bind (("C-S-b" . helm-buffers-list ) ;; List Buffers
+	   ("M-x" . helm-M-x)             ;; meta-X is handled by Helm
+	   ("<f1>" . helm-imenu)          ;; Map F1 to helm-imenu
+	   ("M-i" . helm-occur)
+	   )
+    :init
+    (setq helm-split-window-default-side 'same ; display helm in the same window
+	  helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+	  helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+	  helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+	  helm-ff-file-name-history-use-recentf t
+	  helm-mode-reverse-history           nil ; place helm command history on top
 
-  ;; meta-X is handled by Helm
-  (global-unset-key (kbd "M-x"))
-  (global-set-key (kbd "M-x") 'helm-M-x)
-
-  ;; Map F1 to helm-imenu
-  (global-unset-key (kbd "<f1>"))
-  (global-set-key (kbd "<f1>") 'helm-imenu)
-
-  ;; Helm swoop
-  (global-unset-key (kbd "M-i"))
-  (global-set-key (kbd "M-i") 'helm-occur)
-
-  (setq helm-split-window-default-side 'same ; display helm in the same window
-      ;helm-full-frame                     t ; make helm alway open in a full frame
-      helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-      helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-      helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-      helm-ff-file-name-history-use-recentf t
-      helm-mode-reverse-history           nil ; place helm command history on top
-
-      ;; need to investigate what these do
-      ;; just copied them from: https://github.com/yveszoundi/emacs.d/blob/master/bootstrap/startup.org
-      helm-ff-transformer-show-only-basename nil
-      ;helm-adaptive-history-file             ers-helm-adaptive-history-file
-      ;helm-boring-file-regexp-list           '("\\.git$" "\\.svn$" "\\.elc$" "*~$")
-      helm-yank-symbol-first                 t
-      helm-buffers-fuzzy-matching            t
-      helm-ff-auto-update-initial-value      t
-      helm-input-idle-delay                  0.1
-      helm-idle-delay                        0.1)
-:init
-   (use-package helm-projectile
-                    :ensure    helm-projectile
-                    :bind      ("M-o" . helm-projectile))
-)
+	  ;; need to investigate what these do
+	  ;; just copied them from: https://github.com/yveszoundi/emacs.d/blob/master/bootstrap/startup.org
+	  helm-ff-transformer-show-only-basename nil
+	  ;;helm-adaptive-history-file             ers-helm-adaptive-history-file
+	  ;;helm-boring-file-regexp-list           '("\\.git$" "\\.svn$" "\\.elc$" "*~$")
+	  helm-yank-symbol-first                 t
+	  helm-buffers-fuzzy-matching            t
+	  helm-ff-auto-update-initial-value      t
+	  helm-input-idle-delay                  0.1
+	  helm-idle-delay                        0.1)
+    (use-package helm-projectile
+      :ensure    helm-projectile
+      :bind      ("M-o" . helm-projectile))
+    )
 #+END_SRC
 
 ** magit
