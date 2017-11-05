@@ -435,10 +435,11 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
   (use-package helm
     :ensure t
-    :bind (("C-S-b" . helm-buffers-list ) ;; List Buffers
-	   ("M-x" . helm-M-x)             ;; meta-X is handled by Helm
-	   ("<f1>" . helm-imenu)          ;; Map F1 to helm-imenu
-	   ("M-i" . helm-occur)
+    :bind (("C-S-b" . helm-mini)
+	   ("M-x"   . helm-M-x)             ;; meta-X is handled by Helm
+	   ("<f1>"  . helm-imenu)          ;; Map F1 to helm-imenu
+	   ("M-i"   . helm-occur)
+	   ("M-y"   . helm-show-kill-ring)
 	   )
     :init
     (setq helm-split-window-default-side 'same ; display helm in the same window
@@ -453,6 +454,7 @@ highlighted using different colors at one time."
 	  helm-ff-transformer-show-only-basename nil
 	  ;;helm-adaptive-history-file             ers-helm-adaptive-history-file
 	  ;;helm-boring-file-regexp-list           '("\\.git$" "\\.svn$" "\\.elc$" "*~$")
+	  helm-recentf-fuzzy-match               t
 	  helm-yank-symbol-first                 t
 	  helm-buffers-fuzzy-matching            t
 	  helm-ff-auto-update-initial-value      t
