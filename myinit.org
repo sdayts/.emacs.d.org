@@ -209,6 +209,8 @@ If region is active, apply to active region instead."
 
 ;; mark the entire buffer
 (global-set-key (kbd "M-a") 'mark-whole-buffer)
+
+(setq-default indent-tabs-mode nil)
 #+END_SRC
 
 * Highlighting related customizations
