@@ -100,10 +100,6 @@ If region is active, apply to active region instead."
 ;; in the mode codfiguration section
 (setq org-src-fontify-natively t)
 
-;; Copy/Paste they way I am used to
-(global-unset-key (kbd "C-c c"))
-(global-set-key (kbd "C-c c") 'kill-ring-save)
-
 ;; Paste the way I am used to
 (global-unset-key (kbd "C-v"))
 (global-set-key (kbd "C-v") 'yank)
@@ -771,6 +767,7 @@ highlighted using different colors at one time."
   (use-package whole-line-or-region
     :ensure t
     :bind (("C-w" . whole-line-or-region-kill-region)
+	   ("C-c c" . whole-line-or-region-kill-ring-save)
 	   )
     :config
     )
