@@ -210,6 +210,9 @@ If region is active, apply to active region instead."
 (add-to-list 'same-window-buffer-names "*Help*")
 (add-to-list 'same-window-buffer-names "*Backtrace*")
 (add-to-list 'same-window-buffer-names "*shell*")
+
+;; mark the entire buffer
+(global-set-key (kbd "M-a") 'mark-whole-buffer)
 #+END_SRC
 
 * Highlighting related customizations
@@ -382,12 +385,12 @@ highlighted using different colors at one time."
     (interactive)
     (back-button-global-backward)
     (setq global-mark-ring (butlast global-mark-ring 1))
-  )
+    )
 
   (use-package back-button
     :ensure t
     :bind (("C-," . sd/pop-global-mark-ring )
-	     )
+	   )
     :init
     :config
     )
@@ -463,56 +466,53 @@ highlighted using different colors at one time."
 
 ** magit
 #+BEGIN_SRC emacs-lisp
-(use-package magit
-:ensure t
-:bind (("C-x g" . magit-status))
-:config
-;; update magit heading line to yellow on black, the way I like it...  
-(set-face-attribute 'magit-diff-hunk-heading-highlight nil :background "black" :foreground "yellow" )
-)
+  (use-package magit
+    :ensure t
+    :bind (("C-x g" . magit-status))
+    :config
+    ;; update magit heading line to yellow on black, the way I like it...  
+    (set-face-attribute 'magit-diff-hunk-heading-highlight nil :background "black" :foreground "yellow" )
+    )
 #+END_SRC
 ** move-text
 #+BEGIN_SRC emacs-lisp
-(use-package move-text
-:ensure t
-:config
-  ;; Text movement
-  (global-unset-key (kbd "C-S-<up>"))
-  (global-set-key (kbd "C-S-<up>") 'move-text-up)
-  (global-unset-key (kbd "C-S-<down>"))
-  (global-set-key (kbd "C-S-<down>") 'move-text-down)
-)
+  (use-package move-text
+    :ensure t
+    ;; Text movement
+    :bind (("C-S-<up>" . move-text-up )
+	   ("C-S-<down>" . move-text-down ))
+    :config
+    )
 #+END_SRC
 
 ** multiple-cursors
 #+BEGIN_SRC emacs-lisp
-(defvar multiple-cursors-mode-enabled-hook nil
-      "Hook that is run after `multiple-cursors-mode' is enabled.")
+  (defvar multiple-cursors-mode-enabled-hook nil
+    "Hook that is run after `multiple-cursors-mode' is enabled.")
 
-(defvar multiple-cursors-mode-disabled-hook nil
-      "Hook that is run after `multiple-cursors-mode' is disabled.")
+  (defvar multiple-cursors-mode-disabled-hook nil
+    "Hook that is run after `multiple-cursors-mode' is disabled.")
 
-(defun sd/mc-when-enabled ()
-      "Function to be added to `multiple-cursors-mode-enabled-hook'."
-  (set-cursor-color "red"))
+  (defun sd/mc-when-enabled ()
+    "Function to be added to `multiple-cursors-mode-enabled-hook'."
+    (set-cursor-color "red"))
 
-(defun sd/mc-when-disabled ()
-      "Function to be added to `multiple-cursors-mode-disabled-hook'."
-  (set-cursor-color "white"))
+  (defun sd/mc-when-disabled ()
+    "Function to be added to `multiple-cursors-mode-disabled-hook'."
+    (set-cursor-color "white"))
 
-(use-package multiple-cursors
-  :ensure t
-  :init
-  (global-unset-key (kbd "C--"))
-  (global-set-key (kbd "C--") 'mc/mark-next-like-this)
+  (use-package multiple-cursors
+    :ensure t
+    :bind (("C--" . mc/mark-next-like-this  )
+	   )
+    :init
+    (add-hook 'multiple-cursors-mode-enabled-hook #'sd/mc-when-enabled)
+    (add-hook 'multiple-cursors-mode-disabled-hook #'sd/mc-when-disabled)
 
-  (add-hook 'multiple-cursors-mode-enabled-hook #'sd/mc-when-enabled)
-  (add-hook 'multiple-cursors-mode-disabled-hook #'sd/mc-when-disabled)
-
-  :config
-  (set-face-background 'mc/cursor-bar-face "#2F4F4F")
-  (set-face-foreground 'mc/cursor-bar-face "red")
-)
+    :config
+    (set-face-background 'mc/cursor-bar-face "#2F4F4F")
+    (set-face-foreground 'mc/cursor-bar-face "red")
+    )
 #+END_SRC
 ** org
 #+BEGIN_SRC emacs-lisp
@@ -522,21 +522,21 @@ highlighted using different colors at one time."
 
 ** projectile
 #+BEGIN_SRC  emacs-lisp
-(use-package projectile
-  :ensure    projectile
-  :config    (projectile-global-mode t)
-  :init      
-  (progn
+  (use-package projectile
+    :ensure    t
+    :init
     (setq projectile-completion-system 'helm)
     ;; solves a performance issue
     ;; without this, every cursor movement is incredibly slow
     (setq projectile-mode-line
-        '(:eval (if (projectile-project-p)
-                   (format " Proj[%s]"
-                          (projectile-project-name))
-                "")))
-  )
- )
+	  '(:eval (if (projectile-project-p)
+		      (format " Proj[%s]"
+			      (projectile-project-name))
+		    ""))
+	  )
+    :config
+    (projectile-global-mode t)
+    )
 #+END_SRC
 ** rectangle-mark-mode
 #+BEGIN_SRC emacs-lisp
@@ -549,63 +549,63 @@ highlighted using different colors at one time."
 #+END_SRC
 ** rtags
 #+BEGIN_SRC emacs-lisp
-(use-package rtags
-:ensure t
-:bind (("C-." . rtags-find-symbol-at-point)
-       ("C-," . rtags-location-stack-back)
-       ("C-x r" . rtags-find-references-at-point)
-      )
-)
+  (use-package rtags
+    :ensure t
+    :bind (("C-." . rtags-find-symbol-at-point)
+	   ("C-," . rtags-location-stack-back)
+	   ("C-x r" . rtags-find-references-at-point)
+	   )
+    )
 #+END_SRC
 ** shell
 #+BEGIN_SRC emacs-lisp
-;; Run shell mode
-(global-unset-key (kbd "C-S-m"))
-(global-set-key (kbd "C-S-m") 'shell)
-;; Don't ask to kill the shell buffer
-(add-hook 'shell-mode-hook (lambda() (set-process-query-on-exit-flag (get-process "shell") nil)) )
+  ;; Run shell mode
+  (global-unset-key (kbd "C-S-m"))
+  (global-set-key (kbd "C-S-m") 'shell)
+  ;; Don't ask to kill the shell buffer
+  (add-hook 'shell-mode-hook (lambda() (set-process-query-on-exit-flag (get-process "shell") nil)) )
 #+END_SRC
 ** try
 #+BEGIN_SRC emacs-lisp
-(use-package try 
-:ensure t)
+  (use-package try
+    :ensure t)
 #+END_SRC
 ** which-key
 #+BEGIN_SRC emacs-lisp
-(use-package which-key
-  :ensure t 
-  :config
+  (use-package which-key
+    :ensure t
+    :config
     (which-key-mode))
 #+END_SRC
 ** whole-line-or-region
 #+BEGIN_SRC emacs-lisp
-(use-package whole-line-or-region
-:ensure t
-:config
-  ;; Kill selection or line (in case nothing is selected)
-  (global-unset-key (kbd "C-w"))
-  (global-set-key (kbd "C-w") 'whole-line-or-region-kill-region)
-)
+  (use-package whole-line-or-region
+    :ensure t
+    :bind (("C-w" . whole-line-or-region-kill-region)
+	   )
+    :config
+    )
 #+END_SRC
 
 ** yasnippet
 #+BEGIN_SRC emacs-lisp
-(use-package yasnippet
-:ensure t
-:init
-(yas-global-mode 1)
-:config
-)
+  (use-package yasnippet
+    :ensure t
+    :init
+    (yas-global-mode 1)
+    :config
+    )
 #+END_SRC
 ** zoom-window
 #+BEGIN_SRC emacs-lisp
-(use-package zoom-window
-:ensure t
-:config
-  ;; Zoom-in/Zoom-out
-  (global-unset-key (kbd "C-M-z"))
-  (global-set-key (kbd "C-M-z") 'zoom-window-zoom)
-  (setq zoom-window-mode-line-color "SteelBlue"))
+  (use-package zoom-window
+    :ensure t
+    :bind (("C-M-z" . zoom-window-zoom)
+	   )
+    :init
+    (setq zoom-window-mode-line-color "SteelBlue")
+    :config
+    )
 #+END_SRC
 ** Modes to explore in the future
 # 'auto-complete-c-headers
