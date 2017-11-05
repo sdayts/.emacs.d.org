@@ -210,7 +210,11 @@ If region is active, apply to active region instead."
 ;; mark the entire buffer
 (global-set-key (kbd "M-a") 'mark-whole-buffer)
 
+;; indent with spaces
 (setq-default indent-tabs-mode nil)
+
+;; unset Meta-x m, so that it can be reused for other purposes
+(global-unset-key (kbd "C-x m"))
 #+END_SRC
 
 * Highlighting related customizations
@@ -655,7 +659,9 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :ensure t
-    :bind (("C-x g" . magit-status))
+    :bind (("C-x g" . magit-status)
+           ("C-x m l" . magit-log-all)
+           )
     :config
     ;; update magit heading line to yellow on black, the way I like it...  
     (set-face-attribute 'magit-diff-hunk-heading-highlight nil :background "black" :foreground "yellow" )
