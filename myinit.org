@@ -368,7 +368,16 @@ highlighted using different colors at one time."
        ((t (:inherit ace-jump-face-foreground :height 1.0 :foreground "yellow" :background "black" )))))
     )
 #+END_SRC
-
+** ace-window
+#+BEGIN_SRC emacs-lisp
+  (use-package ace-window
+    ;; don't use for now
+    :disabled
+    :ensure t
+    :init
+    (global-set-key (kbd "C-x o") 'ace-window)
+    :diminish ace-window-mode)
+#+END_SRC
 ** autocomplete
 #+BEGIN_SRC emacs-lisp
   (use-package auto-complete
@@ -588,7 +597,38 @@ highlighted using different colors at one time."
     :config
     )
 #+END_SRC
+** wrap-region
+#+BEGIN_SRC emacs-lisp
 
+  (use-package wrap-region
+    :ensure   t
+    :config
+    (wrap-region-global-mode t)
+    (wrap-region-add-wrappers
+     '(("(" ")")
+       ("[" "]")
+       ("{" "}")
+       ("<" ">")
+       ("'" "'")
+       ("\"" "\"")
+       ("‘" "’"   "q")
+       ("“" "”"   "Q")
+       ("*" "*"   "b"   org-mode)                 ; bolden
+       ("*" "*"   "*"   org-mode)                 ; bolden
+       ("/" "/"   "i"   org-mode)                 ; italics
+       ("/" "/"   "/"   org-mode)                 ; italics
+       ("~" "~"   "c"   org-mode)                 ; code
+       ("~" "~"   "~"   org-mode)                 ; code
+       ("=" "="   "v"   org-mode)                 ; verbatim
+       ("=" "="   "="   org-mode)                 ; verbatim
+       ("_" "_"   "u" '(org-mode markdown-mode))  ; underline
+       ("**" "**" "b"   markdown-mode)            ; bolden
+       ("*" "*"   "i"   markdown-mode)            ; italics
+       ("`" "`"   "c" '(markdown-mode ruby-mode)) ; code
+       ("`" "'"   "c"   lisp-mode)                ; code
+       ))
+    :diminish wrap-region-mode)
+#+END_SRC
 ** yasnippet
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
