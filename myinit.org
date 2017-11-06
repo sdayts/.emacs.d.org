@@ -804,7 +804,6 @@ highlighted using different colors at one time."
 #+END_SRC
 ** wrap-region
 #+BEGIN_SRC emacs-lisp
-
   (use-package wrap-region
     :ensure   t
     :config
