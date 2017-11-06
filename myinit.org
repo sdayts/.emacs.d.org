@@ -758,6 +758,14 @@ highlighted using different colors at one time."
   ;; Don't ask to kill the shell buffer
   (add-hook 'shell-mode-hook (lambda() (set-process-query-on-exit-flag (get-process "shell") nil)) )
 #+END_SRC
+** transpose-frame
+#+BEGIN_SRC emacs-lisp
+  (use-package transpose-frame
+    :ensure t
+    :bind("<f12>" . flop-frame)
+    :config
+    )
+#+END_SRC
 ** try
 #+BEGIN_SRC emacs-lisp
   (use-package try
