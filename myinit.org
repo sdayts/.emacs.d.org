@@ -737,12 +737,10 @@ highlighted using different colors at one time."
 #+END_SRC
 ** rectangle-mark-mode
 #+BEGIN_SRC emacs-lisp
-;; Select vertical region
-(global-unset-key (kbd "C-M-<down>"))
-(global-set-key (kbd "C-M-<down>") 'rectangle-mark-mode)
-
-;; Use Control-w to kill selections in rectangle mode
-(add-hook 'rectangle-mark-mode-hook (lambda() (define-key rectangle-mark-mode-map (kbd "C-w") 'delete-rectangle)) )
+  (use-package rect-mode
+    :bind(("C-M-<down>" . rectangle-mark-mode)
+          :map rectangle-mark-mode-map
+          ("C-w" . delete-rectangle)))
 #+END_SRC
 ** rtags
 #+BEGIN_SRC emacs-lisp
