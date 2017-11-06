@@ -709,8 +709,12 @@ highlighted using different colors at one time."
 #+END_SRC
 ** org
 #+BEGIN_SRC emacs-lisp
-  ; indent propertly in org babel mode
-  (setq org-src-tab-acts-natively t)
+  (use-package org-mode
+      :ensure t
+      :init
+      (unbind-key "M-h" org-mode-map)
+      ; indent propertly in org babel mode
+      (setq org-src-tab-acts-natively t))
 #+END_SRC
 
 ** projectile
@@ -760,7 +764,7 @@ highlighted using different colors at one time."
 #+END_SRC
 ** swap-buffers
 #+BEGIN_SRC emacs-lisp
-  (use-(point)ackage swap-buffers
+  (use-package swap-buffers
     :ensure t
     :bind("C-<f12>" . swap-buffers)
     :init
@@ -775,6 +779,7 @@ highlighted using different colors at one time."
     :ensure t
     :bind("<f12>" . flop-frame)
     :config
+    (advice-add 'flop-frame :after 'sd/update-header)
     )
 #+END_SRC
 ** try
