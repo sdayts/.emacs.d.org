@@ -758,6 +758,17 @@ highlighted using different colors at one time."
   ;; Don't ask to kill the shell buffer
   (add-hook 'shell-mode-hook (lambda() (set-process-query-on-exit-flag (get-process "shell") nil)) )
 #+END_SRC
+** swap-buffers
+#+BEGIN_SRC emacs-lisp
+  (use-(point)ackage swap-buffers
+    :ensure t
+    :bind("C-<f12>" . swap-buffers)
+    :init
+    (setq swap-buffers-keep-focus t)
+    :config
+    (advice-add 'swap-buffers :after 'sd/update-header)
+    )
+#+END_SRC
 ** transpose-frame
 #+BEGIN_SRC emacs-lisp
   (use-package transpose-frame
