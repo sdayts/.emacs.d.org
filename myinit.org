@@ -606,6 +606,14 @@ highlighted using different colors at one time."
 			    (get-text-property (point) 'dired-filename)))
               (define-key dired-mode-map  (kbd "<end>") 'dired-up-directory)))
 #+END_SRC
+** dired+...
+#+BEGIN_SRC emacs-lisp
+  (use-package dired+
+    :ensure t
+    :config
+    )
+#+END_SRC
+
 ** iedit
 #+BEGIN_SRC emacs-lisp
   (use-package iedit
