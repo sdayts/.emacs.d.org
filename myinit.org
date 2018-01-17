@@ -148,7 +148,7 @@ If region is active, apply to active region instead."
 
 ;; disable scrollbar, menu bar and tool bar
 (scroll-bar-mode -1)
-(menu-bar-mode -1)
+(menu-bar-mode t)
 (tool-bar-mode -1)
 
 ;; turn off blinking cursor
@@ -215,6 +215,10 @@ If region is active, apply to active region instead."
 
 ;; unset Meta-x m, so that it can be reused for other purposes
 (global-unset-key (kbd "C-x m"))
+
+;; copy text selected via a mouse to system's clipboard
+(setq mouse-drag-copy-region t)
+
 #+END_SRC
 
 * Highlighting related customizations
@@ -722,7 +726,7 @@ highlighted using different colors at one time."
 #+END_SRC
 ** org
 #+BEGIN_SRC emacs-lisp
-  (use-package org-mode
+  (use-package org
       :ensure t
       :init
       (unbind-key "M-h" org-mode-map)
@@ -750,10 +754,10 @@ highlighted using different colors at one time."
 #+END_SRC
 ** rectangle-mark-mode
 #+BEGIN_SRC emacs-lisp
-  (use-package rect-mode
-    :bind(("C-M-<down>" . rectangle-mark-mode)
-          :map rectangle-mark-mode-map
-          ("C-w" . delete-rectangle)))
+    (use-package rect
+      :bind(("C-M-<down>" . rectangle-mark-mode)
+            :map rectangle-mark-mode-map
+            ("C-w" . delete-rectangle)))
 #+END_SRC
 ** rtags
 #+BEGIN_SRC emacs-lisp
