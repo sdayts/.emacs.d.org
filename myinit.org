@@ -603,7 +603,8 @@ highlighted using different colors at one time."
 	    (lambda ()
 	      (setq-local ace-jump-search-filter
 			  (lambda ()
-			    (get-text-property (point) 'dired-filename)))))
+			    (get-text-property (point) 'dired-filename)))
+              (define-key dired-mode-map  (kbd "<end>") 'dired-up-directory)))
 #+END_SRC
 ** iedit
 #+BEGIN_SRC emacs-lisp
