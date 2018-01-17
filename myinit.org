@@ -604,7 +604,11 @@ highlighted using different colors at one time."
 	      (setq-local ace-jump-search-filter
 			  (lambda ()
 			    (get-text-property (point) 'dired-filename)))
-              (define-key dired-mode-map  (kbd "<end>") 'dired-up-directory)))
+              ; End/Back key goes up one directory in dired mode
+              (define-key dired-mode-map  (kbd "<end>") 'dired-up-directory)
+              ; unset Cntl+Shift+b in dired mode which is by default wants to bookmark a file
+              ; while I like it to bring up the helm-mini
+              (local-unset-key (kbd "C-S-b"))))
 #+END_SRC
 ** dired+...
 #+BEGIN_SRC emacs-lisp
