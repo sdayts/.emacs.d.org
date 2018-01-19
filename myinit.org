@@ -298,6 +298,7 @@ highlighted using different colors at one time."
 ;; make command a meta key on Macs
 (when (eq system-type 'darwin)
   (setq mac-command-modifier 'meta)
+  (global-set-key (kbd "C-M-h") 'ns-do-hide-emacs)
   )
 #+END_SRC
 
@@ -614,6 +615,15 @@ highlighted using different colors at one time."
               ; while I like it to bring up the helm-mini
               (local-unset-key (kbd "C-S-b"))
               (define-key dired-mode-map  (kbd "M-i") 'helm-occur)))
+
+  (use-package dired
+    :config
+    ;; enable dired omit mode
+    (require 'dired-x)
+    (setq-default dired-omit-files-p t) ; Buffer-local variable
+    (setq dired-omit-files
+    ; omit files I don't care about
+    (concat dired-omit-files "\\|\\.o$\\|\\.d$\\|\\.dd$\\|\\.sundev1.c$\\|\\.mapfile$\\|\\.depends$\\|\\.ibm$\\|\\.sundev1$\\|\\.trap$\\|^llcalc_\\|^00")))
 #+END_SRC
 ** dired+...
 #+BEGIN_SRC emacs-lisp
