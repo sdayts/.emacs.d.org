@@ -708,7 +708,7 @@ highlighted using different colors at one time."
     :ensure t
     ;; Text movement
     :bind (("C-S-<up>" . move-text-up )
-	   ("C-S-<down>" . move-text-down ))
+           ("C-S-<down>" . move-text-down ))
     :config
     )
 #+END_SRC
