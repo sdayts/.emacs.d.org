@@ -6,7 +6,10 @@
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives
-	     '("org" . "https://orgmode.org/elpa/"))
+	     '("org-archive" . "https://orgmode.org/elpa/") t)
+
+(if (file-directory-p "~/.emacs.d/local-packages/org-9.1.6/lisp")
+    (add-to-list 'load-path "~/.emacs.d/local-packages/org-9.1.6/lisp"))
 
 (package-initialize)
 
@@ -29,4 +32,4 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (zoom-window yasnippet wrap-region whole-line-or-region which-key try transpose-frame swap-buffers rtags multiple-cursors move-text magit helm-projectile helm expand-region iedit dired+ dired-narrow dired-hacks-utils beacon back-button auto-complete ace-jump-mode use-package))))
+    (shell-pop zoom-window yasnippet wrap-region whole-line-or-region which-key try transpose-frame swap-buffers rtags multiple-cursors move-text magit helm-projectile helm expand-region iedit dired+ dired-narrow dired-hacks-utils beacon back-button auto-complete ace-jump-mode use-package))))
