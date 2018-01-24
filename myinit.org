@@ -766,6 +766,13 @@ highlighted using different colors at one time."
     (set-face-foreground 'mc/cursor-bar-face "red")
     )
 #+END_SRC
+** nxml
+#+BEGIN_SRC emacs-lisp
+  (use-package nxml-mode
+      :config
+      (unbind-key "C-c C-u" nxml-mode-map)
+      (unbind-key "M-h" nxml-mode-map))
+#+END_SRC
 ** org
 #+BEGIN_SRC emacs-lisp
   (use-package org
@@ -813,9 +820,9 @@ highlighted using different colors at one time."
 #+END_SRC
 ** shell
 #+BEGIN_SRC emacs-lisp
-  ;; Run shell mode
-  (global-unset-key (kbd "C-S-m"))
-  (global-set-key (kbd "C-S-m") 'shell)
+  ;; ;; Run shell mode
+  ;; (global-unset-key (kbd "C-S-m"))
+  ;; (global-set-key (kbd "C-S-m") 'shell)
   ;; Don't ask to kill the shell buffer
   (add-hook 'shell-mode-hook (lambda() (set-process-query-on-exit-flag (get-process "shell") nil)) )
 #+END_SRC
@@ -825,6 +832,8 @@ highlighted using different colors at one time."
     :ensure t
     :bind (("C-S-m" . shell-pop))
     :config
+     ;; Don't ask to kill the shell buffer
+     (add-hook 'shell-mode-hook (lambda() (set-process-query-on-exit-flag (get-process "shell") nil)) )
      (setq shell-pop-shell-type
       (quote ("eshell" "*eshell*" (lambda nil (eshell shell-pop-term-shell)))))
      (setq shell-pop-term-shell "/bin/bash")
