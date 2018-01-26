@@ -699,10 +699,10 @@ highlighted using different colors at one time."
           helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
           helm-ff-file-name-history-use-recentf t
           helm-mode-reverse-history           nil ; place helm command history on top
+          helm-ff-transformer-show-only-basename t; only show basename when helm-find-file, to show full path "C-]"
 
           ;; need to investigate what these do
           ;; just copied them from: https://github.com/yveszoundi/emacs.d/blob/master/bootstrap/startup.org
-          helm-ff-transformer-show-only-basename nil
           ;;helm-adaptive-history-file             ers-helm-adaptive-history-file
           ;;helm-boring-file-regexp-list           '("\\.git$" "\\.svn$" "\\.elc$" "*~$")
           helm-recentf-fuzzy-match               t
