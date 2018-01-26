@@ -711,9 +711,20 @@ highlighted using different colors at one time."
           helm-ff-auto-update-initial-value      t
           helm-input-idle-delay                  0.1
           helm-idle-delay                        0.1)
+
     (use-package helm-projectile
       :ensure    helm-projectile
       :bind      ("M-o" . helm-projectile))
+
+    :config
+    ; make helm selection yellow on black
+    (set-face-attribute 'helm-visible-mark nil 
+                    :background "black"
+                    :foreground "yellow")
+    ; make current line in helm pleasant to look at
+    (set-face-attribute 'helm-selection nil
+                        :background "DarkCyan"
+                        :foreground "white")
     )
 #+END_SRC
 
