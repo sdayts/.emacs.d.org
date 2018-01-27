@@ -985,4 +985,6 @@ highlighted using different colors at one time."
 # 'paredit
 # 'rtags-ac
 # web-mode
-
+** Changes to do
+*** find a way to reliably highlight header-line
+*** try to use bear or output of make to index files via rtags
