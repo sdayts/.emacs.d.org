@@ -305,7 +305,7 @@ highlighted using different colors at one time."
 #+END_SRC
 * Color customizations
 #+BEGIN_SRC emacs-lisp
-3  ;; Set cursor color to white
+  ;; Set cursor color to white
   (set-cursor-color "cyan")
   ;; Make cursor a thin bar
   (setq-default cursor-type '(bar . 1))
@@ -987,5 +987,4 @@ highlighted using different colors at one time."
 # 'rtags-ac
 # web-mode
 ** Changes to do
-*** find a way to reliably highlight header-line
 *** try to use bear or output of make to index files via rtags
