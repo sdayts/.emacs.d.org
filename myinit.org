@@ -708,54 +708,64 @@ highlighted using different colors at one time."
 #+END_SRC
 ** helm
 #+BEGIN_SRC emacs-lisp
-  (use-package helm
-    :ensure t
-    :bind (("C-S-b"   . helm-mini)
-           ("M-x"     . helm-M-x)             ;; meta-X is handled by Helm
-           ("<f1>"    . helm-imenu)          ;; Map F1 to helm-imenu
-           ("M-i"     . helm-occur)
-           ("M-y"     . helm-show-kill-ring)
-           ("C-x C-f" . helm-find-files))
-    :init
-    (setq helm-split-window-default-side 'same ; display helm in the same window
-          helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-          helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-          helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-          helm-ff-file-name-history-use-recentf t
-          helm-mode-reverse-history           nil ; place helm command history on top
-          helm-ff-transformer-show-only-basename t; only show basename when helm-find-file, to show full path "C-]"
+    (use-package helm
+      :ensure t
+      :bind (("C-S-b"   . helm-mini)
+             ("M-x"     . helm-M-x)             ;; meta-X is handled by Helm
+             ("<f1>"    . helm-imenu)          ;; Map F1 to helm-imenu
+             ("M-i"     . helm-occur)
+             ("M-y"     . helm-show-kill-ring)
+             ("C-x C-f" . helm-find-files))
+      :init
+      (setq helm-split-window-default-side 'same ; display helm in the same window
+            helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+            helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+            helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+            helm-ff-file-name-history-use-recentf t
+            helm-mode-reverse-history           nil ; place helm command history on top
+            helm-ff-transformer-show-only-basename t; only show basename when helm-find-file, to show full path "C-]"
 
-          ;; need to investigate what these do
-          ;; just copied them from: https://github.com/yveszoundi/emacs.d/blob/master/bootstrap/startup.org
-          ;;helm-adaptive-history-file             ers-helm-adaptive-history-file
-          ;;helm-boring-file-regexp-list           '("\\.git$" "\\.svn$" "\\.elc$" "*~$")
-          helm-recentf-fuzzy-match               t
-          helm-yank-symbol-first                 t
-          helm-buffers-fuzzy-matching            t
-          helm-ff-auto-update-initial-value      t
-          helm-input-idle-delay                  0.1
-          helm-idle-delay                        0.1)
+            ;; need to investigate what these do
+            ;; just copied them from: https://github.com/yveszoundi/emacs.d/blob/master/bootstrap/startup.org
+            ;;helm-adaptive-history-file             ers-helm-adaptive-history-file
+            ;;helm-boring-file-regexp-list           '("\\.git$" "\\.svn$" "\\.elc$" "*~$")
+            helm-recentf-fuzzy-match               t
+            helm-yank-symbol-first                 t
+            helm-buffers-fuzzy-matching            t
+            helm-ff-auto-update-initial-value      t
+            helm-input-idle-delay                  0.1
+            helm-idle-delay                        0.1)
 
-    (use-package helm-projectile
-      :ensure    helm-projectile
-      :bind      ("M-o" . helm-projectile))
+      (use-package helm-projectile
+        :ensure    helm-projectile
+        :bind      ("M-o" . helm-projectile))
 
-    (use-package helm-grep
-      :bind
+      (use-package helm-grep
+        :bind
+        :config
+        ;; color file names in helm grep mode using a sensible color
+        (set-face-attribute 'helm-grep-file nil
+                            :foreground "azure")
+        ;; the original value is "grep --color=always -a -d skip %e -n%cH -e %p %f"
+        ;; the --color option would override helm-grep-match face and force the "red"
+        ;; to be displayed, which does not play well with my color scheme
+        ;; hence remove the --color from the command and override the helm-grep-match
+        ;; with the color I like better
+        (setq helm-grep-default-command "grep -a -d skip %e -n%cH -e %p %f")
+        (set-face-attribute 'helm-grep-match nil
+                      :background "black"
+                      :foreground "yellow")
+        )
+
       :config
-      ;; color file names in helm grep mode using a sensible color
-      (set-face-attribute 'helm-grep-file nil
-                          :foreground "azure"))
-
-    :config
-    ; make helm selection yellow on black
-    (set-face-attribute 'helm-visible-mark nil 
-                    :background "black"
-                    :foreground "yellow")
-    ; make current line in helm pleasant to look at
-    (set-face-attribute 'helm-selection nil
-                        :background "DarkCyan"
-                        :foreground "white"))
+      ; make helm selection yellow on black
+      (set-face-attribute 'helm-visible-mark nil
+                      :background "black"
+                      :foreground "yellow")
+      ; make current line in helm pleasant to look at
+      (set-face-attribute 'helm-selection nil
+                          :background "DarkCyan"
+                          :foreground "white"))
 #+END_SRC
 
 ** magit
