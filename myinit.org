@@ -289,9 +289,11 @@ highlighted using different colors at one time."
       (progn
         (global-hl-line-mode 0)
 	(setq-default cursor-type '(bar . 10))
+        (set-cursor-color "red")
         )
       (progn
         (setq-default cursor-type '(bar . 1))
+        (set-cursor-color "cyan")
         (global-hl-line-mode +1))
 )))
 
@@ -326,7 +328,7 @@ highlighted using different colors at one time."
   (set-face-attribute 'isearch nil :background "black" :foreground "yellow" )
   (set-face-attribute 'lazy-highlight nil :background "black" :foreground "cyan" )
   ;; mode line colors
-  (set-face-attribute 'mode-line nil :background "black" :foreground "yellow" )
+  (set-face-attribute 'mode-line nil :background "black" :foreground "yellow" :height 150)
   (set-face-attribute 'mode-line-inactive nil :background "dimgray" :foreground "white" )
   ;(set-face-attribute 'header-line nil :background "black" :foreground "yellow" )
 
@@ -738,6 +740,13 @@ highlighted using different colors at one time."
       :ensure    helm-projectile
       :bind      ("M-o" . helm-projectile))
 
+    (use-package helm-grep
+      :bind
+      :config
+      ;; color file names in helm grep mode using a sensible color
+      (set-face-attribute 'helm-grep-file nil
+                          :foreground "azure"))
+
     :config
     ; make helm selection yellow on black
     (set-face-attribute 'helm-visible-mark nil 
@@ -746,8 +755,7 @@ highlighted using different colors at one time."
     ; make current line in helm pleasant to look at
     (set-face-attribute 'helm-selection nil
                         :background "DarkCyan"
-                        :foreground "white")
-    )
+                        :foreground "white"))
 #+END_SRC
 
 ** magit
@@ -787,7 +795,7 @@ highlighted using different colors at one time."
 
   (defun sd/mc-when-disabled ()
     "Function to be added to `multiple-cursors-mode-disabled-hook'."
-    (set-cursor-color "white"))
+    (set-cursor-color "cyan"))
 
   (use-package multiple-cursors
     :ensure t
