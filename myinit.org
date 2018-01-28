@@ -156,9 +156,9 @@
   (global-set-key (kbd "<f6>") 'describe-key)
 
   ;; Move mode line to top
-  (setq-default header-line-format mode-line-format)
+  ;(setq-default header-line-format mode-line-format)
   ;; Hide the bottom mode line
-  (setq-default mode-line-format nil)
+  ;(setq-default mode-line-format nil)
 
   ;; display the fully qualified path in the frame title
   (setq frame-title-format
@@ -305,30 +305,31 @@ highlighted using different colors at one time."
 #+END_SRC
 * Color customizations
 #+BEGIN_SRC emacs-lisp
-;; Set cursor color to white
-(set-cursor-color "cyan")
-;; Make cursor a thin bar
-(setq-default cursor-type '(bar . 1))
-;; set background colors
-(set-background-color "#2F4F4F")
-;; color of border of buffer separator
-(set-face-background 'fringe "#2F4F4F")
-;; color of comments
-(set-face-foreground 'font-lock-comment-face "#FA8278")
-;; color of keyword
-(set-face-foreground 'font-lock-keyword-face "#FF9664")
-;; color of background
-(set-face-foreground 'default "#FFF8DC")
-;; color of srings
-(set-face-foreground 'font-lock-string-face "#00ECC8")
-;; selection/search background/foreground
-(set-face-attribute 'region nil :background "black" :foreground "yellow" )
-(set-face-attribute 'isearch nil :background "black" :foreground "yellow" )
-(set-face-attribute 'lazy-highlight nil :background "black" :foreground "cyan" )
-;; mode line colors
-(set-face-attribute 'mode-line nil :background "black" :foreground "yellow" )
-(set-face-attribute 'mode-line-inactive nil :background "dimgray" :foreground "white" )
-;; (set-face-attribute 'header-line nil :background "black" :foreground "yellow" )
+3  ;; Set cursor color to white
+  (set-cursor-color "cyan")
+  ;; Make cursor a thin bar
+  (setq-default cursor-type '(bar . 1))
+  ;; set background colors
+  (set-background-color "#2F4F4F")
+  ;; color of border of buffer separator
+  (set-face-background 'fringe "#2F4F4F")
+  ;; color of comments
+  (set-face-foreground 'font-lock-comment-face "#FA8278")
+  ;; color of keyword
+  (set-face-foreground 'font-lock-keyword-face "#FF9664")
+  ;; color of background
+  (set-face-foreground 'default "#FFF8DC")
+  ;; color of srings
+  (set-face-foreground 'font-lock-string-face "#00ECC8")
+  ;; selection/search background/foreground
+  (set-face-attribute 'region nil :background "black" :foreground "yellow" )
+  (set-face-attribute 'isearch nil :background "black" :foreground "yellow" )
+  (set-face-attribute 'lazy-highlight nil :background "black" :foreground "cyan" )
+  ;; mode line colors
+  (set-face-attribute 'mode-line nil :background "black" :foreground "yellow" )
+  (set-face-attribute 'mode-line-inactive nil :background "dimgray" :foreground "white" )
+  ;(set-face-attribute 'header-line nil :background "black" :foreground "yellow" )
+
 #+END_SRC
 
 * Mac specific
@@ -385,8 +386,8 @@ highlighted using different colors at one time."
   (global-set-key (kbd "M-<down>") 'windmove-down)
 
   ;; update header line's color every time the buffer is switched
-  (add-hook 'buffer-list-update-hook
-            'sd/update-header)
+  ;;(add-hook 'buffer-list-update-hook
+  ;;          'sd/update-header)
 
 #+END_SRC
 * Modes
@@ -885,7 +886,7 @@ highlighted using different colors at one time."
     :init
     (setq swap-buffers-keep-focus t)
     :config
-    (advice-add 'swap-buffers :after 'sd/update-header)
+    ;;(advice-add 'swap-buffers :after 'sd/update-header)
     )
 #+END_SRC
 ** transpose-frame
@@ -894,7 +895,7 @@ highlighted using different colors at one time."
     :ensure t
     :bind("<f12>" . flop-frame)
     :config
-    (advice-add 'flop-frame :after 'sd/update-header)
+    ;;(advice-add 'flop-frame :after 'sd/update-header)
     )
 #+END_SRC
 ** try
