@@ -1019,6 +1019,17 @@ highlighted using different colors at one time."
     :init
     (yas-global-mode 1)
     :config
+    (define-key yas-minor-mode-map (kbd "<tab>") nil)
+    (define-key yas-minor-mode-map (kbd "TAB") nil)
+    (define-key yas-minor-mode-map (kbd "SPC") yas-maybe-expand)
+
+    ;;keys for navigation
+    (define-key yas-keymap [(tab)]       nil)
+    (define-key yas-keymap (kbd "TAB")   nil)
+    (define-key yas-keymap [(shift tab)] nil)
+    (define-key yas-keymap [backtab]     nil)
+    ;; (define-key yas-keymap (kbd "<new-next-field-key>") 'yas-next-field-or-maybe-expand)
+    ;; (define-key yas-keymap (kbd "<new-prev-field-key>") 'yas-prev)
     )
 #+END_SRC
 ** zoom-window
@@ -1050,3 +1061,10 @@ highlighted using different colors at one time."
 *** red on modification
 *** diminish most minor modes
 ** shortcut/macro for going to the includes section and being able to come back by popping the stack with ctrl-,
+** try the following suggestion for not expanding snippets within comments
+(defun yas-no-expand-in-comment/string ()
+  (setq yas-buffer-local-condition
+        '(if (nth 8 (syntax-ppss)) ;; non-nil if in a string or comment
+             '(require-snippet-condition . force-in-comment)
+           t)))
+(add-hook 'prog-mode-hook 'yas-no-expand-in-comment/string)
