@@ -154,6 +154,10 @@
 
   ;; line numbers everywhere. turn off if this feature becomes too expensive
   (global-linum-mode 1)
+
+  ;; ;; grep the entire project. grep seems to work better than "ag"
+  (global-unset-key (kbd "C-M-i"))
+  (global-set-key (kbd "C-M-i") 'helm-projectile-grep)
 #+END_SRC
 
 * Custom functions
@@ -469,13 +473,13 @@ highlighted using different colors at one time."
 ** autocomplete
 #+BEGIN_SRC emacs-lisp
   (use-package auto-complete
+    :diminish auto-complete-mode
     :ensure t
     :init
     (ac-config-default)
     (global-auto-complete-mode t)
     (setq ac-use-menu-map t)
-    (setq ac-delay 0.3)
-    )
+    (setq ac-delay 0.3))
 #+END_SRC
 ** backbutton
 #+BEGIN_SRC emacs-lisp
@@ -685,6 +689,14 @@ highlighted using different colors at one time."
         (extern-lang-close     . 0))))
     )
 #+END_SRC
+** diminish
+#+BEGIN_SRC emacs-lisp
+  (use-package diminish
+    :ensure t
+    :init
+    :config)
+#+END_SRC
+
 ** dired
 #+BEGIN_SRC emacs-lisp
     ;; Kick off dired with Ctrl-l
@@ -745,6 +757,7 @@ highlighted using different colors at one time."
 ** helm
 #+BEGIN_SRC emacs-lisp
   (use-package helm
+    :diminish helm-mode
     :ensure t
     :bind (("C-S-b"   . helm-mini)
            ("M-x"     . helm-M-x)             ;; meta-X is handled by Helm
@@ -797,16 +810,16 @@ highlighted using different colors at one time."
       ;; with the color I like better
       (setq helm-grep-default-command "grep -a -d skip %e -n%cH -e %p %f")
       (set-face-attribute 'helm-grep-match nil
-                    :background "black"
-                    :foreground "yellow")
+                          :background "black"
+                          :foreground "yellow")
       )
 
     :config
-    ; make helm selection yellow on black
+                                          ; make helm selection yellow on black
     (set-face-attribute 'helm-visible-mark nil
-                    :background "black"
-                    :foreground "yellow")
-    ; make current line in helm pleasant to look at
+                        :background "black"
+                        :foreground "yellow")
+                                          ; make current line in helm pleasant to look at
     (set-face-attribute 'helm-selection nil
                         :background "DarkCyan"
                         :foreground "white")
@@ -814,12 +827,12 @@ highlighted using different colors at one time."
 #+END_SRC
 ** ivy
 #+BEGIN_SRC emacs-lisp
-(use-package ivy
-  :ensure t
-  ;:diminish ivy-mode
-  :config
-  (ivy-mode 1)
-  )
+  (use-package ivy
+    :diminish ivy-mode
+    :ensure t
+    ;:diminish ivy-mode
+    :config
+    (ivy-mode 1))
 #+END_SRC
 ** magit
 #+BEGIN_SRC emacs-lisp
@@ -889,11 +902,12 @@ highlighted using different colors at one time."
 ** org
 #+BEGIN_SRC emacs-lisp
   (use-package org
-      :ensure t
-      :init
-      (unbind-key "M-h" org-mode-map)
-      ; indent propertly in org babel mode
-      (setq org-src-tab-acts-natively t))
+    :diminish org-mode
+    :ensure t
+    :init
+    (unbind-key "M-h" org-mode-map)
+    ;; indent propertly in org babel mode
+    (setq org-src-tab-acts-natively t))
 #+END_SRC
 
 ** projectile
@@ -936,10 +950,12 @@ highlighted using different colors at one time."
   ;; make sure pop up buffers such as helm, help, etc pop up below, always in the same place
   (use-package shackle
     :ensure t
-    :config
+    :init
     (setq helm-display-function 'pop-to-buffer)
     (setq shackle-rules '(("\\`\\*helm.*?\\*\\'" :regexp t :align t :ratio 0.5)
-                          ("\\`\\*Help.*?\\*\\'" :regexp t :align t :ratio 0.5))))
+                          ("\\`\\*Help.*?\\*\\'" :regexp t :align t :ratio 0.5)))
+    :config
+    (shackle-mode))
 #+END_SRC
 ** shell
 #+BEGIN_SRC emacs-lisp
@@ -1002,6 +1018,7 @@ highlighted using different colors at one time."
 ** which-key
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
+    :diminish which-key-mode
     :ensure t
     :config
     (which-key-mode))
@@ -1019,6 +1036,7 @@ highlighted using different colors at one time."
 ** wrap-region
 #+BEGIN_SRC emacs-lisp
   (use-package wrap-region
+    :diminish wrap-region-mode
     :ensure   t
     :config
     (wrap-region-global-mode t)
@@ -1044,12 +1062,12 @@ highlighted using different colors at one time."
        ("*" "*"   "i"   markdown-mode)            ; italics
        ("`" "`"   "c" '(markdown-mode ruby-mode)) ; code
        ("`" "'"   "c"   lisp-mode)                ; code
-       ))
-    :diminish wrap-region-mode)
+       )))
 #+END_SRC
 ** yasnippet
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
+    :diminish yas-minor-mode
     :ensure t
     :init
     (yas-global-mode 1)
