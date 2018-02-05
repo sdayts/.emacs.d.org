@@ -2,7 +2,6 @@
 
 * Global settings
 #+BEGIN_SRC emacs-lisp
-
   ;; load doxymacs installed via: brew install doxymacs
   (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/doxymacs/")
   ;; load doxymacs
@@ -39,9 +38,9 @@
   (global-set-key (kbd "<f6>") 'describe-key)
 
   ;; Move mode line to top
-                                          ;(setq-default header-line-format mode-line-format)
+  ;;(setq-default header-line-format mode-line-format)
   ;; Hide the bottom mode line
-                                          ;(setq-default mode-line-format nil)
+  ;;(setq-default mode-line-format nil)
 
   ;; display the fully qualified path in the frame title
   (setq frame-title-format
@@ -155,9 +154,13 @@
   ;; line numbers everywhere. turn off if this feature becomes too expensive
   (global-linum-mode 1)
 
-  ;; ;; grep the entire project. grep seems to work better than "ag"
+  ;; grep the entire project. grep seems to work better than "ag"
   (global-unset-key (kbd "C-M-i"))
   (global-set-key (kbd "C-M-i") 'helm-projectile-grep)
+
+  ;; diminish built-in modes
+  (require 'diminish)
+  (diminish 'auto-revert-mode)
 #+END_SRC
 
 * Custom functions
@@ -367,8 +370,8 @@ highlighted using different colors at one time."
   (set-face-attribute 'isearch nil :background "black" :foreground "yellow" )
   (set-face-attribute 'lazy-highlight nil :background "black" :foreground "cyan" )
   ;; mode line colors
-  (set-face-attribute 'mode-line nil :background "black" :foreground "yellow" :height 150)
-  (set-face-attribute 'mode-line-inactive nil :background "dimgray" :foreground "white" )
+  ;; (set-face-attribute 'mode-line nil :background "black" :foreground "yellow" :height 150)
+  ;; (set-face-attribute 'mode-line-inactive nil :background "dimgray" :foreground "white" )
   ;(set-face-attribute 'header-line nil :background "black" :foreground "yellow" )
 
 #+END_SRC
@@ -692,9 +695,7 @@ highlighted using different colors at one time."
 ** diminish
 #+BEGIN_SRC emacs-lisp
   (use-package diminish
-    :ensure t
-    :init
-    :config)
+    :ensure t)
 #+END_SRC
 
 ** dired
@@ -739,6 +740,11 @@ highlighted using different colors at one time."
     :config
     (diredp-make-find-file-keys-reuse-dirs))
 #+END_SRC
+** esup
+#+BEGIN_SRC emacs-lisp
+(use-package esup
+  :ensure t)
+#+END_SRC
 ** iedit
 #+BEGIN_SRC emacs-lisp
   (use-package iedit
@@ -757,7 +763,6 @@ highlighted using different colors at one time."
 ** helm
 #+BEGIN_SRC emacs-lisp
   (use-package helm
-    :diminish helm-mode
     :ensure t
     :bind (("C-S-b"   . helm-mini)
            ("M-x"     . helm-M-x)             ;; meta-X is handled by Helm
@@ -815,11 +820,13 @@ highlighted using different colors at one time."
       )
 
     :config
-                                          ; make helm selection yellow on black
+    ;; somehow ":diminish helm-mode does not work
+    (diminish 'helm-mode)
+    ;; make helm selection yellow on black
     (set-face-attribute 'helm-visible-mark nil
                         :background "black"
                         :foreground "yellow")
-                                          ; make current line in helm pleasant to look at
+    ;; make current line in helm pleasant to look at
     (set-face-attribute 'helm-selection nil
                         :background "DarkCyan"
                         :foreground "white")
@@ -849,8 +856,9 @@ highlighted using different colors at one time."
 ** modern-cpp-font-lock
 #+BEGIN_SRC emacs-lisp
   (use-package modern-cpp-font-lock
+    :diminish ‘modern-c++-font-lock-mode
     :ensure t)
-(modern-c++-font-lock-global-mode t)
+  (modern-c++-font-lock-global-mode t)
 #+END_SRC
 ** move-text
 #+BEGIN_SRC emacs-lisp
@@ -980,6 +988,102 @@ highlighted using different colors at one time."
      (setq shell-pop-full-span t)
      (setq shell-pop-window-position "bottom"))
 
+#+END_SRC
+** spaceline
+#+BEGIN_SRC emacs-lisp
+  (use-package spaceline :ensure t
+    :config
+    (setq-default mode-line-format '("%e" (:eval (spaceline-ml-main)))))
+
+  (use-package spaceline-config :ensure spaceline
+    :config
+    (spaceline-helm-mode 1)
+
+    (spaceline-define-segment my/buffer-status
+      "Buffer status (read-only, modified), with color"
+      (cond (buffer-read-only (propertize "RO" 'face 'my/spaceline-read-only))
+            ((buffer-modified-p) (propertize "MODIFIED" 'face 'my/spaceline-modified))
+            (t "  ")))
+
+    (spaceline-define-segment amitp/project-id
+      "Name of project, or folder"
+      ;; (propertize
+      ;;  (amitp/shorten-directory
+      ;;   (cond (buffer-file-name (amitp/project-root-for-file buffer-file-name))
+      ;;         (t (amitp/project-root-for-directory default-directory)))
+      ;;   (- (window-width) (length (amitp/spaceline-buffer-id)) 60))
+      ;;  'face 'amitp/spaceline-filename)
+      )
+
+    (spaceline-define-segment amitp/buffer-id
+      "Name of filename relative to project, or buffer id"
+      (propertize
+       (amitp/spaceline-buffer-id)
+       'face 'amitp/spaceline-filename))
+
+    (spaceline-define-segment my/unicode-character
+      "Description of unicode character we're currently on"
+      (let ((ch (following-char)))
+        (when (and ch (>= ch 127))
+          (get-char-code-property (following-char) 'name))))
+
+    ;; (spaceline-define-segment my/week-number
+    ;;   "Year and week number, which I use for marking my projects"
+    ;;   (format-time-string "W%y%V"))
+
+    ;; When there are segments that may or may not appear, they will
+    ;; affect the alternating background colors. I try to put the
+    ;; indicators that appear/disappear the most towards the center.
+    (spaceline-install
+     'main
+     '((my/buffer-status :tight-left t)
+       (amitp/project-id :tight-right t)
+       (amitp/buffer-id :tight-left t :face highlight-face)
+       (("L" line column) :separator ":" :when active)
+       (selection-info :face region :when mark-active)
+       (process :when active))
+     '((my/unicode-character :face my/spaceline-unicode-character :when active)
+       ((flycheck-error flycheck-warning flycheck-info) :when active)
+       (which-function)
+       (version-control :when active)
+       (global :face highlight-face)
+       (major-mode))))
+
+  (defun amitp/spaceline-buffer-id ()
+    (cond (buffer-file-name
+           ;; (s-chop-prefix (projectile-project-name) buffer-file-name))
+           (s-chop-prefix (projectile-project-name) (file-name-nondirectory buffer-file-name)))
+          (t (s-trim (powerline-buffer-id 'mode-line-buffer-id)))))
+
+  (defun hsl (H S L) ; convenience fn
+    (apply 'color-rgb-to-hex (color-hsl-to-rgb (/ H 360.0) S L)))
+  (defun face (face &rest spec) ; convenience fn
+    (face-spec-set face (list (cons t spec))))
+  (setq powerline-text-scale-factor 0.8)
+
+  (face 'mode-line :family "M+ 1m" :height 1.0 :background "gray20" :foreground "gray80" :box nil)
+  (face 'mode-line-inactive :inherit 'mode-line :background "gray55" :foreground "gray80" :box nil)
+  (face 'mode-line-highlight :inherit 'mode-line :background "GoldenRod2" :foreground "white" 
+        :box '(:line-width -2 :color "GoldenRod2" :style released-button))
+
+  (face 'powerline-active1   :inherit 'mode-line          :height powerline-text-scale-factor :background "gray30")
+  (face 'powerline-inactive1 :inherit 'mode-line-inactive :height powerline-text-scale-factor)
+  (face 'powerline-active2   :inherit 'mode-line          :height powerline-text-scale-factor :background "gray40")
+  (face 'powerline-inactive2 :inherit 'mode-line-inactive :height powerline-text-scale-factor)
+
+  (face 'spaceline-highlight :inherit 'mode-line :foreground "white" :background "gray80" :height powerline-text-scale-factor)
+
+  (face 'amitp/spaceline-personal-active   :inherit 'spaceline-highlight :background (hsl 200 0.5 0.5))
+  (face 'amitp/spaceline-personal-inactive :inherit 'spaceline-highlight :background (hsl 200 0.2 0.5))
+  (face 'amitp/spaceline-work-active       :inherit 'spaceline-highlight :background (hsl 0 0.5 0.5))
+  (face 'amitp/spaceline-work-inactive     :inherit 'spaceline-highlight :background (hsl 0 0.2 0.5))
+  (face 'amitp/spaceline-other-active      :inherit 'spaceline-highlight :background (hsl 300 0.4 0.5))
+  (face 'amitp/spaceline-other-inactive    :inherit 'spaceline-highlight :background (hsl 300 0.15 0.5))
+
+  (face 'my/spaceline-read-only :background (hsl 300 0.15 0.5) :foreground "gray80" :box `(:line-width -2 :color ,(hsl 300 0.4 0.5)))
+  (face 'my/spaceline-modified :background "Red" :foreground "Black" :weight 'extra-bold)
+  (face 'my/spaceline-unicode-character :inherit 'mode-line :foreground "black" :background (hsl 50 1.0 0.5))
+  (face 'amitp/spaceline-filename :family "Helvetica Neue" :foreground nil :background nil :weight 'normal :height (/ 1.0 powerline-text-scale-factor))
 #+END_SRC
 ** swap-buffers
 #+BEGIN_SRC emacs-lisp
