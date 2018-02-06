@@ -805,16 +805,13 @@ highlighted using different colors at one time."
           helm-idle-delay                        0.1
           )
 
-    (use-package helm-projectile
-      :ensure    helm-projectile
-      :bind      ("M-o" . helm-projectile))
-
     (use-package helm-ag
       :ensure    t
       :ensure    helm-projectile
       :bind      )
 
     (use-package helm-grep
+      :defer t
       :bind
       :config
       ;; color file names in helm grep mode using a sensible color
@@ -843,6 +840,13 @@ highlighted using different colors at one time."
                         :background "DarkCyan"
                         :foreground "white")
     )
+#+END_SRC
+** helm-projectile
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-projectile
+    :ensure    t
+    :bind      ("M-o" . helm-projectile)
+    :after     (projectile))
 #+END_SRC
 ** ivy
 #+BEGIN_SRC emacs-lisp
@@ -933,20 +937,29 @@ highlighted using different colors at one time."
 ** projectile
 #+BEGIN_SRC  emacs-lisp
   (use-package projectile
-    :ensure    t
+    :ensure t
+    :demand t 
     :init
     (setq projectile-completion-system 'helm)
     ;; solves a performance issue
     ;; without this, every cursor movement is incredibly slow
     (setq projectile-mode-line
-	  '(:eval (if (projectile-project-p)
-		      (format " Proj[%s]"
-			      (projectile-project-name))
-		    ""))
-	  )
+          '(:eval (if (projectile-project-p)
+                      (format " Proj[%s]"
+                              (projectile-project-name))
+                    "")))
     :config
-    (projectile-global-mode t)
-    )
+    ;; ignore files
+    (add-to-list 'grep-find-ignored-files "*.d")
+    (add-to-list 'grep-find-ignored-files "*.dd")
+    (add-to-list 'grep-find-ignored-files "*.mapfile")
+    (add-to-list 'grep-find-ignored-files "*.tsk")
+    (add-to-list 'grep-find-ignored-files "*.depends")
+    ;; ignore directories
+    (add-to-list 'projectile-globally-ignored-directories "llcalc*")
+    (add-to-list 'projectile-globally-ignored-directories "SunWS_cache*")
+
+    (projectile-global-mode t))
 #+END_SRC
 ** rectangle-mark-mode
 #+BEGIN_SRC emacs-lisp
