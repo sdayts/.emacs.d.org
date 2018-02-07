@@ -1153,6 +1153,16 @@ highlighted using different colors at one time."
     :config
     (which-key-mode))
 #+END_SRC
+** whitespace
+#+BEGIN_SRC emacs-lisp
+  (use-package whitespace
+    :init
+    (dolist (hook '(prog-mode-hook))
+      (add-hook hook #'whitespace-mode))
+    (add-hook 'before-save-hook #'whitespace-cleanup)
+    :config
+    (setq whitespace-style '(face trailing)))
+#+END_SRC
 ** whole-line-or-region
 #+BEGIN_SRC emacs-lisp
   (use-package whole-line-or-region
@@ -1247,3 +1257,18 @@ highlighted using different colors at one time."
              '(require-snippet-condition . force-in-comment)
            t)))
 (add-hook 'prog-mode-hook 'yas-no-expand-in-comment/string)
+** random snippets
+(use-package projectile
+  :diminish "Pj"
+  :init
+  (progn
+    (projectile-global-mode)
+    (setq projectile-indexing-method 'alien
+          projectile-sort-order 'recentf
+          projectile-cache-file "~/.emacs.d/cache/projectile.cache"
+          projectile-known-projects-file "~/.emacs.d/cache/projectile-bookmarks.eld"
+          projectile-enable-caching t)
+    (add-to-list 'projectile-globally-ignored-directories "elpa")
+    (add-to-list 'projectile-globally-ignored-directories ".cask")
+    (add-to-list 'projectile-globally-ignored-directories ".cache")))
+** show trailing white spaces and add a command for removing
