@@ -1144,6 +1144,10 @@ highlighted using different colors at one time."
     ;; (global-set-key (kbd "C-x o") 'ace-window)
     ;; :diminish ace-window-mode)
 
+** which-func
+#+BEGIN_SRC emacs-lisp
+  (use-package which-func
+    :demand)
 #+END_SRC
 ** which-key
 #+BEGIN_SRC emacs-lisp
