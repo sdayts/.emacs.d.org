@@ -2,169 +2,172 @@
 
 * Global settings
 #+BEGIN_SRC emacs-lisp
-    ;; load doxymacs installed via: brew install doxymacs
-    (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/doxymacs/")
-    ;; load doxymacs
-    (require 'doxymacs)
+  ;; load doxymacs installed via: brew install doxymacs
+  (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/doxymacs/")
+  ;; load doxymacs
+  (require 'doxymacs)
 
-    ;; fontify code in code blocks for org mode
-    ;; somehow this does not work if I place this line
-    ;; in the mode codfiguration section
-    (setq org-src-fontify-natively t)
+  ;; fontify code in code blocks for org mode
+  ;; somehow this does not work if I place this line
+  ;; in the mode codfiguration section
+  (setq org-src-fontify-natively t)
 
-    ;; Paste the way I am used to
-    (global-unset-key (kbd "C-v"))
-    (global-set-key (kbd "C-v") 'yank)
+  ;; Paste the way I am used to
+  (global-unset-key (kbd "C-v"))
+  (global-set-key (kbd "C-v") 'yank)
 
-    (global-unset-key (kbd "C-M-v"))
-    (global-set-key (kbd "C-M-v") 'yank-rectangle)
+  (global-unset-key (kbd "C-M-v"))
+  (global-set-key (kbd "C-M-v") 'yank-rectangle)
 
-    ;; Paste the way I am used to
-    (global-unset-key (kbd "C-M-j"))
-    (global-set-key (kbd "C-M-j") 'join-line)
+  ;; Paste the way I am used to
+  (global-unset-key (kbd "C-M-j"))
+  (global-set-key (kbd "C-M-j") 'join-line)
 
-    ;; Copy word under the cursor
-    (global-unset-key (kbd "M-c"))
-    (global-set-key (kbd "M-c") 'sd/copy-word-under-cursor)
+  ;; Copy word under the cursor
+  (global-unset-key (kbd "M-c"))
+  (global-set-key (kbd "M-c") 'sd/copy-word-under-cursor)
 
-    ;; Copy word under the cursor
-    (global-unset-key (kbd "C-M-c"))
-    (global-set-key (kbd "C-M-c") 'sd/copy-buffer-name-to-clipboard)
+  ;; Copy word under the cursor
+  (global-unset-key (kbd "C-M-c"))
+  (global-set-key (kbd "C-M-c") 'sd/copy-buffer-name-to-clipboard)
 
-    ;; Comment bindings
-    (global-unset-key (kbd "C-c C-c"))
-    (global-set-key (kbd "C-c C-c") 'sd/comment-line-or-region)
-    (global-unset-key (kbd "C-c C-u"))
-    (global-set-key (kbd "C-c C-u") 'sd/comment-line-or-region)
+  ;; Comment bindings
+  (global-unset-key (kbd "C-c C-c"))
+  (global-set-key (kbd "C-c C-c") 'sd/comment-line-or-region)
+  (global-unset-key (kbd "C-c C-u"))
+  (global-set-key (kbd "C-c C-u") 'sd/comment-line-or-region)
 
-    ;; Map F6 to describe-key
-    (global-unset-key (kbd "<f6>"))
-    (global-set-key (kbd "<f6>") 'describe-key)
+  ;; Map F6 to describe-key
+  (global-unset-key (kbd "<f6>"))
+  (global-set-key (kbd "<f6>") 'describe-key)
 
-    ;; Move mode line to top
-    ;;(setq-default header-line-format mode-line-format)
-    ;; Hide the bottom mode line
-    ;;(setq-default mode-line-format nil)
+  ;; Move mode line to top
+  ;;(setq-default header-line-format mode-line-format)
+  ;; Hide the bottom mode line
+  ;;(setq-default mode-line-format nil)
 
-    ;; display the fully qualified path in the frame title
-    (setq frame-title-format
-          '((:eval (if (buffer-file-name)
-                       (buffer-file-name))
-                   "%b")))
+  ;; display the fully qualified path in the frame title
+  (setq frame-title-format
+        '((:eval (if (buffer-file-name)
+                     (buffer-file-name))
+                 "%b")))
 
-    ;; display full screen
-    (global-unset-key (kbd "C-M-+"))
-    (global-set-key (kbd "C-M-+") 'toggle-frame-maximized)
+  ;; display full screen
+  (global-unset-key (kbd "C-M-+"))
+  (global-set-key (kbd "C-M-+") 'toggle-frame-maximized)
 
-    ;; Show corresponding paren
-    (show-paren-mode 1)
+  ;; Show corresponding paren
+  (show-paren-mode 1)
 
-    ;; keyboard scroll one line at a time
-    (setq scroll-step 1)
-    ;; don't jump around when scrolling
-    (setq scroll-conservatively 101)
+  ;; keyboard scroll one line at a time
+  (setq scroll-step 1)
+  ;; don't jump around when scrolling
+  (setq scroll-conservatively 101)
 
-    ;; suppress splash screen
-    (setq inhibit-startup-message t)
+  ;; suppress splash screen
+  (setq inhibit-startup-message t)
 
-    ;; disable scrollbar, menu bar and tool bar
-    (scroll-bar-mode -1)
-    (menu-bar-mode t)
-    (tool-bar-mode -1)
+  ;; disable scrollbar, menu bar and tool bar
+  (scroll-bar-mode -1)
+  (menu-bar-mode t)
+  (tool-bar-mode -1)
 
-    ;; turn off blinking cursor
-    (blink-cursor-mode -1)
+  ;; turn off blinking cursor
+  (blink-cursor-mode -1)
 
-    ;; turn off the annoying beep
-    (setq visible-bell nil)
+  ;; turn off the annoying beep
+  (setq visible-bell nil)
 
-    ;; turn off line wrapping
-    (set-default 'truncate-lines t)
+  ;; turn off line wrapping
+  (set-default 'truncate-lines t)
 
-    ;; y/n instead of yes/no
-    (fset 'yes-or-no-p 'y-or-n-p)
+  ;; y/n instead of yes/no
+  (fset 'yes-or-no-p 'y-or-n-p)
 
-    ;; Kill current buffer
-    (global-unset-key (kbd "C-<end>"))
-    (global-set-key (kbd "C-<end>") 'kill-this-buffer)
+  ;; Kill current buffer
+  (global-unset-key (kbd "C-<end>"))
+  (global-set-key (kbd "C-<end>") 'kill-this-buffer)
 
-    ;; Enable deleting of selected text by subsequent input
-    (delete-selection-mode 1)
+  ;; Enable deleting of selected text by subsequent input
+  (delete-selection-mode 1)
 
-    ;; Match parens
-    (global-unset-key (kbd "C-]"))
-    (global-set-key (kbd "C-]") 'sd/forward-or-backward-sexp)
+  ;; Match parens
+  (global-unset-key (kbd "C-]"))
+  (global-set-key (kbd "C-]") 'sd/forward-or-backward-sexp)
 
-    ;; Duplicate line
-    (global-unset-key (kbd "C-c C-v"))
-    (global-set-key (kbd "C-c C-v") 'sd/duplicate-line-or-region)
+  ;; Duplicate line
+  (global-unset-key (kbd "C-c C-v"))
+  (global-set-key (kbd "C-c C-v") 'sd/duplicate-line-or-region)
 
 
-    ;; Backup file configuration
-    ;; back
-    (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+  ;; Backup file configuration
+  ;; back
+  (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
-    (setq make-backup-files t               ; backup of a file the first time it is saved.
-          backup-by-copying t               ; don't clobber symlinks
-          version-control t                 ; version numbers for backup files
-          delete-old-versions t             ; delete excess backup files silently
-          delete-by-moving-to-trash t
-          kept-old-versions 6               ; oldest versions to keep when a new numbered backup is made (default: 2)
-          kept-new-versions 9               ; newest versions to keep when a new numbered backup is made (default: 2)
-          auto-save-default t               ; auto-save every buffer that visits a file
-          auto-save-timeout 20              ; number of seconds idle time before auto-save (default: 30)
-          auto-save-interval 200            ; number of keystrokes between auto-saves (default: 300)
-          )
+  (setq make-backup-files t               ; backup of a file the first time it is saved.
+        backup-by-copying t               ; don't clobber symlinks
+        version-control t                 ; version numbers for backup files
+        delete-old-versions t             ; delete excess backup files silently
+        delete-by-moving-to-trash t
+        kept-old-versions 6               ; oldest versions to keep when a new numbered backup is made (default: 2)
+        kept-new-versions 9               ; newest versions to keep when a new numbered backup is made (default: 2)
+        auto-save-default t               ; auto-save every buffer that visits a file
+        auto-save-timeout 20              ; number of seconds idle time before auto-save (default: 30)
+        auto-save-interval 200            ; number of keystrokes between auto-saves (default: 300)
+        )
 
-    ;; save desktop on exit
-    (desktop-save-mode 1)
+  ;; save desktop on exit
+  (desktop-save-mode 1)
 
-    ;; toggle h-cpp
-    (global-unset-key (kbd "C-<return>"))
-    (global-set-key (kbd "C-<return>") 'ff-find-other-file)
+  ;; toggle h-cpp
+  (global-unset-key (kbd "C-<return>"))
+  (global-set-key (kbd "C-<return>") 'ff-find-other-file)
 
-    ;; the following buffers should open in the same emacs window
-    (add-to-list 'same-window-buffer-names "*Help*")
-    (add-to-list 'same-window-buffer-names "*Backtrace*")
-    (add-to-list 'same-window-buffer-names "*shell*")
+  ;; the following buffers should open in the same emacs window
+  (add-to-list 'same-window-buffer-names "*Help*")
+  (add-to-list 'same-window-buffer-names "*Backtrace*")
+  (add-to-list 'same-window-buffer-names "*shell*")
 
-    ;; mark the entire buffer
-    (global-set-key (kbd "M-a") 'mark-whole-buffer)
+  ;; mark the entire buffer
+  (global-set-key (kbd "M-a") 'mark-whole-buffer)
 
-    ;; indent with spaces
-    (setq-default indent-tabs-mode nil)
+  ;; indent with spaces
+  (setq-default indent-tabs-mode nil)
 
-    ;; unset Meta-x m, so that it can be reused for other purposes
-    (global-unset-key (kbd "C-x m"))
+  ;; unset Meta-x m, so that it can be reused for other purposes
+  (global-unset-key (kbd "C-x m"))
 
-    ;; copy text selected via a mouse to system's clipboard
-    (setq mouse-drag-copy-region t)
+  ;; copy text selected via a mouse to system's clipboard
+  (setq mouse-drag-copy-region t)
 
-    ;; open development notes
-    (global-set-key (kbd "<f9>") 'sd/open-dev-notes)
+  ;; open development notes
+  (global-set-key (kbd "<f9>") 'sd/open-dev-notes)
 
-    ;; open org initialization file
-    (global-set-key (kbd "C-<f9>") 'sd/open-org-init)
+  ;; open org initialization file
+  (global-set-key (kbd "C-<f9>") 'sd/open-org-init)
 
-    ;; use ff-find-related-file as a poor substitute for rtags index db, but that
-    ;; is needed right now
-    (global-unset-key (kbd "C-M-."))
-    (global-set-key (kbd "C-M-.") 'ff-find-related-file)
+  ;; use ff-find-related-file as a poor substitute for rtags index db, but that
+  ;; is needed right now
+  (global-unset-key (kbd "C-M-."))
+  (global-set-key (kbd "C-M-.") 'ff-find-related-file)
 
-    ;; setting to 2, original value is t, 
-    ;; performance enhancement, seems to help a little when commenting out large chunks of c++ code
-    (setq font-lock-maximum-decoration t)
+  ;; setting to 2, original value is t,
+  ;; performance enhancement, seems to help a little when commenting out large chunks of c++ code
+  (setq font-lock-maximum-decoration t)
 
-    ;; line numbers everywhere. turn off if this feature becomes too expensive
-    (global-linum-mode 1)
+  ;; line numbers everywhere. turn off if this feature becomes too expensive
+  (global-linum-mode 1)
 
-    ;; grep the entire project. grep seems to work better than "ag"
-    (global-unset-key (kbd "C-M-i"))
-    (global-set-key (kbd "C-M-i") 'helm-projectile-grep)
+  ;; grep the entire project. grep seems to work better than "ag"
+  (global-unset-key (kbd "C-M-i"))
+  (global-set-key (kbd "C-M-i") 'helm-projectile-grep)
 
-    ;; diminish built-in modes
-    (require 'diminish)
-    (diminish 'auto-revert-mode)
+  ;; diminish built-in modes
+  (require 'diminish)
+  (diminish 'auto-revert-mode)
+
+  ;; activate which-function mode
+  (which-function-mode)
 #+END_SRC
 
 * Custom functions
@@ -391,7 +394,7 @@ highlighted using different colors at one time."
 * Mac specific
 #+BEGIN_SRC emacs-lisp
   ;; don't need this anymore as the command key is swapped with option to mimic windows keyboard layout
-  ;; 
+  ;;
   ;; make command a meta key on Macs
   ;; (when (eq system-type 'darwin)
   ;;   (setq mac-command-modifier 'meta)
@@ -457,7 +460,7 @@ highlighted using different colors at one time."
 	   )
     :init
     ;; disable gray background
-    (setq ace-jump-mode-gray-background nil) 
+    (setq ace-jump-mode-gray-background nil)
 
     :config
     ;; use this to always push onto the global mark ring
@@ -714,7 +717,7 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
     ;; Kick off dired with Ctrl-l
     (global-unset-key (kbd "C-l"))
-    (global-set-key (kbd "C-l") 
+    (global-set-key (kbd "C-l")
                     (lambda ()
                       (interactive)
                       (dired ".") ))
@@ -865,7 +868,7 @@ highlighted using different colors at one time."
            ("C-x m l" . magit-log-all)
            )
     :config
-    ;; update magit heading line to yellow on black, the way I like it...  
+    ;; update magit heading line to yellow on black, the way I like it...
     (set-face-attribute 'magit-diff-hunk-heading-highlight nil :background "black" :foreground "yellow" )
     )
 #+END_SRC
@@ -938,7 +941,7 @@ highlighted using different colors at one time."
 #+BEGIN_SRC  emacs-lisp
   (use-package projectile
     :ensure t
-    :demand t 
+    :demand t
     :init
     (setq projectile-completion-system 'helm)
     ;; solves a performance issue
@@ -1030,54 +1033,29 @@ highlighted using different colors at one time."
             ((buffer-modified-p) (propertize "MODIFIED" 'face 'my/spaceline-modified))
             (t "  ")))
 
-    (spaceline-define-segment amitp/project-id
-      "Name of project, or folder"
-      ;; (propertize
-      ;;  (amitp/shorten-directory
-      ;;   (cond (buffer-file-name (amitp/project-root-for-file buffer-file-name))
-      ;;         (t (amitp/project-root-for-directory default-directory)))
-      ;;   (- (window-width) (length (amitp/spaceline-buffer-id)) 60))
-      ;;  'face 'amitp/spaceline-filename)
-      )
-
     (spaceline-define-segment amitp/buffer-id
       "Name of filename relative to project, or buffer id"
       (propertize
        (amitp/spaceline-buffer-id)
        'face 'amitp/spaceline-filename))
 
-    (spaceline-define-segment my/unicode-character
-      "Description of unicode character we're currently on"
-      (let ((ch (following-char)))
-        (when (and ch (>= ch 127))
-          (get-char-code-property (following-char) 'name))))
-
-    ;; (spaceline-define-segment my/week-number
-    ;;   "Year and week number, which I use for marking my projects"
-    ;;   (format-time-string "W%y%V"))
-
     ;; When there are segments that may or may not appear, they will
     ;; affect the alternating background colors. I try to put the
     ;; indicators that appear/disappear the most towards the center.
     (spaceline-install
-     'main
-     '((my/buffer-status :tight-left t)
-       (amitp/project-id :tight-right t)
-       (amitp/buffer-id :tight-left t :face highlight-face)
-       (("L" line column) :separator ":" :when active)
-       (selection-info :face region :when mark-active)
-       (process :when active))
-     '((my/unicode-character :face my/spaceline-unicode-character :when active)
-       ((flycheck-error flycheck-warning flycheck-info) :when active)
-       (which-function)
-       (version-control :when active)
-       (global :face highlight-face)
-       (major-mode))))
+      'main
+      '((my/buffer-status :tight-left t)
+        (amitp/buffer-id :tight-left t :face highlight-face)
+        (which-function :tight-left t)
+        (("L" line column) :separator ":" :when active)
+        (selection-info :face region :when mark-active))
+      '(((flycheck-error flycheck-warning flycheck-info) :when active)
+        (version-control :when active)
+        (global :face highlight-face)
+        (major-mode))))
 
   (defun amitp/spaceline-buffer-id ()
     (cond (buffer-file-name
-           ;; (s-chop-prefix (projectile-project-name) buffer-file-name))
-           ;; (s-chop-prefix (projectile-project-name) (file-name-nondirectory buffer-file-name))
            (file-name-nondirectory buffer-file-name))
           (t (s-trim (powerline-buffer-id 'mode-line-buffer-id)))))
 
@@ -1089,7 +1067,7 @@ highlighted using different colors at one time."
 
   (face 'mode-line :family "M+ 1m" :height 1.0 :background "gray20" :foreground "gray80" :box nil)
   (face 'mode-line-inactive :inherit 'mode-line :background "gray55" :foreground "gray80" :box nil)
-  (face 'mode-line-highlight :inherit 'mode-line :background "GoldenRod2" :foreground "white" 
+  (face 'mode-line-highlight :inherit 'mode-line :background "GoldenRod2" :foreground "white"
         :box '(:line-width -2 :color "GoldenRod2" :style released-button))
 
   (face 'powerline-active1   :inherit 'mode-line          :height powerline-text-scale-factor :background "gray30")
@@ -1098,13 +1076,6 @@ highlighted using different colors at one time."
   (face 'powerline-inactive2 :inherit 'mode-line-inactive :height powerline-text-scale-factor)
 
   (face 'spaceline-highlight :inherit 'mode-line :foreground "white" :background "gray80" :height powerline-text-scale-factor)
-
-  (face 'amitp/spaceline-personal-active   :inherit 'spaceline-highlight :background (hsl 200 0.5 0.5))
-  (face 'amitp/spaceline-personal-inactive :inherit 'spaceline-highlight :background (hsl 200 0.2 0.5))
-  (face 'amitp/spaceline-work-active       :inherit 'spaceline-highlight :background (hsl 0 0.5 0.5))
-  (face 'amitp/spaceline-work-inactive     :inherit 'spaceline-highlight :background (hsl 0 0.2 0.5))
-  (face 'amitp/spaceline-other-active      :inherit 'spaceline-highlight :background (hsl 300 0.4 0.5))
-  (face 'amitp/spaceline-other-inactive    :inherit 'spaceline-highlight :background (hsl 300 0.15 0.5))
 
   (face 'my/spaceline-read-only :background (hsl 300 0.15 0.5) :foreground "gray80" :box `(:line-width -2 :color ,(hsl 300 0.4 0.5)))
   (face 'my/spaceline-modified :background "Red" :foreground "Black" :weight 'extra-bold)
@@ -1143,11 +1114,12 @@ highlighted using different colors at one time."
     :init)
     ;; (global-set-key (kbd "C-x o") 'ace-window)
     ;; :diminish ace-window-mode)
-
-** which-func
+#+END_SRC
+** which-function
 #+BEGIN_SRC emacs-lisp
   (use-package which-func
-    :demand)
+    :config
+    (set-face-attribute 'which-func nil :background "Black" :foreground "Orange" :height 1.5))
 #+END_SRC
 ** which-key
 #+BEGIN_SRC emacs-lisp
