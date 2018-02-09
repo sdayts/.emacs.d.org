@@ -167,7 +167,7 @@
   (diminish 'auto-revert-mode)
 
   ;; activate which-function mode
-  (which-function-mode)
+  (which-function-mode 1)
 #+END_SRC
 
 * Custom functions
