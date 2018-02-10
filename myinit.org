@@ -168,6 +168,9 @@
 
   ;; activate which-function mode
   (which-function-mode 1)
+
+  ;; enable electric pair mode
+  (electric-pair-mode)
 #+END_SRC
 
 * Custom functions
@@ -909,15 +912,15 @@ highlighted using different colors at one time."
   (use-package multiple-cursors
     :ensure t
     :bind (("C--" . mc/mark-next-like-this  )
-	   )
+           :map mc/keymap
+           ("<return>" . nil))
     :init
     (add-hook 'multiple-cursors-mode-enabled-hook #'sd/mc-when-enabled)
     (add-hook 'multiple-cursors-mode-disabled-hook #'sd/mc-when-disabled)
 
     :config
     (set-face-background 'mc/cursor-bar-face "#2F4F4F")
-    (set-face-foreground 'mc/cursor-bar-face "red")
-    )
+    (set-face-foreground 'mc/cursor-bar-face "red"))
 #+END_SRC
 ** nxml
 #+BEGIN_SRC emacs-lisp
@@ -1182,6 +1185,15 @@ highlighted using different colors at one time."
 #+END_SRC
 ** yasnippet
 #+BEGIN_SRC emacs-lisp
+        ;;;###autoload
+  (defun sd/yas-no-expand-in-comment/string ()
+    "Don't expand snippet while in comment."
+    (setq yas-buffer-local-condition
+          '(if (nth 8 (syntax-ppss)) ;; non-nil if in a string or comment
+               '(require-snippet-condition . force-in-comment)
+             t)))
+
+  (add-hook 'prog-mode-hook 'sd/yas-no-expand-in-comment/string)
   (use-package yasnippet
     :diminish yas-minor-mode
     :ensure t
