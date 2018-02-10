@@ -790,6 +790,12 @@ highlighted using different colors at one time."
     :bind (("C-=" . er/expand-region))
     )
 #+END_SRC
+** git-gutter-fringe+
+#+BEGIN_SRC emacs-lisp
+  (use-package git-gutter-fringe+
+    :ensure    t)
+
+#+END_SRC
 ** helm
 #+BEGIN_SRC emacs-lisp
   (use-package helm
@@ -1247,16 +1253,7 @@ highlighted using different colors at one time."
 ** Add snippets
 *** for include
 *** for return true & false
-** look for a way to expand snippets on space
-** function to copy the name of the buffer to the clipboard + keybinding
 ** shortcut/macro for going to the includes section and being able to come back by popping the stack with ctrl-,
-** try the following suggestion for not expanding snippets within comments
-(defun yas-no-expand-in-comment/string ()
-  (setq yas-buffer-local-condition
-        '(if (nth 8 (syntax-ppss)) ;; non-nil if in a string or comment
-             '(require-snippet-condition . force-in-comment)
-           t)))
-(add-hook 'prog-mode-hook 'yas-no-expand-in-comment/string)
 ** random snippets
 (use-package projectile
   :diminish "Pj"
@@ -1271,4 +1268,3 @@ highlighted using different colors at one time."
     (add-to-list 'projectile-globally-ignored-directories "elpa")
     (add-to-list 'projectile-globally-ignored-directories ".cask")
     (add-to-list 'projectile-globally-ignored-directories ".cache")))
-** show trailing white spaces and add a command for removing
