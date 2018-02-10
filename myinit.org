@@ -793,8 +793,9 @@ highlighted using different colors at one time."
 ** git-gutter-fringe+
 #+BEGIN_SRC emacs-lisp
   (use-package git-gutter-fringe+
-    :ensure    t)
-
+    :ensure    t
+    :init
+    (git-gutter+-mode))
 #+END_SRC
 ** helm
 #+BEGIN_SRC emacs-lisp
