@@ -171,6 +171,9 @@
 
   ;; enable electric pair mode
   (electric-pair-mode)
+
+  ;; enable flyspell programming mode
+  (flyspell-prog-mode)
 #+END_SRC
 
 * Custom functions
@@ -762,6 +765,15 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
 (use-package esup
   :ensure t)
+#+END_SRC
+** flyspell-prog
+#+BEGIN_SRC emacs-lisp
+  ;; dictionary installed via:
+  ;; brew install aspell
+  (use-package flyspell
+    :init
+    (setq ispell-program-name "/usr/local/bin/aspell")
+    (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 #+END_SRC
 ** iedit
 #+BEGIN_SRC emacs-lisp
