@@ -2,6 +2,10 @@
 
 * Global settings
 #+BEGIN_SRC emacs-lisp
+  ;; set the default font
+  (when (member "DejaVu Sans Mono" (font-family-list))
+    (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
+
   ;; load doxymacs installed via: brew install doxymacs
   (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/doxymacs/")
   ;; load doxymacs
@@ -772,6 +776,7 @@ highlighted using different colors at one time."
   ;; brew install aspell
   (use-package flyspell
     :init
+    (unbind-key "C-." flyspell-mode-map)
     (setq ispell-program-name "/usr/local/bin/aspell")
     (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 #+END_SRC
@@ -922,24 +927,26 @@ highlighted using different colors at one time."
 
   (defun sd/mc-when-enabled ()
     "Function to be added to `multiple-cursors-mode-enabled-hook'."
-    (set-cursor-color "red"))
+    (setq-default cursor-type '(box . 7)))
 
   (defun sd/mc-when-disabled ()
     "Function to be added to `multiple-cursors-mode-disabled-hook'."
-    (set-cursor-color "cyan"))
+    (setq-default cursor-type '(bar . 1)))
 
   (use-package multiple-cursors
     :ensure t
+    :demand t
     :bind (("C--" . mc/mark-next-like-this  )
            :map mc/keymap
            ("<return>" . nil))
     :init
     (add-hook 'multiple-cursors-mode-enabled-hook #'sd/mc-when-enabled)
     (add-hook 'multiple-cursors-mode-disabled-hook #'sd/mc-when-disabled)
-
+    ;; add mc cursors on Meta-left mouse click
+    (global-unset-key (kbd "M-<down-mouse-1>"))
+    (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
     :config
-    (set-face-background 'mc/cursor-bar-face "#2F4F4F")
-    (set-face-foreground 'mc/cursor-bar-face "red"))
+    (set-face-foreground 'mc/cursor-face "red"))
 #+END_SRC
 ** nxml
 #+BEGIN_SRC emacs-lisp
@@ -1269,3 +1276,4 @@ highlighted using different colors at one time."
     (add-to-list 'projectile-globally-ignored-directories "elpa")
     (add-to-list 'projectile-globally-ignored-directories ".cask")
     (add-to-list 'projectile-globally-ignored-directories ".cache")))
+** add nicer fonts
