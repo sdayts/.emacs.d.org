@@ -6,10 +6,12 @@
   (when (member "DejaVu Sans Mono" (font-family-list))
     (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
 
-  ;; load doxymacs installed via: brew install doxymacs
-  (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/doxymacs/")
-  ;; load doxymacs
-  (require 'doxymacs)
+  (if (file-readable-p "/usr/local/share/emacs/site-lisp/doxymacs")
+  (progn
+     ;; load doxymacs installed via: brew install doxymacs
+     (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/doxymacs/")
+     ;; load doxymacs
+     (require 'doxymacs)))
 
   ;; fontify code in code blocks for org mode
   ;; somehow this does not work if I place this line
@@ -169,11 +171,6 @@
   ;; keybinding for re-centering the buffer
   (global-unset-key (kbd "M-r"))
   (global-set-key (kbd "M-r") 'recenter-top-bottom)
-
-
-  ;; diminish built-in modes
-  (require 'diminish)
-  (diminish 'auto-revert-mode)
 
   ;; activate which-function mode
   (which-function-mode 1)
