@@ -166,6 +166,11 @@
   (global-unset-key (kbd "C-M-i"))
   (global-set-key (kbd "C-M-i") 'helm-projectile-grep)
 
+  ;; keybinding for re-centering the buffer
+  (global-unset-key (kbd "M-r"))
+  (global-set-key (kbd "M-r") 'recenter-top-bottom)
+
+
   ;; diminish built-in modes
   (require 'diminish)
   (diminish 'auto-revert-mode)
@@ -182,7 +187,18 @@
 
 * Custom functions
 #+BEGIN_SRC emacs-lisp
-      ;;;###autoload
+  (defun sd/find-last-include()
+    "Find the last include in the current buffer"
+    (interactive)
+    (push-mark (point))
+    (setq matched-position (search-backward "#include" nil t))
+    (if matched-position
+        (progn
+          (next-line)
+          (recenter-top-bottom))
+      (message "Did not find a #include")))
+
+        ;;;###autoload
   (defun sd/forward-or-backward-sexp (&optional arg)
     "Go to the matching parenthesis character if one is adjacent to point."
     (interactive "^p")
@@ -192,11 +208,11 @@
           ((looking-at "\\s)") (forward-char) (backward-sexp arg))
           ((looking-back "\\s(" 1) (backward-char) (forward-sexp arg))))
 
-      ;;;###autoload
+        ;;;###autoload
   (defun sd/duplicate-line-or-region(arg)
     "Duplicates the current line or region ARG times.
-      If there's no region, the current line will be duplicated. However, if
-      there's a region, all lines that region covers will be duplicated."
+        If there's no region, the current line will be duplicated. However, if
+        there's a region, all lines that region covers will be duplicated."
     (interactive "p")
     (let (beg end (origin (point)))
       (if (and mark-active (> (point) (mark)))
@@ -215,9 +231,9 @@
 
   (defvar sd/copy-word-under-cursor-regex "[^[:word:]_]"
     "Regular expression to use when copying with `copy-word-under-cursor'.
-      Can be customized for each major mode.")
+        Can be customized for each major mode.")
 
-      ;;;###autoload
+        ;;;###autoload
   (defun sd/copy-word-under-cursor ()
     "Copy the word under the cursor to the kill ring."
     (interactive)
@@ -227,7 +243,7 @@
             (end (re-search-forward sd/copy-word-under-cursor-regex)))
         (copy-region-as-kill beg (- end 1)))))
 
-      ;;;###autoload
+        ;;;###autoload
   (defun sd/update-header()
     (interactive)
     (mapc
@@ -250,12 +266,12 @@
      (window-list)))
 
 
-      ;;;###autoload
+        ;;;###autoload
   (defun sd/comment-line-or-region (n)
     "Comment or uncomment current line and leave point after it.
-      With positive prefix, apply to N lines including current one.
-      With negative prefix, apply to -N lines above.
-      If region is active, apply to active region instead."
+        With positive prefix, apply to N lines including current one.
+        With negative prefix, apply to -N lines above.
+        If region is active, apply to active region instead."
     (interactive "p")
     (save-excursion
       (if (use-region-p)
@@ -270,36 +286,36 @@
         (forward-line 1)
         (back-to-indentation))))
 
-      ;;;###autoload
+        ;;;###autoload
   (defun sd/open-org-init()
     (interactive)
     "Open initialization file and move to the end of the buffer."
     (sd/open-file-move-to-end "~/.emacs.d/myinit.org"))
 
-      ;;;###autoload
+        ;;;###autoload
   (defun sd/open-dev-notes()
     (interactive)
     "Load org initialization file and move to the end of the buffer."
     (sd/open-file-move-to-end "~/notes/development_notes.org"))
 
-      ;;;###autoload
+        ;;;###autoload
   (defun sd/open-file-move-to-end(file-name)
     (interactive)
     "Open a file and move to the end of the buffer."
     (find-file file-name)
     (end-of-buffer))
 
-      ;;;###autoload
+        ;;;###autoload
   (defmacro sd/advise-commands-after (advice-name commands &rest body)
     "Apply advice named ADVICE-NAME to multiple COMMANDS.
-  The body of the advice is in BODY."
+    The body of the advice is in BODY."
     `(progn
        ,@(mapcar (lambda (command)
                    `(defadvice ,command (after ,(intern (concat (symbol-name command) "-" advice-name)) activate)
                       ,@body))
                  commands)))
 
-      ;;;###autoload
+        ;;;###autoload
   (defun sd/copy-file-name-to-clipboard ()
     "Copy the current buffer file name to the clipboard."
     (interactive)
@@ -310,20 +326,20 @@
         (kill-new filename)
         (message "Copied buffer file name '%s' to the clipboard." filename))))
 
-      ;;;###autoload
+        ;;;###autoload
   (defun sd/copy-buffer-name-to-clipboard ()
     "Copy the current buffer file name to the clipboard."
     (interactive)
     (kill-new (buffer-name)))
 
   (defun sd/revert-all-buffers ()
-      "Refreshes all open buffers from their respective files."
-      (interactive)
-      (dolist (buf (buffer-list))
-        (with-current-buffer buf
-          (when (and (buffer-file-name) (file-exists-p (buffer-file-name)) (not (buffer-modified-p)))
-            (revert-buffer t t t) )))
-      (message "Refreshed open files.") )
+    "Refreshes all open buffers from their respective files."
+    (interactive)
+    (dolist (buf (buffer-list))
+      (with-current-buffer buf
+        (when (and (buffer-file-name) (file-exists-p (buffer-file-name)) (not (buffer-modified-p)))
+          (revert-buffer t t t) )))
+    (message "Refreshed open files.") )
 #+END_SRC
 
 * Highlighting related customizations
@@ -507,7 +523,7 @@ highlighted using different colors at one time."
     (ac-config-default)
     (global-auto-complete-mode t)
     (setq ac-use-menu-map t)
-    (setq ac-delay 0.3))
+    (setq ac-delay 0.1))
 #+END_SRC
 ** backbutton
 #+BEGIN_SRC emacs-lisp
@@ -519,8 +535,8 @@ highlighted using different colors at one time."
 
   (use-package back-button
     :ensure t
-    :bind (("C-," . sd/pop-global-mark-ring )
-	   )
+    ;; :bind (("C-," . sd/pop-global-mark-ring )
+           ;; )
     :init
     :config
     )
@@ -676,6 +692,11 @@ highlighted using different colors at one time."
 
   (use-package cc-mode
     :ensure t
+    :bind(("C-i". sd/find-last-include)
+          ;; for the time being pop global mark
+          ;; after rtags is configured, will need to integrate
+          ;; with rtags ring
+          ("C-," . back-button-local ))
     :init
     (setq c-default-style
           '((java-mode . "java")
@@ -683,7 +704,7 @@ highlighted using different colors at one time."
             (c++-mode  . "bde")
             (other     . "gnu")))
     :config
-    ; unbind c++-mode-map keys which interfer with global mappings
+    ;; unbind c++-mode-map keys which interfer with global mappings
     (unbind-key "C-c C-c" c++-mode-map)
     (unbind-key "C-c C-u" c++-mode-map)
 
@@ -777,6 +798,7 @@ highlighted using different colors at one time."
   (use-package flyspell
     :init
     (unbind-key "C-." flyspell-mode-map)
+    (unbind-key "C-," flyspell-mode-map)
     (setq ispell-program-name "/usr/local/bin/aspell")
     (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 #+END_SRC
@@ -947,6 +969,7 @@ highlighted using different colors at one time."
     (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
     :config
     (set-face-foreground 'mc/cursor-face "red"))
+
 #+END_SRC
 ** nxml
 #+BEGIN_SRC emacs-lisp
@@ -1005,7 +1028,8 @@ highlighted using different colors at one time."
   (use-package rtags
     :ensure t
     :bind (("C-." . rtags-find-symbol-at-point)
-	   ("C-," . rtags-location-stack-back)
+;; interferes with back-button, since not using now, disable
+;;	   ("C-," . rtags-location-stack-back)
 	   ("C-x r" . rtags-find-references-at-point)
 	   )
     )
@@ -1276,4 +1300,4 @@ highlighted using different colors at one time."
     (add-to-list 'projectile-globally-ignored-directories "elpa")
     (add-to-list 'projectile-globally-ignored-directories ".cask")
     (add-to-list 'projectile-globally-ignored-directories ".cache")))
-** add nicer fonts
+** invistigate origami mode
