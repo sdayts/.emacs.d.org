@@ -791,6 +791,13 @@ highlighted using different colors at one time."
 (use-package esup
   :ensure t)
 #+END_SRC
+** flycheck
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :ensure t
+    :init
+    (global-flycheck-mode))
+#+END_SRC
 ** flyspell-prog
 #+BEGIN_SRC emacs-lisp
   ;; dictionary installed via:
