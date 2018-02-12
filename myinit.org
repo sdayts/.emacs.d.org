@@ -689,11 +689,12 @@ highlighted using different colors at one time."
 
   (use-package cc-mode
     :ensure t
-    :bind(("C-i". sd/find-last-include)
-          ;; for the time being pop global mark
+    :bind(;; for the time being pop global mark
           ;; after rtags is configured, will need to integrate
           ;; with rtags ring
-          ("C-," . back-button-local ))
+          :map c++-mode-map
+               ("C-x i". sd/find-last-include)
+               ("C-," . back-button-local))
     :init
     (setq c-default-style
           '((java-mode . "java")
@@ -795,7 +796,7 @@ highlighted using different colors at one time."
     :init
     (global-flycheck-mode))
 #+END_SRC
-** flyspell-prog
+** flyspell
 #+BEGIN_SRC emacs-lisp
   ;; dictionary installed via:
   ;; brew install aspell
@@ -803,6 +804,7 @@ highlighted using different colors at one time."
     :init
     (unbind-key "C-." flyspell-mode-map)
     (unbind-key "C-," flyspell-mode-map)
+    (unbind-key "C-M-i" flyspell-mode-map)
     (setq ispell-program-name "/usr/local/bin/aspell")
     (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 #+END_SRC
