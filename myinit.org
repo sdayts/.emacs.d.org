@@ -521,11 +521,14 @@ highlighted using different colors at one time."
   (use-package auto-complete
     :diminish auto-complete-mode
     :ensure t
+    :bind (("C-SPC" . auto-complete))
     :init
     (ac-config-default)
     (global-auto-complete-mode t)
     (setq ac-use-menu-map t)
-    (setq ac-delay 0.1))
+    (setq ac-delay 0.1)
+    ;; auto-completion after 2 characters
+    (setq ac-auto-start 2))
 #+END_SRC
 ** backbutton
 #+BEGIN_SRC emacs-lisp
@@ -839,7 +842,7 @@ highlighted using different colors at one time."
   (use-package git-gutter-fringe+
     :ensure    t
     :init
-    (git-gutter+-mode))
+    (global-git-gutter+-mode t))
 #+END_SRC
 ** helm
 #+BEGIN_SRC emacs-lisp
