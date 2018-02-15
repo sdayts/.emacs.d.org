@@ -177,6 +177,11 @@
 
   ;; enable electric pair mode
   (electric-pair-mode)
+  (defun sd/disable-electric-pair-mode (char)
+    "Disable electric pair mode in minibuffer."
+    (minibufferp))
+  ;; but not in minibuffer
+  (setq electric-pair-inhibit-predicate #'sd/disable-electric-pair-mode)
 
   ;; enable flyspell programming mode
   (flyspell-prog-mode)
@@ -792,9 +797,15 @@ highlighted using different colors at one time."
 ** flycheck
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
+    :disabled
     :ensure t
     :init
-    (global-flycheck-mode))
+    ;;(setq-default flycheck-disabled-checkers '(c/c++-clang))
+    (global-flycheck-mode)
+    :config
+    (setq-default flycheck-c/c++-clang-executable "/usr/local/opt/llvm/bin/clang" )
+    (setq-default flycheck-clang-standard-library "libc++")
+    (setq-default flycheck-clang-language-standard "c++11"))
 #+END_SRC
 ** flyspell
 #+BEGIN_SRC emacs-lisp
@@ -820,8 +831,8 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
   (use-package expand-region
     :ensure t
-    :bind (("C-=" . er/expand-region))
-    )
+    :bind (("C-=" . er/expand-region)
+           ("C-M-=" . er/contract-region)))
 #+END_SRC
 ** git-gutter-fringe+
 #+BEGIN_SRC emacs-lisp
