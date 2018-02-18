@@ -570,193 +570,193 @@ highlighted using different colors at one time."
 #+END_SRC
 ** cc-mode
 #+BEGIN_SRC emacs-lisp
-  ;; from https://github.com/philippe-grenet/exordium/blob/master/modules/init-bde-style.el
+    ;; from https://github.com/philippe-grenet/exordium/blob/master/modules/init-bde-style.el
 
-  ;;; Utility functions and constants
+    ;;; Utility functions and constants
 
-  (defconst exordium-bde-search-max-bound (* 80 25))
-  ;;   "Maximum point to search when searching for some regexp/string. Often
-  ;; the search is bound to the same line, however sometimes functionality needs to
-  ;; account for multi-line definitions. In here we assume 80 (columns) * 25 (lines)
-  ;; is enough for everyone.")
+    (defconst exordium-bde-search-max-bound (* 80 25))
+    ;;   "Maximum point to search when searching for some regexp/string. Often
+    ;; the search is bound to the same line, however sometimes functionality needs to
+    ;; account for multi-line definitions. In here we assume 80 (columns) * 25 (lines)
+    ;; is enough for everyone.")
 
-  (defun bde-component-name ()
-    "Return the name of the component for the current buffer"
-    (let ((name (file-name-sans-extension
-                 (file-name-nondirectory (buffer-file-name)))))
-      (cond ((string-match-p "\\.[gipu]\\.t$" name)
-             (substring name 0 (- (length name) 4)))
-            ((string-suffix-p ".t" name)
-             (substring name 0 (- (length name) 2)))
-            (t name))))
+    (defun bde-component-name ()
+      "Return the name of the component for the current buffer"
+      (let ((name (file-name-sans-extension
+                   (file-name-nondirectory (buffer-file-name)))))
+        (cond ((string-match-p "\\.[gipu]\\.t$" name)
+               (substring name 0 (- (length name) 4)))
+              ((string-suffix-p ".t" name)
+               (substring name 0 (- (length name) 2)))
+              (t name))))
 
-  (defun bde-package-name ()
-    "Return the name of the package for the current buffer"
-    (interactive)
-    (let ((component-name (bde-component-name)))
-      (substring
-       component-name
-       0
-       (string-match "_" component-name
-                     (if (string-prefix-p "s_" component-name)
-                         2
-                       0)))))
+    (defun bde-package-name ()
+      "Return the name of the package for the current buffer"
+      (interactive)
+      (let ((component-name (bde-component-name)))
+        (substring
+         component-name
+         0
+         (string-match "_" component-name
+                       (if (string-prefix-p "s_" component-name)
+                           2
+                         0)))))
 
-  ;;; Indentation
-  ;;;
-  ;;; This section define a C style named "bde" using c-add-style.  The offset
-  ;;; in the specification (c-offset-alist) can be any of the following:
-  ;;;
-  ;;; - An integer -> specifies a relative offset. All relative offsets will be
-  ;;;   added together and used to calculate the indentation relative to an
-  ;;;   anchor position earlier in the buffer.
-  ;;; - One of the symbols +, -, ++, --, *, or /
-  ;;;   +   = c-basic-offset times 1
-  ;;;   -   = c-basic-offset times −1
-  ;;;   ++  = c-basic-offset times 2
-  ;;;   --  = c-basic-offset times −2
-  ;;;   *   = c-basic-offset times 0.5
-  ;;;   /   = c-basic-offset times −0.5
-  ;;;
-  ;;; Note: to debug the indentation of a particular line, type 'C-c C-s'. It
-  ;;; will display the variable 'c-syntactic-context' which is a list of the
-  ;;; syntactic components affect the offset calculations for that line, with the
-  ;;; character position in the buffer for each of them. More details in M-x
-  ;;; info, then CC mode, then Interactive Customization.
-  ;;; See cc-align.el for examples of line-up functions.
+    ;;; Indentation
+    ;;;
+    ;;; This section define a C style named "bde" using c-add-style.  The offset
+    ;;; in the specification (c-offset-alist) can be any of the following:
+    ;;;
+    ;;; - An integer -> specifies a relative offset. All relative offsets will be
+    ;;;   added together and used to calculate the indentation relative to an
+    ;;;   anchor position earlier in the buffer.
+    ;;; - One of the symbols +, -, ++, --, *, or /
+    ;;;   +   = c-basic-offset times 1
+    ;;;   -   = c-basic-offset times −1
+    ;;;   ++  = c-basic-offset times 2
+    ;;;   --  = c-basic-offset times −2
+    ;;;   *   = c-basic-offset times 0.5
+    ;;;   /   = c-basic-offset times −0.5
+    ;;;
+    ;;; Note: to debug the indentation of a particular line, type 'C-c C-s'. It
+    ;;; will display the variable 'c-syntactic-context' which is a list of the
+    ;;; syntactic components affect the offset calculations for that line, with the
+    ;;; character position in the buffer for each of them. More details in M-x
+    ;;; info, then CC mode, then Interactive Customization.
+    ;;; See cc-align.el for examples of line-up functions.
 
-  (eval-when-compile (defvar c-syntactic-context))
+    (eval-when-compile (defvar c-syntactic-context))
 
-  (defun bde-is-member-function-declaration ()
-    "Return whether the line ending resembles the member function declaration."
-    (re-search-forward
-     (concat ") *\\(const\\)?"
-             " *\\(noexcept\\|BSLS_CPP11_NOEXCEPT\\)?"
-             " *\\(\\(= *\\(0\\|de\\(fault\\|lete\\)\\)\\)"
-             "\\|BSLS_CPP11_DE\\(FAULT\\|LETED\\)"
-             "\\|override\\|BSLS_CPP11_OVERRIDE\\)?"
-             " *\\(&\\(&\\)?\\)?"
-             " *; *$")
-     (point-at-eol) t))
+    (defun bde-is-member-function-declaration ()
+      "Return whether the line ending resembles the member function declaration."
+      (re-search-forward
+       (concat ") *\\(const\\)?"
+               " *\\(noexcept\\|BSLS_CPP11_NOEXCEPT\\)?"
+               " *\\(\\(= *\\(0\\|de\\(fault\\|lete\\)\\)\\)"
+               "\\|BSLS_CPP11_DE\\(FAULT\\|LETED\\)"
+               "\\|override\\|BSLS_CPP11_OVERRIDE\\)?"
+               " *\\(&\\(&\\)?\\)?"
+               " *; *$")
+       (point-at-eol) t))
 
-  (defun bde-comment-offset (element)
-    "Custom line-up function for BDE comments.
-  Return a symbol for the correct indentation level at the
-  current cursor position, if the cursor is within a class definition:
-  1. + for method comments:
-          int foo() const = 0;
-              // tab goes here
-          int bar() { return 0; }
-              // tab goes here
-  2. column number of beginning of comment for data member comments:
-          int d_data;     // my comment at whatever column I want
-                          // tab goes here
-          int d_someLongVariableName;
-                          // my comment at whatever column I want
-                          // tab goes here
-  3. nil otherwise."
-    (case (caar c-syntactic-context)
-      ((inclass innamespace)
-       (save-excursion
-         (let ((class-offset         ; extra offset for inner structs
-                (c-langelem-col (car c-syntactic-context) t))
-               (comment-column nil)) ; column number of last //
-           (loop
-            (beginning-of-line)
-            (cond ((= (point) (point-min))
-                   (return nil))
-                  ((re-search-forward "^ *//" (point-at-eol) t)
-                   ;; looking at a comment line
-                   (setq comment-column (- (current-column) 2))
-                   (forward-line -1))
-                  ((bde-is-member-function-declaration)
-                   ;; looking at end of method declaration
-                   (return '+))
-                  ((re-search-forward "} *$" (point-at-eol) t)
-                   ;; looking at end of inline method definition
-                   (return '+))
-                  ((re-search-forward "; *//" (point-at-eol) t)
-                   ;; looking at beginning of data member comment block
-                   (return (- (current-column) 2 class-offset c-basic-offset)))
-                  ((and comment-column
-                        (re-search-forward "[_A-Za-z0-9]+; *$"
-                                           (point-at-eol) t))
-                   ;; looking at end of (long?) data member declaration
-                   (return (- comment-column class-offset c-basic-offset)))
-                  (t
-                   (return nil)))))))
-      (t nil)))
+    (defun bde-comment-offset (element)
+      "Custom line-up function for BDE comments.
+    Return a symbol for the correct indentation level at the
+    current cursor position, if the cursor is within a class definition:
+    1. + for method comments:
+            int foo() const = 0;
+                // tab goes here
+            int bar() { return 0; }
+                // tab goes here
+    2. column number of beginning of comment for data member comments:
+            int d_data;     // my comment at whatever column I want
+                            // tab goes here
+            int d_someLongVariableName;
+                            // my comment at whatever column I want
+                            // tab goes here
+    3. nil otherwise."
+      (case (caar c-syntactic-context)
+        ((inclass innamespace)
+         (save-excursion
+           (let ((class-offset         ; extra offset for inner structs
+                  (c-langelem-col (car c-syntactic-context) t))
+                 (comment-column nil)) ; column number of last //
+             (loop
+              (beginning-of-line)
+              (cond ((= (point) (point-min))
+                     (return nil))
+                    ((re-search-forward "^ *//" (point-at-eol) t)
+                     ;; looking at a comment line
+                     (setq comment-column (- (current-column) 2))
+                     (forward-line -1))
+                    ((bde-is-member-function-declaration)
+                     ;; looking at end of method declaration
+                     (return '+))
+                    ((re-search-forward "} *$" (point-at-eol) t)
+                     ;; looking at end of inline method definition
+                     (return '+))
+                    ((re-search-forward "; *//" (point-at-eol) t)
+                     ;; looking at beginning of data member comment block
+                     (return (- (current-column) 2 class-offset c-basic-offset)))
+                    ((and comment-column
+                          (re-search-forward "[_A-Za-z0-9]+; *$"
+                                             (point-at-eol) t))
+                     ;; looking at end of (long?) data member declaration
+                     (return (- comment-column class-offset c-basic-offset)))
+                    (t
+                     (return nil)))))))
+        (t nil)))
 
-  (defun bde-statement-block-intro-offset (element)
-    "Custom line-up function for first line of a statement block.
-  The default identation is is '+' (1 basic offset), unless we are in
-  a switch statement, in which case the indentation is set to
-  '*' (half basic offset). Example:
-  switch(val) {
-    case 100: {
-        return 1;
-    } break;
-    default: {
-        return 0;
-    } break;
-  }"
-    (save-excursion
-      (goto-char (c-langelem-pos element))
-      (if (looking-at "\\(case\\|default\\)")
-          '*
-        '+)))
+    (defun bde-statement-block-intro-offset (element)
+      "Custom line-up function for first line of a statement block.
+    The default identation is is '+' (1 basic offset), unless we are in
+    a switch statement, in which case the indentation is set to
+    '*' (half basic offset). Example:
+    switch(val) {
+      case 100: {
+          return 1;
+      } break;
+      default: {
+          return 0;
+      } break;
+    }"
+      (save-excursion
+        (goto-char (c-langelem-pos element))
+        (if (looking-at "\\(case\\|default\\)")
+            '*
+          '+)))
 
-  ; associate .h file with c++ mode
-  (add-to-list 'auto-mode-alist '("\\.[hc]\\'" . c++-mode))
+    ; associate .h file with c++ mode
+    (add-to-list 'auto-mode-alist '("\\.[hc]\\'" . c++-mode))
 
-  (use-package cc-mode
-    :ensure t
-    :bind(;; for the time being pop global mark
-          ;; after rtags is configured, will need to integrate
-          ;; with rtags ring
-          :map c++-mode-map
-               ("C-x i". sd/find-last-include)
-               ("C-," . back-button-local))
-    :init
-    (setq c-default-style
-          '((java-mode . "java")
-            (awk-mode  . "awk")
-            (c++-mode  . "bde")
-            (other     . "gnu")))
-    :config
-    ;; unbind c++-mode-map keys which interfer with global mappings
-    (unbind-key "C-c C-c" c++-mode-map)
-    (unbind-key "C-c C-u" c++-mode-map)
+    (use-package cc-mode
+      :ensure t
+      :bind(;; for the time being pop global mark
+            ;; after rtags is configured, will need to integrate
+            ;; with rtags ring
+            :map c++-mode-map
+                 ("C-x i". sd/find-last-include)
+                 ("C-," . rtags-location-stack-back))
+      :init
+      (setq c-default-style
+            '((java-mode . "java")
+              (awk-mode  . "awk")
+              (c++-mode  . "bde")
+              (other     . "gnu")))
+      :config
+      ;; unbind c++-mode-map keys which interfer with global mappings
+      (unbind-key "C-c C-c" c++-mode-map)
+      (unbind-key "C-c C-u" c++-mode-map)
 
-    ;; See http://cc-mode.sourceforge.net/html-manual/Syntactic-Symbols.html#Syntactic-Symbols
-    (c-add-style
-     "bde"
-     '((c-basic-offset . 4)
-       (c-comment-only-line-offset . 0)
-       (fill-column . 79)
-       (c-backslash-column . 78)
-       (c-backslash-max-column . 78)
-       (c-offsets-alist
-        (comment-intro         . bde-comment-offset)
-        (defun-open            . 0)
-        (defun-close           . 0)
-        (statement-block-intro . bde-statement-block-intro-offset)
-        (substatement-open     . 0)
-        (substatement-label    . 0)
-        (label                 . 0)
-        (access-label          . /)
-        (case-label            . *)
-        (statement-case-intro  . *)
-        (statement-case-open   . 0)
-        (statement-cont        . +)
-        (inline-open           . 0)
-        (inline-close          . 0)
-        (innamespace           . 0)
-        (member-init-intro     . 0)
-        (extern-lang-open      . 0)
-        (brace-list-entry      . /)
-        (extern-lang-close     . 0))))
-    )
+      ;; See http://cc-mode.sourceforge.net/html-manual/Syntactic-Symbols.html#Syntactic-Symbols
+      (c-add-style
+       "bde"
+       '((c-basic-offset . 4)
+         (c-comment-only-line-offset . 0)
+         (fill-column . 79)
+         (c-backslash-column . 78)
+         (c-backslash-max-column . 78)
+         (c-offsets-alist
+          (comment-intro         . bde-comment-offset)
+          (defun-open            . 0)
+          (defun-close           . 0)
+          (statement-block-intro . bde-statement-block-intro-offset)
+          (substatement-open     . 0)
+          (substatement-label    . 0)
+          (label                 . 0)
+          (access-label          . /)
+          (case-label            . *)
+          (statement-case-intro  . *)
+          (statement-case-open   . 0)
+          (statement-cont        . +)
+          (inline-open           . 0)
+          (inline-close          . 0)
+          (innamespace           . 0)
+          (member-init-intro     . 0)
+          (extern-lang-open      . 0)
+          (brace-list-entry      . /)
+          (extern-lang-close     . 0))))
+      )
 #+END_SRC
 ** diminish
 #+BEGIN_SRC emacs-lisp
@@ -810,6 +810,913 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
 (use-package esup
   :ensure t)
+#+END_SRC
+** exordium
+Relevant code from exordium, by Philippe Grenet. All the credit is his.
+*** init-prefs
+#+BEGIN_SRC emacs-lisp
+(defcustom exordium-complete-mode :auto-complete
+  "Slect the completion engine for exordium. Possible values are
+  :auto-complete, :company, and nil. Default is :auto-complete. See also
+  `exordium-rtags-auto-complete'."
+  :group 'exordium
+  :type  'symbol)
+;;; RTags
+
+;;; See init-rtags.el
+(defcustom exordium-rtags-rdm-args nil
+  "Command-line arguments passed to rdm, if needed. This should
+be a list of strings."
+  :group 'exordium
+  :type  'sexp)
+
+(defcustom exordium-rtags-syntax-checker :flymake
+  "The syntax checker to be used with rtags. If set to :flycheck the
+`flycheck-rtags' will be used. Otherwise, the built-in flymake will be used."
+  :group 'exordium
+  :type  'symbol)
+
+;;; See init-rtags-cdb.el
+(defcustom exordium-rtags-source-file-extensions '("*.cpp" "*.c")
+  "List of source file extension patterns for creating a
+  compilation database using command
+  `rtags-create-compilation-database'. Not needed for CMake projects."
+  :group 'exordium
+  :type  'sexp)
+#+END_SRC
+*** init-lib
+#+BEGIN_SRC emacs-lisp
+  ;;;; Init lib
+  ;;;
+  ;;; This file defines utility functions reused in other modules. It should be
+  ;;; loaded before any other module.
+
+  (with-no-warnings (require 'cl))
+
+  
+  ;;; Files
+
+  (defun exordium-directory-tree (dir)
+    "Returns the list of subdirs of 'dir' excluding any dot
+  dirs. Input is a string and output is a list of strings."
+    (let* ((dir   (directory-file-name dir))
+           (dirs  '())
+           (files (directory-files dir nil nil t)))
+      (dolist (f files)
+        (unless (string-equal "." (substring f 0 1))
+          (let ((f (concat dir "/" f)))
+            (when (file-directory-p f)
+              (setq dirs (append (cons f (exordium-directory-tree f))
+                                 dirs))))))
+      dirs))
+
+  (defun exordium-read-file-lines (file)
+    "Return a list of lines (strings) of the specified file"
+    (with-temp-buffer
+      (insert-file-contents file)
+      (split-string (buffer-string) "\n" t)))
+
+  (defun exordium-read-file-as-string (file)
+    "Return the content of the specified file as a string."
+    (with-temp-buffer
+      (insert-file-contents file)
+      (buffer-string)))
+
+  (defun exordium-parent-directory (dir)
+    "Return the path of the dir's parent directory"
+    (file-name-directory (directory-file-name dir)))
+
+  
+  ;;; String manipulation functions
+
+  (require 'subr-x)
+
+  ;; string-prefix-p has been in Emacs for years, but string-suffix-p was
+  ;; introduced only in Emacs 24.4.
+
+  (unless (fboundp 'string-suffix-p)
+    (defun string-suffix-p (suffix string  &optional ignore-case)
+      "Return non-nil if SUFFIX is a suffix of STRING.
+  If IGNORE-CASE is non-nil, the comparison is done without paying
+  attention to case differences."
+      (let ((start-pos (- (length string) (length suffix))))
+        (and (>= start-pos 0)
+             (eq t (compare-strings suffix nil nil
+                                    string start-pos nil ignore-case))))))
+
+  ;; Other string functions introduced in Emacs 24.4:
+
+  (unless (fboundp 'string-trim-left)
+    (defsubst string-trim-left (string)
+      "Remove leading whitespace from STRING."
+      (if (string-match "\\`[ \t\n\r]+" string)
+          (replace-match "" t t string)
+        string)))
+
+  (unless (fboundp 'string-trim-right)
+    (defsubst string-trim-right (string)
+      "Remove trailing whitespace from STRING."
+      (if (string-match "[ \t\n\r]+\\'" string)
+          (replace-match "" t t string)
+        string)))
+
+  (unless (fboundp 'string-trim)
+    (defsubst string-trim (string)
+      "Remove leading and trailing whitespace from STRING."
+      (string-trim-left (string-trim-right string))))
+
+  (eval-when-compile (assert (not (fboundp 'string-truncate))))
+
+  (defun string-truncate (string n)
+    "Return STRING minus the last N characters."
+    (substring string 0 (max 0(- (length string) n))))
+
+  
+  ;;; Add backtick to electric pair mode. It makes buffer local variable with
+  ;;; an extra back tick added
+  (defun exordium-electric-mode-add-back-tick ()
+    (when exordium-enable-electric-pair-mode
+      (setq-local electric-pair-pairs
+                  (append electric-pair-pairs '((?` . ?`))))
+      (setq-local electric-pair-text-pairs
+                  (append electric-pair-text-pairs '((?` . ?`))))))
+#+END_SRC
+*** init-rtags
+#+BEGIN_SRC emacs-lisp
+  ;;;; Rtags - see `https://github.com/Andersbakken/rtags'
+  ;;;
+  ;;; Rtags keys use prefix C-c r
+  ;;; ---------- ----------------------------------------------------------------
+  ;;; Key        Function
+  ;;; ---------- ----------------------------------------------------------------
+  ;;; C-c r .    `rtags-find-symbol-at-point'
+  ;;; M-.
+  ;;; C-c r ,    `rtags-find-references-at-point'
+  ;;; M-,
+  ;;;
+  ;;; C-c r >    `rtags-find-symbol' (prompts for symbol name)
+  ;;; C-c r <    `rtags-find-references' (prompts for symbol name)
+  ;;;
+  ;;; M-C-g      List all buffer symbols with Helm
+  ;;;
+  ;;; ---------- ----------------------------------------------------------------
+  ;;; C-c r v    `rtags-find-virtuals-at-point' list all impl. of function
+  ;;; C-c r ;    `rtags-find-file' find file in project using partial name
+  ;;;
+  ;;; C-c r R    `rtags-rename-symbol'
+  ;;; C-c r F    `rtags-fixit' fix the error using clang "did you mean".
+  ;;;
+  ;;; C-c r [    `rtags-location-stack-back' go back to previous location
+  ;;; C-{
+  ;;; C-c r ]    `rtags-location-stack-forward' the opposite
+  ;;; C-}
+  ;;;
+  ;;; ---------- ----------------------------------------------------------------
+  ;;;            `rtags-start': start rdm in a subprocess and start RTags
+  ;;;            diagnostics.
+  ;;;            `rtags-stop': kill rdm subprocess and RTags diagnostics.
+  ;;; C-c r l    `rtags-show-rdm-buffer' show rdm log buffer.
+  ;;;            `rtags-set-current-project' switch between projects
+  ;;; C-c r e    `rtags-reparse-file' force recompile current buffer.
+  ;;;
+  ;;; ---------- ----------------------------------------------------------------
+  ;;; C-c r D    `rtags-diagnostics' start diagnostics/force reparse
+  ;;; C-c r Q    `rtags-stop-diagnostics' stop the diagnostic subprocess
+  ;;; C-c r d    `rtags-show-diagnostics-buffer' toggle diag window
+  ;;;            (without reparsing)
+  ;;; C-c r down `rtags-next-diag' goes to the next problem.
+  ;;; C-c r up   `rtags-previous-diag' goes to previous problem.
+  ;;; C-c r c    `rtags-clear-diagnostics' clears any error or warning overlay.
+  ;;;            `rtags-stop-diagnostics' stops the process.
+  ;;;
+  ;;; ---------- ----------------------------------------------------------------
+  ;;; C-c r U    `rtags-print-cursorinfo' show what we know about symbol
+  ;;; C-c r P    `rtags-print-dependencies' show all includes
+  ;;; C-c r T    `rtags-taglist' show all tags in a window on left side
+  ;;;
+  ;;;
+  ;;; Building rtags
+  ;;; ==============
+  ;;; $ git clone https://github.com/Andersbakken/rtags.git
+  ;;; $ cd rtags
+  ;;; $ git submodule init && git submodule update
+  ;;; $ cmake .
+  ;;; $ make
+  ;;;
+  ;;; Files
+  ;;; =====
+  ;;; Rtags uses the following files:
+  ;;; `~/.rtags' (created automatically)
+  ;;;     Where rdm stores its index files. They are reloaded when it restarts.
+  ;;; `~/.rdmrc' (optional)
+  ;;;     Config file for rdm (see rdm.cpp) containing default command line args.
+  ;;; `.rtags-config' (optional, located in project root dir)
+  ;;;     Project configuration file. Not needed if there is a .git or .svn at
+  ;;;     the project root.
+  ;;; `compile_commands.json' (optional, located in project root dir)
+  ;;;     Compilation database for a given project, containing for each file the
+  ;;;     clang command to build it. Not needed if you use RTags's compiler
+  ;;;     wrapper scripts.
+  ;;;
+  ;;; Running rdm in a shell
+  ;;; ======================
+  ;;; Run `rdm' in a shell or in the background. Use -L to specify a log file.
+  ;;; Use --help for the list of options. You can stop it gracefully with: rc -q
+  ;;;
+  ;;; You can control rdm with the rc client (use --help to see all options):
+  ;;; $ rc -w
+  ;;;     List the loaded projects and show the active one.
+  ;;; $ rc -w proj
+  ;;;     Make "proj" the active project ("proj" is a regex).
+  ;;; $ rc -J
+  ;;;     Reload the compilation DB from the current directory.
+  ;;; $ rc -W proj
+  ;;;     Delete project.
+  ;;; $ rc --find-project-root /path/to/sourcefile.cpp
+  ;;;     Print what it determines to be the correct project root.
+  ;;; $ rc -T sourcefile.cpp
+  ;;;     Say wether this component is indexed or not.
+  ;;; $ rc -q
+  ;;;     Shutdown rdm.
+  ;;;
+  ;;; Running rdm in Emacs
+  ;;; ====================
+  ;;; M-x `rtags-start'. A buffer will be created with rdm logs; you can show
+  ;;; it with "C-c r l".
+  ;;; M-x `rtags-stop' to kill it.
+  ;;;
+  ;;; Setting up a new project
+  ;;; ========================
+  ;;; 1. If the project root dir does not contain a .git or .svn repo, create a
+  ;;;    file `.rtags-config' in the root dir with the specified content:
+  ;;;    project: /path/to/project
+  ;;;
+  ;;; 2. The next step is to create the compilation database
+  ;;;    `compile_commands.json'. For that, use CMake or use module
+  ;;;     init-rtags-cdb.el.
+  ;;;
+  ;;; Diagnostics mode
+  ;;; ================
+  ;;; RTags diagnostics is a subprocess that highlight compilation errors and
+  ;;; warnings in the code (using flymake or flycheck). Click on a highlighted
+  ;;; region to view the error message. Use "C-c r d" (lowercase d) to display
+  ;;; the diagnostics buffer containing the error messages without forcing a
+  ;;; reparsing of the current file.
+  ;;;
+  ;;; It is started by default, but you can control it with:
+  ;;; - "C-c r D" or M-x `rtags-diagnostics' to start,
+  ;;; - "C-c r q" or M-x `rtags-stop-diagnostics' to terminate the subprocess.
+
+  (with-no-warnings (require 'cl))
+  (require 'rtags)
+  (require 'ac-rtags)
+  (require 'auto-complete-c-headers)
+  (require 'projectile)
+
+  
+  ;;; Turn on flycheck support when requested
+  (when (eq exordium-rtags-syntax-checker :flycheck)
+    (require 'flycheck-rtags)
+    ;; As per: https://github.com/Andersbakken/rtags#rtags-flycheck-integration
+    (cl-flet ((flycheck-rtags-hook ()
+                                   (flycheck-select-checker 'rtags)
+                                   (setq-local flycheck-highlighting-mode nil)
+                                   (setq-local flycheck-check-syntax-automatically nil)))
+      (add-hook 'c-mode-hook #'flycheck-rtags-hook)
+      (add-hook 'c++-mode-hook #'flycheck-rtags-hook)
+      (add-hook 'objc-mode-hook #'flycheck-rtags-hook)))
+
+  ;;; Key bindings
+
+  ;; Enable default keys from rtags with prefix "Ctrl-C r"".
+  ;; The default prefix is "Ctrl-x r" but almost all keys are bound;
+  ;; "Ctrl-c r" is not defined by default, so we get the whole keyboard.
+  (rtags-enable-standard-keybindings c-mode-base-map "\C-cr")
+
+  (defun exordium-rtags-find-symbol-at-point (&optional prefix other-window)
+    "Redefinition of `rtags-find-symbol-at-point' that returns t on
+  success and nil if not found. This implementation comes from
+  https://github.com/Andersbakken/rtags/blob/master/src/rtags.el c75467b"
+    (interactive "P")
+    (rtags-delete-rtags-windows)
+    (rtags-location-stack-push)
+    (let ((arg (rtags-current-location))
+          (tagname (or (rtags-current-symbol) (rtags-current-token)))
+          (fn (buffer-file-name))
+          (found-it nil))
+      (rtags-reparse-file-if-needed)
+      (with-current-buffer (rtags-get-buffer)
+        (rtags-call-rc :path fn :path-filter prefix "-f" arg)
+        (cond ((or (not rtags-follow-symbol-try-harder)
+                   (= (length tagname) 0))
+               (setq found-it (rtags-handle-results-buffer nil nil fn other-window)))
+              ((setq found-it (rtags-handle-results-buffer nil t fn other-window)))
+              (t
+               (erase-buffer)
+               (rtags-call-rc :path fn "-F" tagname "--definition-only" "-M" "1" "--dependency-filter" fn :path-filter prefix
+                              (when rtags-wildcard-symbol-names "--wildcard-symbol-names")
+                              (when rtags-symbolnames-case-insensitive "-I"))
+               (unless (setq found-it (rtags-handle-results-buffer nil nil fn other-window))
+                 (erase-buffer)
+                 (rtags-call-rc :path fn "-F" tagname "-M" "1" "--dependency-filter" fn :path-filter prefix
+                                (when rtags-wildcard-symbol-names "--wildcard-symbol-names")
+                                (when rtags-symbolnames-case-insensitive "-I"))
+                 (setq found-it (rtags-handle-results-buffer nil nil fn other-window)))))
+        (recenter))
+      found-it))
+
+  ;; Alias for C-c r . This key recenters the buffer if needed.
+  (define-key c-mode-base-map "\M-."
+    (lambda (other-window)
+      (interactive "P")
+      (exordium-rtags-find-symbol-at-point nil other-window)))
+
+  ;; Alias for C-c r ,
+  (define-key c-mode-base-map "\M-," (function rtags-find-references-at-point))
+
+  ;; Alias for C-c r [
+  (define-key c-mode-base-map [(control c) (r) (left)] (function rtags-location-stack-back))
+  ;; Alias for C-c r [
+  (define-key c-mode-base-map [(control c) (r) (right)] (function rtags-location-stack-forward))
+
+  (define-key c-mode-base-map [(meta control g)] (function rtags-imenu))
+
+  (define-key c-mode-base-map [(control c) (r) (down)] (function rtags-next-diag))
+  (define-key c-mode-base-map [(control c) (r) (up)] (function rtags-previous-diag))
+  (define-key c-mode-base-map [(control c) (r) (c)] (function rtags-clear-diagnostics))
+
+  (define-key c-mode-base-map "\C-crQ" (function rtags-stop-diagnostics))
+
+  
+  ;;; Start rdm as a subprocess, with output in a buffer
+
+  (defun exordium-rtags-start-rdm-maybe ()
+    "Start rdm if not already running. Return t if started and nil
+  otherwise."
+    (unless (exordium-rtags-rdm-running-p)
+      (exordium-rtags-start-rdm-impl nil)
+      t))
+
+  (defun exordium-rtags-rdm-running-p ()
+    "Predicate testing if rdm is running"
+    (let ((process (get-process "rdm")))
+      (or
+       ;; Rdm runs in a process started from Emacs
+       (and (processp process)
+            (not (eq (process-status process) 'exit))
+            (not (eq (process-status process) 'signal)))
+       ;; User has started rdm outside of Emacs
+       ;; Note: sadly this does not work on macOS
+       (let ((uuid (user-uid)))
+         (dolist (pid (reverse (list-system-processes)))
+           (let* ((attrs (process-attributes pid))
+                  (pname (cdr (assoc 'comm attrs)))
+                  (puid  (cdr (assoc 'euid attrs))))
+             (when (and (eq puid uuid)
+                        (string= pname "rdm"))
+                (return t))))))))
+
+  (defun exordium-rtags-start-rdm-impl (&optional open-buffer)
+    "Start rdm in a subprocess. Open the rdm log buffer if
+  open-buffer is true."
+    (let ((buffer (get-buffer-create "*RTags rdm*")))
+      (when open-buffer
+        (switch-to-buffer buffer))
+      (with-current-buffer buffer
+        (rtags-rdm-mode)
+        (read-only-mode))
+      (let ((process
+             (apply #'start-process "rdm" buffer "rdm" exordium-rtags-rdm-args)))
+        (message "Started rdm - PID %d" (process-id process))))
+    ;; Add RTags to company backends
+    (when (and (eq exordium-complete-mode :company)
+               (not (member 'company-rtags company-backends)))
+      (push 'company-rtags company-backends)))
+
+  (defun rtags-start ()
+    "Start the rdm deamon in a subprocess and display output in a
+  buffer. Also start the RTag diagostics mode."
+    (interactive)
+    (setq rtags-autostart-diagnostics t)
+    (exordium-rtags-start-rdm-impl t))
+
+  (defun rtags-stop ()
+    "Stop both RTags diagnostics and rdm, if they are running."
+    (interactive)
+    ;; Remove RTags from company backends
+    (when (and (eq exordium-complete-mode :company)
+               (member 'company-rtags company-backends))
+      (setq company-backends (delete 'company-rtags company-backends)))
+    ;; Stop RTags Diagnostics and kill its buffer without prompt
+    (when (and rtags-diagnostics-process
+               (not (eq (process-status rtags-diagnostics-process) 'exit)))
+      (kill-process rtags-diagnostics-process))
+    (when (get-buffer "*RTags Diagnostics*")
+      (let ((kill-buffer-query-functions nil))
+        (kill-buffer "*RTags Diagnostics*")))
+    ;; Stop rdm and kill its buffer without prompt
+    (rtags-quit-rdm)
+    (when (get-buffer "*RTags rdm*")
+      (let ((kill-buffer-query-functions nil))
+        (kill-buffer "*RTags rdm*"))))
+
+  (defun rtags-show-rdm-buffer ()
+    "Show/hide the rdm log buffer"
+    (interactive)
+    (let* ((buffer-name "*RTags rdm*")
+           (buffer (get-buffer buffer-name))
+           (window (and buffer (get-buffer-window buffer))))
+      (cond (window
+             (bury-buffer buffer)
+             (delete-window window))
+            (buffer
+             (display-buffer buffer))
+            (t
+             (message "Rtags rdm is not running (use M-x rtags-start)")))))
+
+  (define-key c-mode-base-map [(control c)(r)(l)] 'rtags-show-rdm-buffer)
+
+  
+  ;;; Mode for rdm log output
+  ;;; See http://ergoemacs.org/emacs/elisp_syntax_coloring.html
+
+  (defsubst rtags-rdm-record-search-forward (&optional regexp bound)
+    "Search forward from point for a log line matching REGEXP.
+  Set point to the end of the occurrence found, and return point.
+  An optional second argument BOUND bounds the search: the match
+  found must not extend after that position. This function also
+  sets `match-data' to the entire match."
+    (let ((org-pos (point)))
+      (block while-loop
+        ;; While there are more matches for REGEXP
+        (while (re-search-forward regexp bound t)
+          (if (re-search-backward "^" org-pos t)
+              (let ((begin-pos (point)))
+                ;; If we found a matching log line, set match data and return
+                (if (re-search-forward "$" bound t)
+                    (progn
+                      (set-match-data (list begin-pos (point)))
+                      (return-from while-loop (point)))
+                  (return-from while-loop))))))))
+
+  (defun rtags-rdm-match-record-error (bound)
+    "Search forward from point to BOUND for error."
+    (rtags-rdm-record-search-forward "\\(error:\\)" bound))
+
+  (defun rtags-rdm-match-record-warning (bound)
+    "Search forward from point to BOUND for warning."
+    (rtags-rdm-record-search-forward "\\(warning:\\)" bound))
+
+  (defun rtags-rdm-match-record-note (bound)
+    "Search forward from point to BOUND for note."
+    (rtags-rdm-record-search-forward "\\(note:\\)" bound))
+
+  (defun rtags-rdm-match-record-done (bound)
+    "Search forward from point to BOUND for Jobs."
+    (rtags-rdm-record-search-forward "\\(Jobs\\)" bound))
+
+  (defconst rtags-rdm-mode-keywords
+    (list '(rtags-rdm-match-record-error 0 'compilation-error)
+          '(rtags-rdm-match-record-warning 0 'compilation-warning)
+          '(rtags-rdm-match-record-note 0 'compilation-info)
+          '(rtags-rdm-match-record-done 0 'underline))
+    "Describes how to syntax highlight keywords in rtags-rdm-mode.")
+
+  (defconst rtags-rdm-mode-syntax-table
+    ;; Defines a "comment" as anything that starts with a square bracket, e.g.
+    ;; [100%] /path/to/file.cpp in 437ms. (1259 syms, etc) (dirty)
+    (let ((synTable (make-syntax-table)))
+      (modify-syntax-entry ?\[ "< b" synTable)
+      (modify-syntax-entry ?\n "> b" synTable)
+      synTable))
+
+  (define-derived-mode rtags-rdm-mode fundamental-mode
+    "rdm-log"
+    "Mode for viewing rdm logs"
+    :syntax-table rtags-rdm-mode-syntax-table
+    ;; Syntax highlighting:
+    (setq font-lock-defaults '(rtags-rdm-mode-keywords t t)))
+
+  
+  ;;; Using the diagnostics buffer
+
+  (defun rtags-show-diagnostics-buffer ()
+    "Show/hide the diagnostics buffer in a dedicated
+  window (similar to `rtags-diagnostics' but without reparsing)."
+    (interactive)
+    (if (rtags-has-diagnostics)
+        (let* ((buffer-name "*RTags Diagnostics*")
+               (buffer (get-buffer buffer-name))
+               (window (get-buffer-window buffer)))
+          (cond (window
+                 (bury-buffer buffer)
+                 (delete-window window))
+                (buffer
+                 (display-buffer buffer-name)
+                 (other-window 1)
+                 (goto-char (point-min))
+                 (fit-window-to-buffer (get-buffer-window (current-buffer)) 10 2)
+                 (set-window-dedicated-p (get-buffer-window (current-buffer)) t)
+                 (other-window -1))))
+      (message "Rtags diagnostics is not running (use C-c r D)")))
+
+  (define-key c-mode-base-map [(control c)(r)(d)] 'rtags-show-diagnostics-buffer)
+
+  ;; Used in powerline:
+  (defun rtags-diagnostics-has-errors ()
+    "Return t or nil depending if RTags diagnostics displays errors"
+    (let ((diag-buff (get-buffer "*RTags Diagnostics*")))
+      (if (and diag-buff
+               rtags-diagnostics-process
+               (not (eq (process-status rtags-diagnostics-process) 'exit))
+               (not (eq (process-status rtags-diagnostics-process) 'signal)))
+          (> (buffer-size diag-buff) 0)
+        nil)))
+
+  
+  ;;; RTags auto-complete (EXPERIMENTAL)
+  ;;; FIXME: this is broken, need to revisit the whole thing.
+
+  ;;; AC source for #include
+
+  ;;; The following function fixes a bug in achead:documentation-for-candidate
+  (defun my-documentation-for-candidate (candidate)
+    "Generate documentation for a candidate `candidate'. For now,
+  just returns the path and content of the header file which
+  `candidate' specifies."
+    (let ((path
+           (assoc-default candidate achead:ac-latest-results-alist 'string=)))
+      (ignore-errors
+        (with-temp-buffer
+          (insert path)
+          (unless (file-directory-p path)
+            (insert "\n--------------------------\n")
+            (insert-file-contents path nil 0 200)) ;; first 200 content bytes
+          (buffer-string)))))
+
+  (ac-define-source my-c-headers
+    `((init       . (setq achead:include-cache nil))
+      (candidates . achead:ac-candidates)
+      (prefix     . ,achead:ac-prefix)
+      (document   . my-documentation-for-candidate)
+      (requires   . 0)
+      (symbol     . "h")
+      (action     . ac-start)
+      (limit      . nil)))
+
+  ;;; AC source for RTags
+
+  (defun ac-rtags-init ()
+    (unless rtags-diagnostics-process
+      (rtags-diagnostics)))
+
+  (ac-define-source my-rtags
+    '((init       . rtags-ac-init)
+      (prefix     . rtags-ac-prefix)
+      (candidates . rtags-ac-candidates)
+      (action     . rtags-ac-action)
+      (document   . rtags-ac-document)
+      (requires   . 0)
+      (symbol     . "r")))
+
+  ;;; Functions to enable auto-complete
+
+  (defun rtags-auto-complete ()
+    "Enables auto-complete with RTags.
+  Note that RTags becomes the only source for auto-complete in all
+  C and C++ buffers. Also note that RTags Diagostics must be turned
+  on."
+    (interactive)
+    (require 'ac-rtags)
+    (setq rtags-completions-enabled t)
+    (add-hook 'c++-mode-hook
+              (lambda ()
+                (setq ac-sources '(ac-source-my-rtags)))))
+
+  (defun rtags-diagnostics-auto-complete ()
+    "Starts diagnostics and auto-complete with RTags and #includes.
+  Note that this function replaces all other sources of auto-complete
+   for C++ files. Any previously opened C++ file needs to be reopen
+  for this to be effective."
+    (interactive)
+    ;; Require
+    ;; Start RTags diagnostics
+    (unless rtags-diagnostics-process
+      (rtags-diagnostics))
+    ;; FIXME: this is broken, should not depend on compile_includes
+    ;; Create an auto-complete source for headers using compile_includes
+    ;; (let ((plist (rtags-load-compile-includes-file (projectile-project-root))))
+    ;;   (dolist (dir (plist-get plist :src-dirs))
+    ;;     (add-to-list 'achead:include-directories dir))
+    ;;   (dolist (dir (plist-get plist :include-dirs))
+    ;;     (add-to-list 'achead:include-directories dir)))
+    ;; Turn on RTags auto-complete
+    (setq rtags-completions-enabled t)
+    (add-hook 'c++-mode-hook
+              (lambda ()
+                (setq ac-sources '(ac-source-my-rtags
+                                   ;;ac-source-my-c-headers
+                                   )))))
+
+  (define-key c-mode-base-map [(control c)(r)(A)]
+    'rtags-diagnostics-auto-complete)
+
+  
+  ;; Local Variables:
+  ;; byte-compile-warnings: (not cl-functions)
+  ;; End:
+#+END_SRC
+*** init-rtags-cdb
+#+BEGIN_SRC emacs-lisp
+;;;; Command to create a compilation database.
+;;;
+;;; ---------- ----------------------------------------------------------------
+;;; Key        Command
+;;; ---------- ----------------------------------------------------------------
+;;;            `rtags-create-compilation-database': see doc below.
+;;; ---------- ----------------------------------------------------------------
+;;;
+;;; This module provides a single command, `rtags-create-compilation-database',
+;;; which is an easy way to generate a CLang compilation database
+;;; (`compile_commands.json') for non-CMake projects.
+;;;
+;;; The first step is to create a file `compile_includes' in the project root
+;;; dir, which specifies how to compile your project and in particular where
+;;; are all the source files and all the include files. For example:
+;;;
+;;;   # Where are the source files (there could be multiple directories).
+;;;   # We will scan recursively any subdirectories that do not match any
+;;;   # 'exclude' regex.
+;;;   src .
+;;;
+;;;   # What to put in -I directives (in addition to the source files above).
+;;;   # We will scan recursively any subdirectories that do not match any
+;;;   # 'exclude' regex.
+;;;   include /Users/phil/Code/cpp/include/bsl
+;;;   include /Users/phil/Code/cpp/include/bdl
+;;;
+;;;   # Optional: patterns to exclude in -I directives and for looking for
+;;;   # sources:
+;;;   exclude /test$
+;;;   exclude /doc$
+;;;   exclude /group$
+;;;   exclude /package$
+;;;
+;;;   # Optional: if any file name pattern must be excluded from the "src" files,
+;;;   # use the "excludesrc" directive. For example this will exclude all test
+;;;   # drivers:
+;;;   excludesrc \.t\.cpp$
+;;;
+;;; In addition, the creation of a compilation database uses these variables:
+;;;
+;;; - `rtags-compile-includes-base-dir': set this to your workspace path
+;;;   if you want to use relative paths in `compile_includes' (by default any
+;;;   relative path in this file is relative to the project root dir).
+;;; - `rtags-clang-command-prefix': default is "/usr/bin/clang++ -Irelative"
+;;;   (Note that rtags ignores the clang++ command because it uses libclang).
+;;; - `rtags-clang-command-suffix': default is "-c -o".
+;;;
+;;; Once you have created the `compile_includes' file, run the command
+;;; M-x `rtags-create-compilation-database'. It will:
+;;;
+;;; - Prompt for the project root dir
+;;; - Scan all source dirs and include dirs
+;;; - Create `compilation_database.json' (it overwrites without asking)
+;;; - Ask if you want to reload it (if rdm is running).
+
+(with-no-warnings (require 'cl))
+
+;; Override these variables in your .emacs as needed:
+
+(defvar rtags-clang-command-prefix
+  "/usr/bin/clang++ "
+  "Compilation command prefix to use for creating compilation
+  databases. Override this variable for your local environment.")
+
+(defvar rtags-clang-command-suffix
+  " -c -o "
+  "Compilation command suffix to use for creating compilation
+  databases. Override this variable for you local environment.")
+
+(defvar rtags-compile-includes-base-dir
+  nil
+  "If non-nil, base directory to use for all relative paths in
+  `compile_include'. Use nil for absolute paths.")
+
+
+;;; Creating a compilation DB
+
+(defun rtags-load-compile-includes-file-content (compile-includes-file)
+  "Read and parse the specified compile-includes file, and return
+a list of five sublists:
+- The list of `src' directives,
+- The list of `include' directives,
+- The list of `exclude' directives,
+- The list of `excludesrc' directives,
+- The list of `macro' directives."
+  (let ((line-number      1)
+        (value            nil)
+        (src-list         ())
+        (include-list     ())
+        (exclude-list     ())
+        (exclude-src-list ())
+        (macro-list       ()))
+    (dolist (record (exordium-read-file-lines compile-includes-file))
+      (incf line-number)
+      (setq value (second (split-string record " ")))
+      (cond ((or (eq "" record)
+                 (string-prefix-p "#" record))
+             ;; Comment or empty string; skip it
+             nil)
+            ((string-prefix-p "src" record)
+             (when value
+               (setq src-list (cons value src-list))))
+            ((string-prefix-p "include" record)
+             (when value
+               (setq include-list (cons value include-list))))
+            ((string-prefix-p "excludesrc" record)
+             (when value
+               (setq exclude-src-list (cons value exclude-src-list))))
+            ((string-prefix-p "exclude" record)
+             (when value
+               (setq exclude-list (cons value exclude-list))))
+            ((string-prefix-p "macro" record)
+             (when value
+               (setq macro-list (cons value macro-list))))
+            (t
+             (error "Syntax error line %d: %s" line-number record))))
+    (list src-list include-list exclude-list exclude-src-list macro-list)))
+
+(defun rtags-is-excluded-p (path excluded-regexs)
+  "Return non-nil if the specified path matches any regex in
+the list of excluded regexs"
+  (catch 'return
+    (dolist (excluded excluded-regexs)
+      (when (string-match excluded path)
+        (throw 'return t)))
+    (throw 'return nil)))
+
+(defun rtags-directory-contains-sources-p (path)
+  "Return non-nil if the specified path contains any C/C++ source
+  or header file"
+  (directory-files path nil ".*\\.\\(c\\|cpp\\|h\\|hpp\\)$" nil))
+
+(defun rtags-scan-subdirectories (dir excluded-regexs)
+  "Return a list of subdirectories under the specified root dir,
+excluding any that match any regex in the specified excluded
+regex list."
+  (let ((result ()))
+    (dolist (subdir (cons dir (exordium-directory-tree dir)))
+      (when (and (rtags-directory-contains-sources-p subdir)
+                 (not (rtags-is-excluded-p subdir excluded-regexs)))
+        (setq result (cons subdir result))))
+    result))
+
+(defun rtags-load-compile-includes-file (dir)
+  "Loads the `compile_includes' file from the specified directory
+and returns its content as a property list, or nil if the file
+could not be loaded. The property list looks like this:
+'(:src-dirs (...)
+  :include-dirs (...)
+  :exclude-src (...)
+  :macros (...))"
+  (let ((compile-includes-file (concat (file-name-as-directory dir)
+                                       "compile_includes")))
+    (cond ((file-exists-p compile-includes-file)
+           ;; Parse the file and return 3 lists: src, include, exclude
+           (let ((directives (rtags-load-compile-includes-file-content
+                              compile-includes-file)))
+             (let ((src-dirs    (first directives))
+                   (incl-dirs   (second directives))
+                   (excl-regexs (third directives))
+                   (excl-src    (fourth directives))
+                   (macros      (fifth directives))
+                   (result      ()))
+               ;; Scan src to get all subdirs that do not match the excludes
+               (let (dirs)
+                 (dolist (path src-dirs)
+                   (unless (file-name-absolute-p path)
+                     (setq path (expand-file-name path
+                                                  (or rtags-compile-includes-base-dir
+                                                      dir))))
+                   (message "Scanning source dir: %s ..." path)
+                   (setq dirs (nconc dirs (rtags-scan-subdirectories path excl-regexs))))
+                 (setq result (list :src-dirs dirs)))
+               ;; Same with includes
+               (let (dirs)
+                 (dolist (path incl-dirs)
+                   (setq path (expand-file-name path rtags-compile-includes-base-dir))
+                   (message "Scanning include dir: %s ..." path)
+                   (setq dirs (nconc dirs (rtags-scan-subdirectories path excl-regexs))))
+                 (setq result (nconc result (list :include-dirs dirs))))
+               ;; Add exclude-src and macros into the result
+               (setq result (nconc result (list :exclude-src excl-src
+                                                :macros macros)))
+               ;; Done
+               (message "Project has %d source dirs and %d include dirs"
+                        (length (plist-get result :src-dirs))
+                        (length (plist-get result :include-dirs)))
+               result)))
+          (t
+           (message "No compilation_includes file")
+           nil))))
+
+(defun rtags-create-compilation-command (plist)
+  "Returns a string containing the clang compilation command to
+use for the compilation database, using the content of PLIST."
+  (let ((command rtags-clang-command-prefix))
+    ;; -D options:
+    (dolist (m (plist-get plist :macros))
+      (setq command (concat command " -D" m)))
+    ;; -I options
+    (dolist (path (plist-get plist :src-dirs))
+      (setq command (concat command " -I" path)))
+    (dolist (path (plist-get plist :include-dirs))
+      (setq command (concat command " -I" path)))
+    (concat command rtags-clang-command-suffix)))
+
+(defun rtags-prompt-compilation-database-dir ()
+  "Prompts the user for the directory where to generate the
+compilation database. If we're in a projectile project, propose
+the project root first, and prompt for a dir if the user
+declines. Returns the directory string."
+  (let ((project-root (and (featurep 'projectile)
+                           (projectile-project-root))))
+    (if (and project-root
+             (y-or-n-p (format "Create at project root (%s)?" project-root)))
+        project-root
+      (read-directory-name "Project root: "))))
+
+(defun rtags-create-compilation-database (dir)
+  "Regenerates `compile_commands.json' from `compile_includes' in
+the specified directory."
+  (interactive (list (rtags-prompt-compilation-database-dir)))
+  (let ((plist (rtags-load-compile-includes-file dir)))
+    (when plist
+      (let ((dbfilename (concat (file-name-as-directory dir)
+                                "compile_commands.json"))
+            (compile-command (rtags-create-compilation-command plist))
+            (exclude-files (plist-get plist :exclude-src))
+            (num-files 0))
+        (with-temp-buffer
+          (insert "[")
+          (newline)
+          ;; Note: dynamic binding of variable default-directory
+          (dolist (default-directory (plist-get plist :src-dirs))
+            (message "Processing directory: %s ..." default-directory)
+            (let ((files (mapcan #'file-expand-wildcards
+                                 exordium-rtags-source-file-extensions))
+                  ;; rdm does not like directories starting with "~/"
+                  (dirname (if (string-prefix-p "~/" default-directory)
+                               (substitute-in-file-name
+                                (concat "$HOME/" (substring default-directory 2)))
+                             default-directory)))
+              (dolist (file files)
+                (unless (rtags-is-excluded-p file exclude-files)
+                  (incf num-files)
+                  (insert "  { \"directory\": \"" dirname "\",")
+                  (newline)
+                  (insert "    \"command\":   \""
+                          compile-command
+                          (file-name-sans-extension file) ".o "
+                          file "\",")
+                  (newline)
+                  (insert "    \"file\":      \"" file "\" },")
+                  (newline)))))
+          (insert "];")
+          (newline)
+          (write-region (buffer-string) nil dbfilename))
+        (when (yes-or-no-p
+               (format "Wrote compile_commands.json (%d files). Reload it?" num-files))
+          ;; FIXME: rtags-call-rc does not work if you don't specify a current buffer?
+          ;; That seems broken.
+          (rtags-call-rc :path t :output nil :unsaved (current-buffer) "-J" dir)
+          (message "Reloaded (check rdm's logs)"))))))
+
+
+;;; Mode for compile_includes files
+
+(defconst rtags-compile-includes-mode-keywords
+  ;; Words and associated face.
+  `(( "\\(^src\\|^include\\|^excludesrc\\|^exclude\\|^macro\\)"
+     . font-lock-keyword-face)))
+
+(defconst rtags-compile-includes-mode-syntax-table
+  ;; Defines a "comment" as anything that starts with hash tag
+  (let ((synTable (make-syntax-table)))
+    (modify-syntax-entry ?\# "< b" synTable)
+    (modify-syntax-entry ?\n "> b" synTable)
+    synTable))
+
+(define-derived-mode rtags-compile-includes-mode fundamental-mode
+  "compile-includes"
+  "Mode for editing compile_includes files"
+  :syntax-table rtags-compile-includes-mode-syntax-table
+  ;; Syntax highlighting:
+  (setq font-lock-defaults '((rtags-compile-includes-mode-keywords))))
+
+(add-to-list 'auto-mode-alist
+             '("compile_includes" . rtags-compile-includes-mode))
 #+END_SRC
 ** flycheck
 #+BEGIN_SRC emacs-lisp
@@ -1076,7 +1983,8 @@ highlighted using different colors at one time."
     :init
     (setq helm-display-function 'pop-to-buffer)
     (setq shackle-rules '(("\\`\\*helm.*?\\*\\'" :regexp t :align t :ratio 0.5)
-                          ("\\`\\*Help.*?\\*\\'" :regexp t :align t :ratio 0.5)))
+                          ("\\`\\*Help.*?\\*\\'" :regexp t :align t :ratio 0.5)
+                          ("\\`\\*RTags.*?\\*\\'" :regexp t :align t :ratio 0.5)))
     :config
     (shackle-mode))
 #+END_SRC
