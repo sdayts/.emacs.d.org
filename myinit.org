@@ -707,7 +707,8 @@ highlighted using different colors at one time."
           ;; after rtags is configured, will need to integrate
           ;; with rtags ring
           :map c++-mode-map
-               ("C-x i". sd/find-last-include))
+               ("C-x i". sd/find-last-include)
+               ("<f1>". rtags-imenu))
     :init
     ;; enable electric pair mode for buffers in c-mode
     (add-hook 'c++-mode-hook #'electric-pair-local-mode)
@@ -2439,3 +2440,7 @@ the specified directory."
     (add-to-list 'projectile-globally-ignored-directories ".cask")
     (add-to-list 'projectile-globally-ignored-directories ".cache")))
 ** invistigate origami mode
+** undo-tree mode
+** smartparens mode
+** exec-path-from-shell mode
+** hydra
