@@ -7,11 +7,11 @@
     (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
 
   (if (file-readable-p "/usr/local/share/emacs/site-lisp/doxymacs")
-  (progn
-     ;; load doxymacs installed via: brew install doxymacs
-     (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/doxymacs/")
-     ;; load doxymacs
-     (require 'doxymacs)))
+      (progn
+        ;; load doxymacs installed via: brew install doxymacs
+        (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/doxymacs/")
+        ;; load doxymacs
+        (require 'doxymacs)))
 
   ;; fontify code in code blocks for org mode
   ;; somehow this does not work if I place this line
@@ -174,14 +174,6 @@
 
   ;; activate which-function mode
   (which-function-mode 1)
-
-  ;; enable electric pair mode
-  (electric-pair-mode)
-  (defun sd/disable-electric-pair-mode (char)
-    "Disable electric pair mode in minibuffer."
-    (minibufferp))
-  ;; but not in minibuffer
-  (setq electric-pair-inhibit-predicate #'sd/disable-electric-pair-mode)
 
   ;; enable flyspell programming mode
   (flyspell-prog-mode)
@@ -570,192 +562,194 @@ highlighted using different colors at one time."
 #+END_SRC
 ** cc-mode
 #+BEGIN_SRC emacs-lisp
-    ;; from https://github.com/philippe-grenet/exordium/blob/master/modules/init-bde-style.el
+  ;; from https://github.com/philippe-grenet/exordium/blob/master/modules/init-bde-style.el
 
-    ;;; Utility functions and constants
+  ;;; Utility functions and constants
 
-    (defconst exordium-bde-search-max-bound (* 80 25))
-    ;;   "Maximum point to search when searching for some regexp/string. Often
-    ;; the search is bound to the same line, however sometimes functionality needs to
-    ;; account for multi-line definitions. In here we assume 80 (columns) * 25 (lines)
-    ;; is enough for everyone.")
+  (defconst exordium-bde-search-max-bound (* 80 25))
+  ;;   "Maximum point to search when searching for some regexp/string. Often
+  ;; the search is bound to the same line, however sometimes functionality needs to
+  ;; account for multi-line definitions. In here we assume 80 (columns) * 25 (lines)
+  ;; is enough for everyone.")
 
-    (defun bde-component-name ()
-      "Return the name of the component for the current buffer"
-      (let ((name (file-name-sans-extension
-                   (file-name-nondirectory (buffer-file-name)))))
-        (cond ((string-match-p "\\.[gipu]\\.t$" name)
-               (substring name 0 (- (length name) 4)))
-              ((string-suffix-p ".t" name)
-               (substring name 0 (- (length name) 2)))
-              (t name))))
+  (defun bde-component-name ()
+    "Return the name of the component for the current buffer"
+    (let ((name (file-name-sans-extension
+                 (file-name-nondirectory (buffer-file-name)))))
+      (cond ((string-match-p "\\.[gipu]\\.t$" name)
+             (substring name 0 (- (length name) 4)))
+            ((string-suffix-p ".t" name)
+             (substring name 0 (- (length name) 2)))
+            (t name))))
 
-    (defun bde-package-name ()
-      "Return the name of the package for the current buffer"
-      (interactive)
-      (let ((component-name (bde-component-name)))
-        (substring
-         component-name
-         0
-         (string-match "_" component-name
-                       (if (string-prefix-p "s_" component-name)
-                           2
-                         0)))))
+  (defun bde-package-name ()
+    "Return the name of the package for the current buffer"
+    (interactive)
+    (let ((component-name (bde-component-name)))
+      (substring
+       component-name
+       0
+       (string-match "_" component-name
+                     (if (string-prefix-p "s_" component-name)
+                         2
+                       0)))))
 
-    ;;; Indentation
-    ;;;
-    ;;; This section define a C style named "bde" using c-add-style.  The offset
-    ;;; in the specification (c-offset-alist) can be any of the following:
-    ;;;
-    ;;; - An integer -> specifies a relative offset. All relative offsets will be
-    ;;;   added together and used to calculate the indentation relative to an
-    ;;;   anchor position earlier in the buffer.
-    ;;; - One of the symbols +, -, ++, --, *, or /
-    ;;;   +   = c-basic-offset times 1
-    ;;;   -   = c-basic-offset times −1
-    ;;;   ++  = c-basic-offset times 2
-    ;;;   --  = c-basic-offset times −2
-    ;;;   *   = c-basic-offset times 0.5
-    ;;;   /   = c-basic-offset times −0.5
-    ;;;
-    ;;; Note: to debug the indentation of a particular line, type 'C-c C-s'. It
-    ;;; will display the variable 'c-syntactic-context' which is a list of the
-    ;;; syntactic components affect the offset calculations for that line, with the
-    ;;; character position in the buffer for each of them. More details in M-x
-    ;;; info, then CC mode, then Interactive Customization.
-    ;;; See cc-align.el for examples of line-up functions.
+  ;;; Indentation
+  ;;;
+  ;;; This section define a C style named "bde" using c-add-style.  The offset
+  ;;; in the specification (c-offset-alist) can be any of the following:
+  ;;;
+  ;;; - An integer -> specifies a relative offset. All relative offsets will be
+  ;;;   added together and used to calculate the indentation relative to an
+  ;;;   anchor position earlier in the buffer.
+  ;;; - One of the symbols +, -, ++, --, *, or /
+  ;;;   +   = c-basic-offset times 1
+  ;;;   -   = c-basic-offset times −1
+  ;;;   ++  = c-basic-offset times 2
+  ;;;   --  = c-basic-offset times −2
+  ;;;   *   = c-basic-offset times 0.5
+  ;;;   /   = c-basic-offset times −0.5
+  ;;;
+  ;;; Note: to debug the indentation of a particular line, type 'C-c C-s'. It
+  ;;; will display the variable 'c-syntactic-context' which is a list of the
+  ;;; syntactic components affect the offset calculations for that line, with the
+  ;;; character position in the buffer for each of them. More details in M-x
+  ;;; info, then CC mode, then Interactive Customization.
+  ;;; See cc-align.el for examples of line-up functions.
 
-    (eval-when-compile (defvar c-syntactic-context))
+  (eval-when-compile (defvar c-syntactic-context))
 
-    (defun bde-is-member-function-declaration ()
-      "Return whether the line ending resembles the member function declaration."
-      (re-search-forward
-       (concat ") *\\(const\\)?"
-               " *\\(noexcept\\|BSLS_CPP11_NOEXCEPT\\)?"
-               " *\\(\\(= *\\(0\\|de\\(fault\\|lete\\)\\)\\)"
-               "\\|BSLS_CPP11_DE\\(FAULT\\|LETED\\)"
-               "\\|override\\|BSLS_CPP11_OVERRIDE\\)?"
-               " *\\(&\\(&\\)?\\)?"
-               " *; *$")
-       (point-at-eol) t))
+  (defun bde-is-member-function-declaration ()
+    "Return whether the line ending resembles the member function declaration."
+    (re-search-forward
+     (concat ") *\\(const\\)?"
+             " *\\(noexcept\\|BSLS_CPP11_NOEXCEPT\\)?"
+             " *\\(\\(= *\\(0\\|de\\(fault\\|lete\\)\\)\\)"
+             "\\|BSLS_CPP11_DE\\(FAULT\\|LETED\\)"
+             "\\|override\\|BSLS_CPP11_OVERRIDE\\)?"
+             " *\\(&\\(&\\)?\\)?"
+             " *; *$")
+     (point-at-eol) t))
 
-    (defun bde-comment-offset (element)
-      "Custom line-up function for BDE comments.
-    Return a symbol for the correct indentation level at the
-    current cursor position, if the cursor is within a class definition:
-    1. + for method comments:
-            int foo() const = 0;
-                // tab goes here
-            int bar() { return 0; }
-                // tab goes here
-    2. column number of beginning of comment for data member comments:
-            int d_data;     // my comment at whatever column I want
-                            // tab goes here
-            int d_someLongVariableName;
-                            // my comment at whatever column I want
-                            // tab goes here
-    3. nil otherwise."
-      (case (caar c-syntactic-context)
-        ((inclass innamespace)
-         (save-excursion
-           (let ((class-offset         ; extra offset for inner structs
-                  (c-langelem-col (car c-syntactic-context) t))
-                 (comment-column nil)) ; column number of last //
-             (loop
-              (beginning-of-line)
-              (cond ((= (point) (point-min))
-                     (return nil))
-                    ((re-search-forward "^ *//" (point-at-eol) t)
-                     ;; looking at a comment line
-                     (setq comment-column (- (current-column) 2))
-                     (forward-line -1))
-                    ((bde-is-member-function-declaration)
-                     ;; looking at end of method declaration
-                     (return '+))
-                    ((re-search-forward "} *$" (point-at-eol) t)
-                     ;; looking at end of inline method definition
-                     (return '+))
-                    ((re-search-forward "; *//" (point-at-eol) t)
-                     ;; looking at beginning of data member comment block
-                     (return (- (current-column) 2 class-offset c-basic-offset)))
-                    ((and comment-column
-                          (re-search-forward "[_A-Za-z0-9]+; *$"
-                                             (point-at-eol) t))
-                     ;; looking at end of (long?) data member declaration
-                     (return (- comment-column class-offset c-basic-offset)))
-                    (t
-                     (return nil)))))))
-        (t nil)))
+  (defun bde-comment-offset (element)
+    "Custom line-up function for BDE comments.
+  Return a symbol for the correct indentation level at the
+  current cursor position, if the cursor is within a class definition:
+  1. + for method comments:
+          int foo() const = 0;
+              // tab goes here
+          int bar() { return 0; }
+              // tab goes here
+  2. column number of beginning of comment for data member comments:
+          int d_data;     // my comment at whatever column I want
+                          // tab goes here
+          int d_someLongVariableName;
+                          // my comment at whatever column I want
+                          // tab goes here
+  3. nil otherwise."
+    (case (caar c-syntactic-context)
+      ((inclass innamespace)
+       (save-excursion
+         (let ((class-offset         ; extra offset for inner structs
+                (c-langelem-col (car c-syntactic-context) t))
+               (comment-column nil)) ; column number of last //
+           (loop
+            (beginning-of-line)
+            (cond ((= (point) (point-min))
+                   (return nil))
+                  ((re-search-forward "^ *//" (point-at-eol) t)
+                   ;; looking at a comment line
+                   (setq comment-column (- (current-column) 2))
+                   (forward-line -1))
+                  ((bde-is-member-function-declaration)
+                   ;; looking at end of method declaration
+                   (return '+))
+                  ((re-search-forward "} *$" (point-at-eol) t)
+                   ;; looking at end of inline method definition
+                   (return '+))
+                  ((re-search-forward "; *//" (point-at-eol) t)
+                   ;; looking at beginning of data member comment block
+                   (return (- (current-column) 2 class-offset c-basic-offset)))
+                  ((and comment-column
+                        (re-search-forward "[_A-Za-z0-9]+; *$"
+                                           (point-at-eol) t))
+                   ;; looking at end of (long?) data member declaration
+                   (return (- comment-column class-offset c-basic-offset)))
+                  (t
+                   (return nil)))))))
+      (t nil)))
 
-    (defun bde-statement-block-intro-offset (element)
-      "Custom line-up function for first line of a statement block.
-    The default identation is is '+' (1 basic offset), unless we are in
-    a switch statement, in which case the indentation is set to
-    '*' (half basic offset). Example:
-    switch(val) {
-      case 100: {
-          return 1;
-      } break;
-      default: {
-          return 0;
-      } break;
-    }"
-      (save-excursion
-        (goto-char (c-langelem-pos element))
-        (if (looking-at "\\(case\\|default\\)")
-            '*
-          '+)))
+  (defun bde-statement-block-intro-offset (element)
+    "Custom line-up function for first line of a statement block.
+  The default identation is is '+' (1 basic offset), unless we are in
+  a switch statement, in which case the indentation is set to
+  '*' (half basic offset). Example:
+  switch(val) {
+    case 100: {
+        return 1;
+    } break;
+    default: {
+        return 0;
+    } break;
+  }"
+    (save-excursion
+      (goto-char (c-langelem-pos element))
+      (if (looking-at "\\(case\\|default\\)")
+          '*
+        '+)))
 
-    ; associate .h file with c++ mode
-    (add-to-list 'auto-mode-alist '("\\.[hc]\\'" . c++-mode))
+  ; associate .h file with c++ mode
+  (add-to-list 'auto-mode-alist '("\\.[hc]\\'" . c++-mode))
 
-    (use-package cc-mode
-      :ensure t
-      :bind(;; for the time being pop global mark
-            ;; after rtags is configured, will need to integrate
-            ;; with rtags ring
-            :map c++-mode-map
-                 ("C-x i". sd/find-last-include))
-      :init
-      (setq c-default-style
-            '((java-mode . "java")
-              (awk-mode  . "awk")
-              (c++-mode  . "bde")
-              (other     . "gnu")))
-      :config
-      ;; unbind c++-mode-map keys which interfer with global mappings
-      (unbind-key "C-c C-c" c++-mode-map)
-      (unbind-key "C-c C-u" c++-mode-map)
+  (use-package cc-mode
+    :ensure t
+    :bind(;; for the time being pop global mark
+          ;; after rtags is configured, will need to integrate
+          ;; with rtags ring
+          :map c++-mode-map
+               ("C-x i". sd/find-last-include))
+    :init
+    ;; enable electric pair mode for buffers in c-mode
+    (add-hook 'c++-mode-hook #'electric-pair-local-mode)
+    (setq c-default-style
+          '((java-mode . "java")
+            (awk-mode  . "awk")
+            (c++-mode  . "bde")
+            (other     . "gnu")))
+    :config
+    ;; unbind c++-mode-map keys which interfer with global mappings
+    (unbind-key "C-c C-c" c++-mode-map)
+    (unbind-key "C-c C-u" c++-mode-map)
 
-      ;; See http://cc-mode.sourceforge.net/html-manual/Syntactic-Symbols.html#Syntactic-Symbols
-      (c-add-style
-       "bde"
-       '((c-basic-offset . 4)
-         (c-comment-only-line-offset . 0)
-         (fill-column . 79)
-         (c-backslash-column . 78)
-         (c-backslash-max-column . 78)
-         (c-offsets-alist
-          (comment-intro         . bde-comment-offset)
-          (defun-open            . 0)
-          (defun-close           . 0)
-          (statement-block-intro . bde-statement-block-intro-offset)
-          (substatement-open     . 0)
-          (substatement-label    . 0)
-          (label                 . 0)
-          (access-label          . /)
-          (case-label            . *)
-          (statement-case-intro  . *)
-          (statement-case-open   . 0)
-          (statement-cont        . +)
-          (inline-open           . 0)
-          (inline-close          . 0)
-          (innamespace           . 0)
-          (member-init-intro     . 0)
-          (extern-lang-open      . 0)
-          (brace-list-entry      . /)
-          (extern-lang-close     . 0))))
-      )
+    ;; See http://cc-mode.sourceforge.net/html-manual/Syntactic-Symbols.html#Syntactic-Symbols
+    (c-add-style
+     "bde"
+     '((c-basic-offset . 4)
+       (c-comment-only-line-offset . 0)
+       (fill-column . 79)
+       (c-backslash-column . 78)
+       (c-backslash-max-column . 78)
+       (c-offsets-alist
+        (comment-intro         . bde-comment-offset)
+        (defun-open            . 0)
+        (defun-close           . 0)
+        (statement-block-intro . bde-statement-block-intro-offset)
+        (substatement-open     . 0)
+        (substatement-label    . 0)
+        (label                 . 0)
+        (access-label          . /)
+        (case-label            . *)
+        (statement-case-intro  . *)
+        (statement-case-open   . 0)
+        (statement-cont        . +)
+        (inline-open           . 0)
+        (inline-close          . 0)
+        (innamespace           . 0)
+        (member-init-intro     . 0)
+        (extern-lang-open      . 0)
+        (brace-list-entry      . /)
+        (extern-lang-close     . 0))))
+    )
 #+END_SRC
 ** diminish
 #+BEGIN_SRC emacs-lisp
@@ -2045,6 +2039,11 @@ the specified directory."
     :config
     (ivy-mode 1))
 #+END_SRC
+** json-mode
+#+BEGIN_SRC emacs-lisp
+(use-package json-mode
+    :ensure t)
+#+END_SRC
 ** magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
@@ -2149,6 +2148,7 @@ the specified directory."
     ;; ignore directories
     (add-to-list 'projectile-globally-ignored-directories "llcalc*")
     (add-to-list 'projectile-globally-ignored-directories "SunWS_cache*")
+    (add-to-list 'projectile-globally-ignored-directories ".svn*")
 
     (projectile-global-mode t))
 #+END_SRC
