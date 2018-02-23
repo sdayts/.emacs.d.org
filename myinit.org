@@ -560,6 +560,16 @@ highlighted using different colors at one time."
     (beacon-mode)
     (setq beacon-color "Green"))
 #+END_SRC
+** company
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+      :ensure t)
+#+END_SRC
+** company-rtags
+#+BEGIN_SRC emacs-lisp
+(use-package company-rtags
+      :ensure t)
+#+END_SRC
 ** cc-mode
 #+BEGIN_SRC emacs-lisp
   ;; from https://github.com/philippe-grenet/exordium/blob/master/modules/init-bde-style.el
@@ -2371,6 +2381,13 @@ the specified directory."
        ("`" "'"   "c"   lisp-mode)                ; code
        )))
 #+END_SRC
+** undo-tree
+#+BEGIN_SRC emacs-lisp
+  (use-package undo-tree
+    :ensure t
+    :init
+    (global-undo-tree-mode))
+#+END_SRC
 ** yasnippet
 #+BEGIN_SRC emacs-lisp
         ;;;###autoload
@@ -2444,3 +2461,17 @@ the specified directory."
 ** smartparens mode
 ** exec-path-from-shell mode
 ** hydra
+** swiper
+** rtags-helm/helm-rtags
+http://syamajala.github.io/c-ide.html
+(require 'rtags)
+(require 'company-rtags)
+(setq rtags-completions-enabled t)
+
+(eval-after-load 'company
+  '(add-to-list
+    'company-backends 'company-rtags))
+(setq rtags-autostart-diagnostics t)
+
+(require 'rtags-helm)
+(setq rtags-use-helm t)
