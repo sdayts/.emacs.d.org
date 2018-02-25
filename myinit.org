@@ -522,7 +522,7 @@ highlighted using different colors at one time."
   (use-package auto-complete
     :diminish auto-complete-mode
     :ensure t
-    :bind (("C-SPC" . auto-complete))
+    :bind (("C-S-SPC" . auto-complete))
     :init
     (ac-config-default)
     (global-auto-complete-mode t)
@@ -563,12 +563,32 @@ highlighted using different colors at one time."
 ** company
 #+BEGIN_SRC emacs-lisp
   (use-package company
-      :ensure t)
+    :ensure t
+    :config
+    (global-company-mode)
+    (setq company-idle-delay 0))
 #+END_SRC
 ** company-rtags
 #+BEGIN_SRC emacs-lisp
-(use-package company-rtags
-      :ensure t)
+  (use-package company-rtags
+    ;; disable for now, very slow and most importantly doesn't work
+    :disabled
+    :ensure t
+    :config
+    (push 'company-rtags company-backends))
+#+END_SRC
+** company-irony
+#+BEGIN_SRC emacs-lisp
+  (use-package company-irony
+    :ensure t
+    :bind (("C-SPC" . company-complete))
+    :config
+    (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
+    (setq company-backends (delete 'company-semantic company-backends))
+    (setq company-backends (delete 'company-clang company-backends))
+    (eval-after-load 'company
+      '(add-to-list
+        'company-backends 'company-irony)))
 #+END_SRC
 ** cc-mode
 #+BEGIN_SRC emacs-lisp
@@ -731,6 +751,13 @@ highlighted using different colors at one time."
     ;; unbind c++-mode-map keys which interfer with global mappings
     (unbind-key "C-c C-c" c++-mode-map)
     (unbind-key "C-c C-u" c++-mode-map)
+
+    ;; trigger company completion via tab
+    ;; (define-key c-mode-map [(tab)] 'company-complete)
+    ;; (define-key c++-mode-map [(tab)] 'company-complete)
+
+    (add-hook 'c++-mode-hook 'irony-mode)
+    (add-hook 'c-mode-hook 'irony-mode)
 
     ;; See http://cc-mode.sourceforge.net/html-manual/Syntactic-Symbols.html#Syntactic-Symbols
     (c-add-style
@@ -1915,16 +1942,16 @@ the specified directory."
 #+END_SRC
 ** flycheck
 #+BEGIN_SRC emacs-lisp
-  (use-package flycheck
-    :disabled
-    :ensure t
-    :init
-    ;;(setq-default flycheck-disabled-checkers '(c/c++-clang))
-    (global-flycheck-mode)
-    :config
-    (setq-default flycheck-c/c++-clang-executable "/usr/local/opt/llvm/bin/clang" )
-    (setq-default flycheck-clang-standard-library "libc++")
-    (setq-default flycheck-clang-language-standard "c++11"))
+  ;; (use-package flycheck
+  ;;   :disabled
+  ;;   :ensure t
+  ;;   :init
+  ;;   ;;(setq-default flycheck-disabled-checkers '(c/c++-clang))
+  ;;   (global-flycheck-mode)
+  ;;   :config
+  ;;   (setq-default flycheck-c/c++-clang-executable "/usr/local/opt/llvm/bin/clang" )
+  ;;   (setq-default flycheck-clang-standard-library "libc++")
+  ;;   (setq-default flycheck-clang-language-standard "c++11"))
 #+END_SRC
 ** flyspell
 #+BEGIN_SRC emacs-lisp
@@ -2040,6 +2067,20 @@ the specified directory."
 #+BEGIN_SRC emacs-lisp
   (use-package helm-rtags
       :ensure    t )
+#+END_SRC
+** irony
+#+BEGIN_SRC emacs-lisp
+  (defun my-irony-mode-hook ()
+    (define-key irony-mode-map [remap completion-at-point]
+      'irony-completion-at-point-async)
+    (define-key irony-mode-map [remap complete-symbol]
+      'irony-completion-at-point-async))
+
+  (use-package irony
+    :ensure t
+    :init
+    (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 #+END_SRC
 ** ivy
 #+BEGIN_SRC emacs-lisp
