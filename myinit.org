@@ -588,8 +588,8 @@ highlighted using different colors at one time."
     (setq company-backends (delete 'company-clang company-backends))
     :config
     (eval-after-load 'company
-      '(add-to-list
-        'company-backends 'company-irony)))
+    '(add-to-list
+      'company-backends '(company-irony-c-headers company-irony))))
 #+END_SRC
 ** company-irony-c-headers
 #+BEGIN_SRC emacs-lisp
@@ -744,7 +744,8 @@ highlighted using different colors at one time."
           ;; with rtags ring
           :map c++-mode-map
                ("C-x i". sd/find-last-include)
-               ("<f1>". rtags-imenu))
+               ("<f1>". rtags-imenu)
+               ("C-M-f" . rtags-find-symbol))
     :init
     ;; enable electric pair mode for buffers in c-mode
     (add-hook 'c++-mode-hook #'electric-pair-local-mode)
@@ -2433,7 +2434,10 @@ the specified directory."
   (use-package undo-tree
     :ensure t
     :init
-    (global-undo-tree-mode))
+    (global-undo-tree-mode)
+    (unbind-key "C-x r u" undo-tree-map)
+    (unbind-key "C-x r U" undo-tree-map)
+    (unbind-key "C-x r" undo-tree-map))
 #+END_SRC
 ** yasnippet
 #+BEGIN_SRC emacs-lisp
