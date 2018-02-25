@@ -582,13 +582,19 @@ highlighted using different colors at one time."
   (use-package company-irony
     :ensure t
     :bind (("C-SPC" . company-complete))
-    :config
+    :init
     (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
     (setq company-backends (delete 'company-semantic company-backends))
     (setq company-backends (delete 'company-clang company-backends))
+    :config
     (eval-after-load 'company
       '(add-to-list
         'company-backends 'company-irony)))
+#+END_SRC
+** company-irony-c-headers
+#+BEGIN_SRC emacs-lisp
+  (use-package company-irony-c-headers
+    :ensure t)
 #+END_SRC
 ** cc-mode
 #+BEGIN_SRC emacs-lisp
