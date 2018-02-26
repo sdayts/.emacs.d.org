@@ -2207,7 +2207,9 @@ the specified directory."
     ;; ignore directories
     (add-to-list 'projectile-globally-ignored-directories "llcalc*")
     (add-to-list 'projectile-globally-ignored-directories "SunWS_cache*")
-    (add-to-list 'projectile-globally-ignored-directories ".svn*")
+    (add-to-list 'projectile-globally-ignored-directories ".svn")
+    ;; ignore specific file suffixes from projectile
+    (setq projectile-globally-ignored-file-suffixes '(".svn-base"))
 
     (projectile-global-mode t))
 #+END_SRC
