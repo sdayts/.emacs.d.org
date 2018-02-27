@@ -181,6 +181,18 @@
   ;; start scrolling when within 3 lines of either top or bottom of the window
   (setq scroll-margin 3)
 
+  ;; conveniently map repeat to F7
+  (global-unset-key (kbd "<f7>"))
+  (global-set-key (kbd "<f7>") 'repeat)
+
+  ;; man pages
+  (global-unset-key (kbd "C-c m"))
+  (global-set-key (kbd "C-c m") 'helm-man-woman)
+  ;; display man page in the other frame (selected)
+  (setq Man-notify-method 'aggressive)
+
+  ;; always select help window
+  (setq help-window-select t)
 #+END_SRC
 
 * Custom functions
