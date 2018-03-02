@@ -2540,3 +2540,4 @@ http://syamajala.github.io/c-ide.html
 
 (require 'rtags-helm)
 (setq rtags-use-helm t)
+** pcre2el

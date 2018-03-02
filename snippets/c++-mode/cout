@@ -3,4 +3,4 @@
 # key: cout
 # binding: direct-keybinding
 # --
-bsl::cout << $0 << bsl::endl;
+bsl::cout << $1 $0<< bsl::endl;
