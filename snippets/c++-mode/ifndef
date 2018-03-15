@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: ifndef
+# key: ind
+# --
+#ifndef $1
+#include <$0>
+#endif
