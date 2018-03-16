@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ASSERT_TRUE
+# key: at
+# --
+ASSERT_TRUE( $0 );

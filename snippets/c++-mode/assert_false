@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ASSERT_FALSE
+# key: af
+# --
+ASSERT_FALSE( $0 );
