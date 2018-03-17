@@ -188,8 +188,8 @@
   ;; man pages
   (global-unset-key (kbd "C-c m"))
   (global-set-key (kbd "C-c m") 'helm-man-woman)
-  ;; display man page in the other frame (selected)
-  (setq Man-notify-method 'aggressive)
+  ;; display man page in the current buffer
+  (setq Man-notify-method 'pushy)
 
   ;; always select help window
   (setq help-window-select t)
