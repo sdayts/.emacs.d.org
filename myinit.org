@@ -193,6 +193,11 @@
 
   ;; always select help window
   (setq help-window-select t)
+
+  ;; Copy word under the cursor
+  (global-unset-key (kbd "C-M-b"))
+  (global-set-key (kbd "C-M-b") 'helm-bookmarks)
+
 #+END_SRC
 
 * Custom functions
