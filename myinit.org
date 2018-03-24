@@ -47,11 +47,6 @@
   (global-unset-key (kbd "<f6>"))
   (global-set-key (kbd "<f6>") 'describe-key)
 
-  ;; Move mode line to top
-  ;;(setq-default header-line-format mode-line-format)
-  ;; Hide the bottom mode line
-  ;;(setq-default mode-line-format nil)
-
   ;; display the fully qualified path in the frame title
   (setq frame-title-format
         '((:eval (if (buffer-file-name)
@@ -406,9 +401,9 @@ highlighted using different colors at one time."
 
 ;; hilight current line
 (global-hl-line-mode +1)
-;; (set-face-background hl-line-face "#005A64")
 ;; slightly prefer this color for the current line
-(set-face-background hl-line-face "#345858")
+;; (set-face-background hl-line-face "#345858")
+(set-face-background hl-line-face "#345865")
 #+END_SRC
 * Color customizations
 #+BEGIN_SRC emacs-lisp
@@ -432,11 +427,6 @@ highlighted using different colors at one time."
   (set-face-attribute 'region nil :background "black" :foreground "yellow" )
   (set-face-attribute 'isearch nil :background "black" :foreground "yellow" )
   (set-face-attribute 'lazy-highlight nil :background "black" :foreground "cyan" )
-  ;; mode line colors
-  ;; (set-face-attribute 'mode-line nil :background "black" :foreground "yellow" :height 150)
-  ;; (set-face-attribute 'mode-line-inactive nil :background "dimgray" :foreground "white" )
-  ;(set-face-attribute 'header-line nil :background "black" :foreground "yellow" )
-
 #+END_SRC
 
 * Mac specific
@@ -2278,11 +2268,12 @@ the specified directory."
 #+END_SRC
 ** shell
 #+BEGIN_SRC emacs-lisp
-  ;; ;; Run shell mode
-  ;; (global-unset-key (kbd "C-S-m"))
-  ;; (global-set-key (kbd "C-S-m") 'shell)
-  ;; Don't ask to kill the shell buffer
-  (add-hook 'shell-mode-hook (lambda() (set-process-query-on-exit-flag (get-process "shell") nil)) )
+  (use-package shell-mode
+    :bind(:map shell-mode-map
+               ("C-p" . comint-previous-input)
+               ("C-n" . comint-next-input))
+    :config
+    (add-hook 'shell-mode-hook (lambda() (set-process-query-on-exit-flag (get-process "shell") nil)) ))
 #+END_SRC
 ** shell-pop
 #+BEGIN_SRC emacs-lisp
