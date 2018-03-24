@@ -2210,7 +2210,9 @@ the specified directory."
     :init
     (unbind-key "M-h" org-mode-map)
     ;; indent propertly in org babel mode
-    (setq org-src-tab-acts-natively t))
+    (setq org-src-tab-acts-natively t)
+    ;; support shift-selection-mode
+    (setq org-support-shift-select t))
 #+END_SRC
 
 ** projectile
