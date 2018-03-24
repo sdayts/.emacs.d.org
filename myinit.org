@@ -2250,7 +2250,7 @@ the specified directory."
     (use-package rect
       :bind(("C-M-<down>" . rectangle-mark-mode)
             :map rectangle-mark-mode-map
-            ("C-w" . delete-rectangle)))
+            ("C-w" . kill-rectangle)))
 #+END_SRC
 ** rtags
 #+BEGIN_SRC emacs-lisp
