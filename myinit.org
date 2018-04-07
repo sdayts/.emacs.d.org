@@ -1986,6 +1986,11 @@ the specified directory."
     (setq ispell-program-name "/usr/local/bin/aspell")
     (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 #+END_SRC
+** git-timemachine
+#+BEGIN_SRC emacs-lisp
+  (use-package git-timemachine
+    :ensure t )
+#+END_SRC
 ** iedit
 #+BEGIN_SRC emacs-lisp
   (use-package iedit
