@@ -2512,7 +2512,6 @@ the specified directory."
     )
 #+END_SRC
 ** Modes to explore in the future
-# 'auto-complete-c-headers
 # 'ensime
 # 'paredit
 # 'rtags-ac
