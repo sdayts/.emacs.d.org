@@ -2420,13 +2420,24 @@ the specified directory."
 #+END_SRC
 ** whole-line-or-region
 #+BEGIN_SRC emacs-lisp
-  (use-package whole-line-or-region
-    :ensure t
-    :bind (("C-w" . whole-line-or-region-kill-region)
-	   ("C-c c" . whole-line-or-region-kill-ring-save)
-	   )
-    :config
-    )
+  (defun sd/whole-line-or-region-kill-ring-save()
+    "When in rectangle mode, copy the rectangle"
+    (interactive)
+    (if rectangle-mark-mode
+        (progn
+          (message "Copying rectangle.")
+          (copy-rectangle-as-kill (region-beginning) (region-end)))
+      (progn
+        (message "Copying region.")
+        (whole-line-or-region-kill-ring-save nil))))
+
+    (use-package whole-line-or-region
+      :ensure t
+      :bind (("C-w" . whole-line-or-region-kill-region)
+             ;; ("C-c c" . whole-line-or-region-kill-ring-save)
+             ("C-c c" . sd/whole-line-or-region-kill-ring-save)
+             )
+      :config)
 #+END_SRC
 ** wrap-region
 #+BEGIN_SRC emacs-lisp
