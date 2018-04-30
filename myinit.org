@@ -2240,6 +2240,14 @@ the specified directory."
 
     (projectile-global-mode t))
 #+END_SRC
+** python
+#+BEGIN_SRC emacs-lisp
+  (use-package python
+    :bind( :map python-mode-map
+                ("C-c C-c" . sd/comment-line-or-region)
+                ("C-c C-v" . sd/duplicate-line-or-region)))
+
+#+END_SRC
 ** rectangle-mark-mode
 #+BEGIN_SRC emacs-lisp
     (use-package rect
