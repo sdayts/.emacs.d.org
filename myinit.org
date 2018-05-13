@@ -758,7 +758,7 @@ highlighted using different colors at one time."
           ;; with rtags ring
           :map c++-mode-map
                ("C-x i". sd/find-last-include)
-               ("<f1>". rtags-imenu)
+               ("<f1>". rtags-helm-select-taglist)
                ("C-M-f" . rtags-find-symbol))
     :init
     ;; enable electric pair mode for buffers in c-mode
