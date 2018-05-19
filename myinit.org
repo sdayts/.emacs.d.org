@@ -2131,8 +2131,11 @@ the specified directory."
            )
     :config
     ;; update magit heading line to yellow on black, the way I like it...
-    (set-face-attribute 'magit-diff-hunk-heading-highlight nil :background "black" :foreground "yellow" )
-    )
+    (set-face-attribute 'magit-diff-hunk-heading-highlight nil :background "black" :foreground "yellow")
+    ;; make changes look nice
+    (set-face-attribute 'magit-diff-removed-highlight nil :background "black" :foreground "red")
+    (set-face-attribute 'magit-diff-added-highlight nil :background "black" :foregroundq "SeaGreen3")
+    (set-face-attribute 'magit-diff-removed nil :background "DarkRed"))
 #+END_SRC
 ** man
 #+BEGIN_SRC emacs-lisp
