@@ -208,7 +208,7 @@
           (recenter-top-bottom))
       (message "Did not find a #include")))
 
-          ;;;###autoload
+            ;;;###autoload
   (defun sd/forward-or-backward-sexp (&optional arg)
     "Go to the matching parenthesis character if one is adjacent to point."
     (interactive "^p")
@@ -218,11 +218,11 @@
           ((looking-at "\\s)") (forward-char) (backward-sexp arg))
           ((looking-back "\\s(" 1) (backward-char) (forward-sexp arg))))
 
-          ;;;###autoload
+            ;;;###autoload
   (defun sd/duplicate-line-or-region(arg)
     "Duplicates the current line or region ARG times.
-          If there's no region, the current line will be duplicated. However, if
-          there's a region, all lines that region covers will be duplicated."
+            If there's no region, the current line will be duplicated. However, if
+            there's a region, all lines that region covers will be duplicated."
     (interactive "p")
     (let (beg end (origin (point)))
       (if (and mark-active (> (point) (mark)))
@@ -241,9 +241,9 @@
 
   (defvar sd/copy-word-under-cursor-regex "[^[:word:]_]"
     "Regular expression to use when copying with `copy-word-under-cursor'.
-          Can be customized for each major mode.")
+            Can be customized for each major mode.")
 
-          ;;;###autoload
+            ;;;###autoload
   (defun sd/copy-word-under-cursor ()
     "Copy the word under the cursor to the kill ring."
     (interactive)
@@ -253,7 +253,7 @@
             (end (re-search-forward sd/copy-word-under-cursor-regex)))
         (copy-region-as-kill beg (- end 1)))))
 
-          ;;;###autoload
+            ;;;###autoload
   (defun sd/update-header()
     (interactive)
     (mapc
@@ -276,12 +276,12 @@
      (window-list)))
 
 
-          ;;;###autoload
+            ;;;###autoload
   (defun sd/comment-line-or-region (n)
     "Comment or uncomment current line and leave point after it.
-          With positive prefix, apply to N lines including current one.
-          With negative prefix, apply to -N lines above.
-          If region is active, apply to active region instead."
+     With positive prefix, apply to N lines including current one.
+     With negative prefix, apply to -N lines above.
+     If region is active, apply to active region instead."
     (interactive "p")
     (save-excursion
       (if (use-region-p)
@@ -296,36 +296,36 @@
         (forward-line 1)
         (back-to-indentation))))
 
-          ;;;###autoload
+            ;;;###autoload
   (defun sd/open-org-init()
     (interactive)
     "Open initialization file and move to the end of the buffer."
     (sd/open-file-move-to-end "~/.emacs.d/myinit.org"))
 
-          ;;;###autoload
+            ;;;###autoload
   (defun sd/open-dev-notes()
     (interactive)
     "Load org initialization file and move to the end of the buffer."
     (sd/open-file-move-to-end "~/notes/development_notes.org"))
 
-          ;;;###autoload
+            ;;;###autoload
   (defun sd/open-file-move-to-end(file-name)
     (interactive)
     "Open a file and move to the end of the buffer."
     (find-file file-name)
     (end-of-buffer))
 
-          ;;;###autoload
+            ;;;###autoload
   (defmacro sd/advise-commands-after (advice-name commands &rest body)
     "Apply advice named ADVICE-NAME to multiple COMMANDS.
-      The body of the advice is in BODY."
+        The body of the advice is in BODY."
     `(progn
        ,@(mapcar (lambda (command)
                    `(defadvice ,command (after ,(intern (concat (symbol-name command) "-" advice-name)) activate)
                       ,@body))
                  commands)))
 
-          ;;;###autoload
+            ;;;###autoload
   (defun sd/copy-file-name-to-clipboard ()
     "Copy the current buffer file name to the clipboard."
     (interactive)
@@ -336,7 +336,7 @@
         (kill-new filename)
         (message "Copied buffer file name '%s' to the clipboard." filename))))
 
-          ;;;###autoload
+            ;;;###autoload
   (defun sd/copy-buffer-name-to-clipboard ()
     "Copy the current buffer file name to the clipboard."
     (interactive)
@@ -357,6 +357,12 @@
     (if ( and (string-match-p "std::" (buffer-name)) (string-match-p "::" (Man-default-man-entry)))
         (man-follow (concat "std::" (Man-default-man-entry))))
     (man (Man-default-man-entry)))
+
+  ;;; macros
+  ;; split following text on space. if you want to split the current line, select first
+  (fset 'sd/split-line
+        [?\M-x ?r ?e ?p ?l ?a ?c ?e ?- ?s ?t ?r ?i ?n ?g return ?  return ?\C-q ?\C-j return])
+
 #+END_SRC
 
 * Highlighting related customizations
