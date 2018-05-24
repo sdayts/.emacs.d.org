@@ -102,7 +102,7 @@
 
   ;; Split current line
   (global-unset-key (kbd "C-M-o"))
-  (global-set-key (kbd "C-M-o") 'sd/split-line)
+  (global-set-key (kbd "C-M-o") 'sd/split-current-line)
 
   ;; Backup file configuration
   ;; back
@@ -361,10 +361,13 @@
         (man-follow (concat "std::" (Man-default-man-entry))))
     (man (Man-default-man-entry)))
 
-  ;;; macros
-  ;; split curent line
-(fset 'sd/split-line
-   [?\C-a ?\C-@ ?\C-e ?\M-x ?r ?e ?p ?l ?a ?c ?e ?- ?s ?t ?r ?i ?n ?g return ?  return ?\C-q ?\C-j return])
+  (defun sd/split-current-line ()
+    "Split current line."
+    (interactive)
+    (move-beginning-of-line nil)
+    (set-mark-command nil)
+    (move-end-of-line nil)
+    (replace-regexp "[ \t]+" "\n" nil (region-beginning) (region-end)))
 
 #+END_SRC
 
