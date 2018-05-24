@@ -359,9 +359,9 @@
     (man (Man-default-man-entry)))
 
   ;;; macros
-  ;; split following text on space. if you want to split the current line, select first
-  (fset 'sd/split-line
-        [?\M-x ?r ?e ?p ?l ?a ?c ?e ?- ?s ?t ?r ?i ?n ?g return ?  return ?\C-q ?\C-j return])
+  ;; split curent line
+(fset 'sd/split-line
+   [?\C-a ?\C-@ ?\C-e ?\M-x ?r ?e ?p ?l ?a ?c ?e ?- ?s ?t ?r ?i ?n ?g return ?  return ?\C-q ?\C-j return])
 
 #+END_SRC
 
