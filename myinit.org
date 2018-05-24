@@ -100,6 +100,9 @@
   (global-unset-key (kbd "C-c C-v"))
   (global-set-key (kbd "C-c C-v") 'sd/duplicate-line-or-region)
 
+  ;; Split current line
+  (global-unset-key (kbd "C-M-o"))
+  (global-set-key (kbd "C-M-o") 'sd/split-line)
 
   ;; Backup file configuration
   ;; back
