@@ -500,6 +500,13 @@ highlighted using different colors at one time."
 
 #+END_SRC
 * Modes
+ #+BEGIN_SRC emacs-lisp
+   ;; Somehow need to do this first.
+   ;; Without this, cannot use :chords
+   (use-package use-package-chords
+     :ensure t
+     :config (key-chord-mode 1))
+ #+END_SRC
 ** ac-rtags
 #+BEGIN_SRC emacs-lisp
 (use-package ac-rtags
@@ -582,6 +589,7 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
   (use-package beacon
     :ensure t
+    :bind (("C-l" . beacon-blink))
     :config
     (beacon-mode 1)
     (setq beacon-blink-when-focused t)
