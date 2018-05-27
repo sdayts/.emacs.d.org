@@ -832,6 +832,7 @@ highlighted using different colors at one time."
 ** dired
 #+BEGIN_SRC emacs-lisp
   (use-package dired
+    :after    helm-swoop
     :bind ( ("C-l" . dired-jump)
             :map dired-mode-map
             ("C-M-i" . helm-projectile-grep)
