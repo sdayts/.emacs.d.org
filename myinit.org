@@ -2127,7 +2127,7 @@ the specified directory."
     (set-face-attribute 'magit-diff-hunk-heading-highlight nil :background "black" :foreground "yellow")
     ;; make changes look nice
     (set-face-attribute 'magit-diff-removed-highlight nil :background "black" :foreground "red")
-    (set-face-attribute 'magit-diff-added-highlight nil :background "black" :foregroundq "SeaGreen3")
+    (set-face-attribute 'magit-diff-added-highlight nil :background "black" :foreground "SeaGreen3")
     (set-face-attribute 'magit-diff-removed nil :background "DarkRed")
     (set-face-attribute 'magit-diff-hunk-heading nil :background "black" :foreground "turquoise1" ))
 #+END_SRC
