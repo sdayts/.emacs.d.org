@@ -833,6 +833,7 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
   (use-package dired
     :after    helm-swoop
+    :chords (("ll" . dired-jump))
     :bind ( ("C-l" . dired-jump)
             :map dired-mode-map
             ("C-M-i" . helm-projectile-grep)
@@ -2088,6 +2089,12 @@ the specified directory."
   (use-package helm-rtags
       :ensure    t )
 #+END_SRC
+** hydra
+#+BEGIN_SRC emacs-lisp
+(use-package hydra
+    :ensure t
+    :config)
+#+END_SRC
 ** irony
 #+BEGIN_SRC emacs-lisp
   (defun my-irony-mode-hook ()
@@ -2116,13 +2123,27 @@ the specified directory."
 (use-package json-mode
     :ensure t)
 #+END_SRC
+** key-chord
+#+BEGIN_SRC emacs-lisp
+  (use-package key-chord
+      :ensure t
+      :config)
+
+  ;; turn on the key-chord mode
+  (key-chord-mode 1)
+
+  ;; fast copy
+  (key-chord-define-global "cc" 'sd/whole-line-or-region-kill-ring-save)
+  ;; fast paste
+  (key-chord-define-global "vv" 'yank)
+#+END_SRC
 ** magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :ensure t
+    :chords (("mm" . magit-status))
     :bind (("C-x g" . magit-status)
-           ("C-x m l" . magit-log-all)
-           )
+           ("C-x m l" . magit-log-all))
     :config
     ;; update magit heading line to yellow on black, the way I like it...
     (set-face-attribute 'magit-diff-hunk-heading-highlight nil :background "black" :foreground "yellow")
@@ -2485,6 +2506,12 @@ the specified directory."
     (unbind-key "C-x r u" undo-tree-map)
     (unbind-key "C-x r U" undo-tree-map)
     (unbind-key "C-x r" undo-tree-map))
+#+END_SRC
+** use-package-chors
+#+BEGIN_SRC emacs-lisp
+(use-package use-package-chords
+  :ensure t
+  :config (key-chord-mode 1))
 #+END_SRC
 ** yasnippet
 #+BEGIN_SRC emacs-lisp
