@@ -835,9 +835,10 @@ highlighted using different colors at one time."
     :bind ( ("C-l" . dired-jump)
             :map dired-mode-map
             ("C-M-i" . helm-projectile-grep)
-            ("M-i" . helm-occur)
+            ("M-i" . helm-swoop)
             ;; End/Back key goes up one directory in dired mode
             ("<end>" . dired-up-directory))
+    :init
     :config
     ;; enable dired omit mode
     (require 'dired-x)
@@ -851,10 +852,6 @@ highlighted using different colors at one time."
     (setq-local ace-jump-search-filter
                           (lambda ()
                             (get-text-property (point) 'dired-filename)))
-    ;; set up better colors
-    (set-face-attribute 'diredp-flag-mark-line nil :background "black" :foreground "yellow" )
-    (set-face-attribute 'diredp-flag-mark nil :background "black" :foreground "green" )
-    (set-face-attribute 'diredp-deletion nil :background "black" :foreground "firebrick1" )
     ;; subpackages
     (use-package dired-hacks-utils :ensure t)
     (use-package dired-narrow
@@ -867,7 +864,11 @@ highlighted using different colors at one time."
     :ensure t
     :demand t
     :config
-    (diredp-make-find-file-keys-reuse-dirs))
+    (diredp-make-find-file-keys-reuse-dirs)
+    ;; set up better colors
+    (set-face-attribute 'diredp-flag-mark-line nil :background "black" :foreground "yellow" )
+    (set-face-attribute 'diredp-flag-mark nil :background "black" :foreground "green" )
+    (set-face-attribute 'diredp-deletion nil :background "black" :foreground "firebrick1" ))
 #+END_SRC
 ** esup
 #+BEGIN_SRC emacs-lisp
@@ -1999,7 +2000,7 @@ the specified directory."
     :bind (("C-S-b"   . helm-mini)
            ("M-x"     . helm-M-x)             ;; meta-X is handled by Helm
            ("<f1>"    . helm-imenu)          ;; Map F1 to helm-imenu
-           ("M-i"     . helm-occur)
+           ("M-i"     . helm-swoop)
            ("M-y"     . helm-show-kill-ring)
            ("C-x C-f" . helm-find-files))
     :init
@@ -2049,8 +2050,6 @@ the specified directory."
       )
 
     :config
-    ;; somehow ":diminish helm-mode does not work
-    (diminish 'helm-mode)
     ;; make helm selection yellow on black
     (set-face-attribute 'helm-visible-mark nil
                         :background "black"
@@ -2060,6 +2059,21 @@ the specified directory."
                         :background "DarkCyan"
                         :foreground "white")
     )
+
+    (use-package helm-swoop
+      :ensure    t
+      :config
+      ;; make sure helm swoop plays nice with shackle
+      ;; thank you wasamasa!
+      (setq helm-swoop-split-window-function 'display-buffer)
+      ;; my own faces
+      (set-face-attribute 'helm-swoop-target-line-face nil
+                          :background "yellow"
+                          :foreground "black")
+
+      (set-face-attribute 'helm-swoop-target-word-face nil
+                          :background "black"
+                          :foreground "yellow"))
 #+END_SRC
 ** helm-projectile
 #+BEGIN_SRC emacs-lisp
