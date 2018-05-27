@@ -593,7 +593,7 @@ highlighted using different colors at one time."
     :config
     (beacon-mode 1)
     (setq beacon-blink-when-focused t)
-    (setq beacon-color "Green"))
+    (setq beacon-color "cyan"))
 #+END_SRC
 ** company
 #+BEGIN_SRC emacs-lisp
