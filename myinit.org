@@ -832,10 +832,9 @@ highlighted using different colors at one time."
 ** dired
 #+BEGIN_SRC emacs-lisp
   (use-package dired
-    :after    helm-swoop
+    :after    (helm-swoop)
     :chords (("ll" . dired-jump))
-    :bind ( ("C-l" . dired-jump)
-            :map dired-mode-map
+    :bind ( :map dired-mode-map
             ("C-M-i" . helm-projectile-grep)
             ("M-i" . helm-swoop)
             ;; End/Back key goes up one directory in dired mode
