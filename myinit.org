@@ -160,7 +160,10 @@
   (setq font-lock-maximum-decoration t)
 
   ;; line numbers everywhere. turn off if this feature becomes too expensive
-  (global-linum-mode 1)
+  ;; turning off linum
+  ;; (global-linum-mode 1)
+  ;; native line number implementation
+  (global-display-line-numbers-mode)
 
   ;; grep the entire project. grep seems to work better than "ag"
   (global-unset-key (kbd "C-M-i"))
@@ -846,7 +849,7 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
   (use-package dired
     :after    (helm-swoop)
-    :chords (("ll" . dired-jump))
+    :chords (("LL" . dired-jump))
     :bind ( :map dired-mode-map
             ("C-M-i" . helm-projectile-grep)
             ("M-i" . helm-swoop)
@@ -2160,7 +2163,7 @@ the specified directory."
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :ensure t
-    :chords (("mm" . magit-status))
+    :chords (("MM" . magit-status))
     :bind (("C-x g" . magit-status)
            ("C-x m l" . magit-log-all))
     :config
@@ -2244,9 +2247,7 @@ the specified directory."
     ;; indent propertly in org babel mode
     (setq org-src-tab-acts-natively t)
     ;; support shift-selection-mode
-    (setq org-support-shift-select t)
-    ;; turn off line numbers in org mode. too slow
-    (add-hook 'org-mode-hook (lambda () (linum-mode -1))))
+    (setq org-support-shift-select t))
 #+END_SRC
 ** projectile
 #+BEGIN_SRC  emacs-lisp
