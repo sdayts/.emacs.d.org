@@ -2238,16 +2238,16 @@ the specified directory."
 ** org
 #+BEGIN_SRC emacs-lisp
   (use-package org
-    :diminish org-mode
     :ensure t
     :init
     (unbind-key "M-h" org-mode-map)
     ;; indent propertly in org babel mode
     (setq org-src-tab-acts-natively t)
     ;; support shift-selection-mode
-    (setq org-support-shift-select t))
+    (setq org-support-shift-select t)
+    ;; turn off line numbers in org mode. too slow
+    (add-hook 'org-mode-hook (lambda () (linum-mode -1))))
 #+END_SRC
-
 ** projectile
 #+BEGIN_SRC  emacs-lisp
   (use-package projectile
