@@ -121,6 +121,11 @@
         )
 
   ;; save desktop on exit
+  (when window-system
+    (add-to-list 'default-frame-alist '(width . 132))
+    (add-to-list 'default-frame-alist '(height . 32))
+    (add-to-list 'default-frame-alist '(ns-appearance . dark))
+    (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))
   (desktop-save-mode 1)
 
   ;; toggle h-cpp
