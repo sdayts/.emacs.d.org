@@ -638,7 +638,11 @@ highlighted using different colors at one time."
 #+END_SRC
 ** counsel
 #+BEGIN_SRC emacs-lisp
-(use-package counsel
+  (use-package counsel
+    :bind ( ("M-y"   . counsel-yank-pop)
+            ("C-S-b" . counsel-ibuffer)
+            ("M-x"   . counsel-M-x)
+            ("<f1>"  . counsel-imenu))
     :ensure t)
 #+END_SRC
 ** cc-mode
@@ -2024,10 +2028,10 @@ the specified directory."
   (use-package helm
     :ensure t
     :bind (("C-S-b"   . helm-mini)
-           ("M-x"     . helm-M-x)             ;; meta-X is handled by Helm
-           ("<f1>"    . helm-imenu)          ;; Map F1 to helm-imenu
+           ;;("M-x"     . helm-M-x)             ;; meta-X is handled by Helm
+           ;;("<f1>"    . helm-imenu)          ;; Map F1 to helm-imenu
            ("M-i"     . helm-swoop)
-           ("M-y"     . helm-show-kill-ring)
+           ;;("M-y"     . helm-show-kill-ring)
            ("C-x C-f" . helm-find-files))
     :init
     (setq helm-split-window-default-side 'same ; display helm in the same window
