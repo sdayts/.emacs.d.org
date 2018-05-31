@@ -164,9 +164,6 @@
   ;; performance enhancement, seems to help a little when commenting out large chunks of c++ code
   (setq font-lock-maximum-decoration t)
 
-  ;; line numbers everywhere. turn off if this feature becomes too expensive
-  ;; turning off linum
-  ;; (global-linum-mode 1)
   ;; native line number implementation
   (global-display-line-numbers-mode)
 
@@ -200,9 +197,9 @@
   ;; always select help window
   (setq help-window-select t)
 
-  ;; Copy word under the cursor
+  ;; bookmarks
   (global-unset-key (kbd "C-M-b"))
-  (global-set-key (kbd "C-M-b") 'helm-bookmarks)
+  (global-set-key (kbd "C-M-b") 'counsel-bookmark)
 
 #+END_SRC
 
@@ -2143,7 +2140,16 @@ the specified directory."
     :ensure t
     ;:diminish ivy-mode
     :config
+    (setq ivy-height 25)
     (ivy-mode 1))
+#+END_SRC
+** ivy-posframe
+#+BEGIN_SRC emacs-lisp
+  (use-package ivy-posframe
+    :ensure t
+    :after ivy
+    :config
+    (setq ivy-display-function #'ivy-posframe-display-at-frame-center))
 #+END_SRC
 ** json-mode
 #+BEGIN_SRC emacs-lisp
