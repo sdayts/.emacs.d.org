@@ -639,10 +639,11 @@ highlighted using different colors at one time."
 ** counsel
 #+BEGIN_SRC emacs-lisp
   (use-package counsel
-    :bind ( ("M-y"   . counsel-yank-pop)
-            ("C-S-b" . counsel-ibuffer)
-            ("M-x"   . counsel-M-x)
-            ("<f1>"  . counsel-imenu))
+    :bind ( ("M-y"     . counsel-yank-pop)
+            ("C-S-b"   . counsel-ibuffer)
+            ("M-x"     . counsel-M-x)
+            ("<f1>"    . counsel-imenu)
+            ("C-c C-f" . counsel-find-file))
     :ensure t)
 #+END_SRC
 ** cc-mode
@@ -1999,7 +2000,8 @@ the specified directory."
   (use-package golden-ratio
     :ensure t
     :config
-    (golden-ratio-mode 1))
+    (golden-ratio-mode 1)
+    (golden-ratio-toggle-widescreen))
 #+END_SRC
 ** iedit
 #+BEGIN_SRC emacs-lisp
@@ -2027,12 +2029,14 @@ the specified directory."
 #+BEGIN_SRC emacs-lisp
   (use-package helm
     :ensure t
-    :bind (("C-S-b"   . helm-mini)
+    :bind (
+           ;;("C-S-b"   . helm-mini)
            ;;("M-x"     . helm-M-x)             ;; meta-X is handled by Helm
            ;;("<f1>"    . helm-imenu)          ;; Map F1 to helm-imenu
            ("M-i"     . helm-swoop)
            ;;("M-y"     . helm-show-kill-ring)
-           ("C-x C-f" . helm-find-files))
+           ;;("C-x C-f" . helm-find-files)
+           )
     :init
     (setq helm-split-window-default-side 'same ; display helm in the same window
           helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
@@ -2145,6 +2149,9 @@ the specified directory."
     ;:diminish ivy-mode
     :config
     (setq ivy-height 25)
+    ;; for completions, the order does not matter
+    (setq ivy-re-builders-alist
+        '((t . ivy--regex-ignore-order)))
     (ivy-mode 1))
 #+END_SRC
 ** ivy-posframe
@@ -2436,7 +2443,8 @@ the specified directory."
 #+END_SRC
 ** swiper
 #+BEGIN_SRC emacs-lisp
-(use-package swiper
+  (use-package swiper
+    :bind ( ("M-i" . swiper) )
     :ensure t)
 #+END_SRC
 ** transpose-frame
