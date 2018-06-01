@@ -522,9 +522,7 @@ highlighted using different colors at one time."
   ;; might want to consider switching to ivyy
   (use-package ace-jump-mode
     :ensure t
-    :bind (("M-SPC" . ace-jump-word-mode )
-	   ("C-M-r" . redraw-display )
-	   )
+    :bind (("M-SPC" . ace-jump-word-mode ))
     :init
     ;; disable gray background
     (setq ace-jump-mode-gray-background nil)
@@ -643,7 +641,8 @@ highlighted using different colors at one time."
             ("C-S-b"   . counsel-ibuffer)
             ("M-x"     . counsel-M-x)
             ("<f1>"    . counsel-imenu)
-            ("C-c C-f" . counsel-find-file))
+            ("C-c C-f" . counsel-find-file)
+            ("C-M-r"   . counsel-recentf ))
     :ensure t)
 #+END_SRC
 ** cc-mode
@@ -2033,7 +2032,7 @@ the specified directory."
            ;;("C-S-b"   . helm-mini)
            ;;("M-x"     . helm-M-x)             ;; meta-X is handled by Helm
            ;;("<f1>"    . helm-imenu)          ;; Map F1 to helm-imenu
-           ("M-i"     . helm-swoop)
+           ;;("M-i"     . helm-swoop)
            ;;("M-y"     . helm-show-kill-ring)
            ;;("C-x C-f" . helm-find-files)
            )
@@ -2146,12 +2145,12 @@ the specified directory."
   (use-package ivy
     :diminish ivy-mode
     :ensure t
-    ;:diminish ivy-mode
     :config
     (setq ivy-height 25)
     ;; for completions, the order does not matter
     (setq ivy-re-builders-alist
-        '((t . ivy--regex-ignore-order)))
+          '((t . ivy--regex-ignore-order)))
+    (setq ivy-use-virtual-buffers t)
     (ivy-mode 1))
 #+END_SRC
 ** ivy-posframe
