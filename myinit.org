@@ -169,7 +169,7 @@
 
   ;; grep the entire project. grep seems to work better than "ag"
   (global-unset-key (kbd "C-M-i"))
-  (global-set-key (kbd "C-M-i") 'helm-projectile-grep)
+  (global-set-key (kbd "C-M-i") 'counsel-projectile-grep)
 
   ;; keybinding for re-centering the buffer
   (global-unset-key (kbd "M-r"))
@@ -598,53 +598,6 @@ highlighted using different colors at one time."
     (setq beacon-blink-when-focused t)
     (setq beacon-color "cyan"))
 #+END_SRC
-** company
-#+BEGIN_SRC emacs-lisp
-  (use-package company
-    :ensure t
-    :config
-    (global-company-mode)
-    (setq company-idle-delay 0))
-#+END_SRC
-** company-rtags
-#+BEGIN_SRC emacs-lisp
-  (use-package company-rtags
-    ;; disable for now, very slow and most importantly doesn't work
-    :disabled
-    :ensure t
-    :config
-    (push 'company-rtags company-backends))
-#+END_SRC
-** company-irony
-#+BEGIN_SRC emacs-lisp
-  (use-package company-irony
-    :ensure t
-    :bind (("C-SPC" . company-complete))
-    :init
-    (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
-    (setq company-backends (delete 'company-semantic company-backends))
-    (setq company-backends (delete 'company-clang company-backends))
-    :config
-    (eval-after-load 'company
-    '(add-to-list
-      'company-backends '(company-irony-c-headers company-irony))))
-#+END_SRC
-** company-irony-c-headers
-#+BEGIN_SRC emacs-lisp
-  (use-package company-irony-c-headers
-    :ensure t)
-#+END_SRC
-** counsel
-#+BEGIN_SRC emacs-lisp
-  (use-package counsel
-    :bind ( ("M-y"     . counsel-yank-pop)
-            ("C-S-b"   . counsel-ibuffer)
-            ("M-x"     . counsel-M-x)
-            ("<f1>"    . counsel-imenu)
-            ("C-c C-f" . counsel-find-file)
-            ("C-M-r"   . counsel-recentf ))
-    :ensure t)
-#+END_SRC
 ** cc-mode
 #+BEGIN_SRC emacs-lisp
   ;; from https://github.com/philippe-grenet/exordium/blob/master/modules/init-bde-style.el
@@ -845,20 +798,71 @@ highlighted using different colors at one time."
         (extern-lang-close     . 0))))
     )
 #+END_SRC
+** company
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :ensure t
+    :config
+    (global-company-mode)
+    (setq company-idle-delay 0))
+#+END_SRC
+** company-rtags
+#+BEGIN_SRC emacs-lisp
+  (use-package company-rtags
+    ;; disable for now, very slow and most importantly doesn't work
+    :disabled
+    :ensure t
+    :config
+    (push 'company-rtags company-backends))
+#+END_SRC
+** company-irony
+#+BEGIN_SRC emacs-lisp
+  (use-package company-irony
+    :ensure t
+    :bind (("C-SPC" . company-complete))
+    :init
+    (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
+    (setq company-backends (delete 'company-semantic company-backends))
+    (setq company-backends (delete 'company-clang company-backends))
+    :config
+    (eval-after-load 'company
+    '(add-to-list
+      'company-backends '(company-irony-c-headers company-irony))))
+#+END_SRC
+** company-irony-c-headers
+#+BEGIN_SRC emacs-lisp
+  (use-package company-irony-c-headers
+    :ensure t)
+#+END_SRC
+** counsel
+#+BEGIN_SRC emacs-lisp
+  (use-package counsel
+    :bind ( ("M-y"     . counsel-yank-pop)
+            ("C-S-b"   . counsel-ibuffer)
+            ("M-x"     . counsel-M-x)
+            ("<f1>"    . counsel-imenu)
+            ("C-c C-f" . counsel-find-file)
+            ("C-M-r"   . counsel-recentf ))
+    :ensure t)
+#+END_SRC
+** counsel-projectile
+#+BEGIN_SRC emacs-lisp
+  (use-package counsel-projectile
+    :ensure t)
+#+END_SRC
 ** diminish
 #+BEGIN_SRC emacs-lisp
   (use-package diminish
     :ensure t)
 #+END_SRC
-
 ** dired
 #+BEGIN_SRC emacs-lisp
   (use-package dired
     :after    (helm-swoop)
     :chords (("LL" . dired-jump))
     :bind ( :map dired-mode-map
-            ("C-M-i" . helm-projectile-grep)
-            ("M-i" . helm-swoop)
+            ("C-M-i" . counsel-projectile-grep)
+            ("M-i" . swiper)
             ;; End/Back key goes up one directory in dired mode
             ("<end>" . dired-up-directory))
     :init
