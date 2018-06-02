@@ -201,6 +201,8 @@
   (global-unset-key (kbd "C-M-b"))
   (global-set-key (kbd "C-M-b") 'counsel-bookmark)
 
+  ;; recenter after imenu jump
+  (add-hook 'imenu-after-jump-hook #'recenter-top-bottom)
 #+END_SRC
 
 * Custom functions
@@ -746,7 +748,8 @@ highlighted using different colors at one time."
           ;; with rtags ring
           :map c++-mode-map
                ("C-x i". sd/find-last-include)
-               ("<f1>". rtags-helm-select-taglist)
+               ;;("<f1>". rtags-helm-select-taglist)
+               ("<f1>". counsel-semantic-or-imenu)
                ("C-M-f" . rtags-find-symbol))
     :init
     ;; enable electric pair mode for buffers in c-mode
