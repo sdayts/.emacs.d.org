@@ -851,7 +851,10 @@ highlighted using different colors at one time."
 ** counsel-projectile
 #+BEGIN_SRC emacs-lisp
   (use-package counsel-projectile
-    :ensure t)
+    :ensure t
+    :config
+    ;; make searches case-insensitive
+    (setq counsel-projectile-grep-base-command "grep -irnE %s -- %%s ."))
 #+END_SRC
 ** diminish
 #+BEGIN_SRC emacs-lisp
