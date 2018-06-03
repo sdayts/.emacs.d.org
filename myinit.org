@@ -852,6 +852,7 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
   (use-package counsel-projectile
     :ensure t
+    :bind (("M-o" . counsel-projectile-find-file))
     :config
     ;; make searches case-insensitive
     (setq counsel-projectile-grep-base-command "grep -irnE %s -- %%s ."))
@@ -2122,7 +2123,7 @@ the specified directory."
 #+BEGIN_SRC emacs-lisp
   (use-package helm-projectile
     :ensure    t
-    :bind      ("M-o" . helm-projectile)
+  ;;  :bind      ("M-o" . helm-projectile)
     :after     (projectile))
 #+END_SRC
 ** helm-rtags
