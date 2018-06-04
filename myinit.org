@@ -501,6 +501,9 @@ highlighted using different colors at one time."
   (global-set-key (kbd "M-j") 'windmove-down)
   (global-set-key (kbd "M-<down>") 'windmove-down)
 
+  ;; Start maximised (cross-platf)
+  (add-hook 'window-setup-hook 'toggle-frame-maximized t)
+
   ;; update header line's color every time the buffer is switched
   ;;(add-hook 'buffer-list-update-hook
   ;;          'sd/update-header)
@@ -2628,6 +2631,8 @@ the specified directory."
 # 'paredit
 # 'rtags-ac
 # web-mode
+# simpleclip-mode
+
 * TODO
 ** Add snippets
 *** for include
