@@ -167,9 +167,9 @@
   ;; native line number implementation
   (global-display-line-numbers-mode)
 
-  ;; grep the entire project. grep seems to work better than "ag"
+  ;; search the entire project
   (global-unset-key (kbd "C-M-i"))
-  (global-set-key (kbd "C-M-i") 'counsel-projectile-grep)
+  (global-set-key (kbd "C-M-i") 'counsel-projectile-ag)
 
   ;; keybinding for re-centering the buffer
   (global-unset-key (kbd "M-r"))
@@ -758,8 +758,7 @@ highlighted using different colors at one time."
           ;; with rtags ring
           :map c++-mode-map
                ("C-x i". sd/find-last-include)
-               ;;("<f1>". rtags-helm-select-taglist)
-               ("<f1>". counsel-semantic-or-imenu)
+               ("<f1>". rtags-imenu)
                ("C-M-f" . rtags-find-symbol))
     :init
     ;; enable electric pair mode for buffers in c-mode
@@ -878,7 +877,7 @@ highlighted using different colors at one time."
     :after    (helm-swoop)
     :chords (("LL" . dired-jump))
     :bind ( :map dired-mode-map
-            ("C-M-i" . counsel-projectile-grep)
+            ("C-M-i" . counsel-projectile-ag)
             ("M-i" . swiper)
             ;; End/Back key goes up one directory in dired mode
             ("<end>" . dired-up-directory))
@@ -2201,9 +2200,9 @@ the specified directory."
   (key-chord-mode 1)
 
   ;; fast copy
-  (key-chord-define-global "cc" 'sd/whole-line-or-region-kill-ring-save)
+  ;;(key-chord-define-global "cc" 'sd/whole-line-or-region-kill-ring-save)
   ;; fast paste
-  (key-chord-define-global "vv" 'yank)
+  ;;(key-chord-define-global "vv" 'yank)
 #+END_SRC
 ** magit
 #+BEGIN_SRC emacs-lisp
