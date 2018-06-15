@@ -523,7 +523,9 @@ highlighted using different colors at one time."
 
 #+END_SRC
 * Aliases
+#+BEGIN_SRC emacs-lisp
 (defalias 'dbl 'sd/region-delete-blank-lines)
+#+END_SRC
 * Modes
  #+BEGIN_SRC emacs-lisp
    ;; Somehow need to do this first.
@@ -893,7 +895,8 @@ highlighted using different colors at one time."
     :config
     ;; enable dired omit mode
     (require 'dired-x)
-    (setq-default dired-omit-files-p t) ; Buffer-local variable
+    ;; this is messing up the desktop restore. need to figure out how to enable dired-omit-mode when entering dired
+    ;;(setq-default dired-omit-files-p t) ; Buffer-local variable
     (setq dired-omit-files
           ;; omit files I don't care about
           (concat dired-omit-files "\\|\\.o$\\|\\.d$\\|\\.dd$\\|\\.sundev1.c$\\|\\.mapfile$\\|\\.depends$\\|\\.ibm$\\|\\.sundev1$\\|\\.trap$\\|^llcalc_\\|^00"))
