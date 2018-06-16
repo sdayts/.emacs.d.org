@@ -2371,7 +2371,9 @@ the specified directory."
            ("C-x r" . rtags-find-references-at-point)
            ("C-<f1>" . rtags-imenu))
     :config
-    (setq rtags-display-result-backend 'helm))
+    (setq rtags-display-result-backend 'helm)
+    ;; don't jump to first match, very annoying
+    (setq rtags-jump-to-first-match nil))
 #+END_SRC
 ** shackle
 #+BEGIN_SRC emacs-lisp
