@@ -887,27 +887,31 @@ highlighted using different colors at one time."
     :after    (helm-swoop)
     :chords (("LL" . dired-jump))
     :bind ( :map dired-mode-map
-            ("C-M-i" . counsel-projectile-ag)
-            ("M-i" . swiper)
-            ;; End/Back key goes up one directory in dired mode
-            ("<end>" . dired-up-directory))
+                 ("C-M-i" . counsel-projectile-ag)
+                 ("M-i" . swiper)
+                 ;; End/Back key goes up one directory in dired mode
+                 ("<end>" . dired-up-directory))
     :init
+    (defun sd/dired-config()
+      (require 'dired-x)
+      (setq dired-omit-files
+            ;; omit files I don't care about
+            (concat dired-omit-files "\\|\\.o$\\|\\.d$\\|\\.dd$\\|\\.sundev1.c$\\|\\.mapfile$\\|\\.depends$\\|\\.ibm$\\|\\.sundev1$\\|\\.trap$\\|^llcalc_\\|^00"))
+      ;; enable dired omit mode
+      (dired-omit-mode t))
+
+    (add-hook 'dired-mode-hook 'sd/dired-config)
+
     :config
-    ;; enable dired omit mode
-    (require 'dired-x)
-    ;; this is messing up the desktop restore. need to figure out how to enable dired-omit-mode when entering dired
-    ;;(setq-default dired-omit-files-p t) ; Buffer-local variable
-    (setq dired-omit-files
-          ;; omit files I don't care about
-          (concat dired-omit-files "\\|\\.o$\\|\\.d$\\|\\.dd$\\|\\.sundev1.c$\\|\\.mapfile$\\|\\.depends$\\|\\.ibm$\\|\\.sundev1$\\|\\.trap$\\|^llcalc_\\|^00"))
     ;; unset Cntl+Shift+b in dired mode which is by default wants to bookmark a file
     ;; while I like it to bring up the helm-mini
     (local-unset-key (kbd "C-S-b"))
     (setq-local ace-jump-search-filter
-                          (lambda ()
-                            (get-text-property (point) 'dired-filename)))
+                (lambda ()
+                  (get-text-property (point) 'dired-filename)))
     ;; subpackages
-    (use-package dired-hacks-utils :ensure t)
+    (use-package dired-hacks-utils
+      :ensure t)
     (use-package dired-narrow
       :ensure t
       :config))
