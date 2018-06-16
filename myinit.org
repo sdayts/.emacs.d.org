@@ -22,8 +22,8 @@
   (global-unset-key (kbd "C-v"))
   (global-set-key (kbd "C-v") 'yank)
 
-  (global-unset-key (kbd "C-M-v"))
-  (global-set-key (kbd "C-M-v") 'yank-rectangle)
+  (global-unset-key (kbd "C-M-y"))
+  (global-set-key (kbd "C-M-y") 'yank-rectangle)
 
   ;; Paste the way I am used to
   (global-unset-key (kbd "C-M-j"))
@@ -758,18 +758,18 @@ highlighted using different colors at one time."
           '*
         '+)))
 
-  ; associate .h file with c++ mode
+  ;; associate .h file with c++ mode
   (add-to-list 'auto-mode-alist '("\\.[hc]\\'" . c++-mode))
 
   (use-package cc-mode
     :ensure t
-    :bind(;; for the time being pop global mark
-          ;; after rtags is configured, will need to integrate
-          ;; with rtags ring
+    :bind(
           :map c++-mode-map
-               ("C-x i". sd/find-last-include)
-               ("<f1>". rtags-imenu)
-               ("C-M-f" . rtags-find-symbol))
+               ("C-x i" . sd/find-last-include)
+               ("<f1>"  . rtags-imenu)
+               ("C-M-f" . rtags-find-symbol)
+               ("C-M-h" . rtags-print-class-hierarchy)
+               ("C-M-v" . rtags-find-virtuals-at-point))
     :init
     ;; enable electric pair mode for buffers in c-mode
     (add-hook 'c++-mode-hook #'electric-pair-local-mode)
@@ -817,8 +817,7 @@ highlighted using different colors at one time."
         (member-init-intro     . 0)
         (extern-lang-open      . 0)
         (brace-list-entry      . /)
-        (extern-lang-close     . 0))))
-    )
+        (extern-lang-close     . 0)))))
 #+END_SRC
 ** company
 #+BEGIN_SRC emacs-lisp
