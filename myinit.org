@@ -211,6 +211,9 @@
   (global-unset-key (kbd "C-M-d"))
   (global-set-key (kbd "C-M-d") 'just-one-space)
 
+  (global-unset-key (kbd "C-b"))
+  (global-set-key (kbd "C-b") 'back-to-indentation)
+
 #+END_SRC
 
 * Custom functions
@@ -767,7 +770,7 @@ highlighted using different colors at one time."
           :map c++-mode-map
                ("C-x i" . sd/find-last-include)
                ("<f1>"  . rtags-imenu)
-               ("C-m"   . rtags-imenu)
+               ("M-m"   . rtags-imenu)
                ("C-M-f" . rtags-find-symbol)
                ("C-M-h" . rtags-print-class-hierarchy)
                ("C-M-v" . rtags-find-virtuals-at-point))
@@ -863,6 +866,7 @@ highlighted using different colors at one time."
             ("C-S-b"   . counsel-ibuffer)
             ("M-x"     . counsel-M-x)
             ("<f1>"    . counsel-imenu)
+            ("M-m"     . counsel-imenu)
             ("C-c C-f" . counsel-find-file)
             ("C-M-r"   . counsel-recentf ))
     :ensure t)
