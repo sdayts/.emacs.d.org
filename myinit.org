@@ -546,6 +546,7 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
   ;; might want to consider switching to ivyy
   (use-package ace-jump-mode
+    :disabled
     :ensure t
     :bind (("M-SPC" . ace-jump-word-mode ))
     :init
@@ -923,8 +924,7 @@ highlighted using different colors at one time."
 ** dired+
 #+BEGIN_SRC emacs-lisp
   (use-package dired+
-    :ensure t
-    :demand t
+    :load-path "~/.emacs.d/local-packages/dired+"
     :config
     (diredp-make-find-file-keys-reuse-dirs)
     ;; set up better colors
@@ -1837,9 +1837,6 @@ the specified directory."
   ;;;                current file using Helm.
   ;;; C-c r r        `helm-flycheck' show rtags errors in helm buffer
   ;;; -------------- -------------------------------------------------------
-
-  (require 'rtags)
-  (require 'helm)
 
   (when (eq exordium-rtags-syntax-checker :flycheck)
     (require 'helm-flycheck)
