@@ -635,7 +635,9 @@ highlighted using different colors at one time."
     :config
     (beacon-mode 1)
     (setq beacon-blink-when-focused t)
-    (setq beacon-color "cyan"))
+    (setq beacon-color "cyan")
+    (setq beacon-size 50)
+    (setq beacon-blink-duration 0.6))
 #+END_SRC
 ** cc-mode
 #+BEGIN_SRC emacs-lisp
