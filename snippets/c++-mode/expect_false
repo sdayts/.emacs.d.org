@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: EXPECT_FALSE
+# key: ef
+# --
+EXPECT_FALSE( $0 );

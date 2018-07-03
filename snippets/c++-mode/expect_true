@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: EXPECT_TRUE
+# key: et
+# --
+EXPECT_TRUE( $0 );

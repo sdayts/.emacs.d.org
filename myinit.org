@@ -2320,7 +2320,11 @@ the specified directory."
     ;; indent propertly in org babel mode
     (setq org-src-tab-acts-natively t)
     ;; support shift-selection-mode
-    (setq org-support-shift-select t))
+    (setq org-support-shift-select t)
+    ;; timestamp TODO items
+    (setq org-log-done 'time)
+    ;; insert notes for DONE items
+    (setq org-log-done 'note))
 #+END_SRC
 ** projectile
 #+BEGIN_SRC  emacs-lisp
