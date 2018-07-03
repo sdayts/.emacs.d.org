@@ -598,6 +598,19 @@ highlighted using different colors at one time."
   (use-package auto-complete-c-headers
     :ensure t)
 #+END_SRC
+** avy
+#+BEGIN_SRC emacs-lisp
+  (use-package avy
+    :ensure t
+    :bind (("M-SPC" . avy-goto-word-1 ))
+    :config
+    ;; restrict matching to one buffer
+    (setq avy-all-windows nil)
+    ;; yellow on black for matching characters
+    (custom-set-faces
+     '(avy-lead-face
+       ((t (:inherit avy-lead-face :height 1.0 :foreground "yellow" :background "black" ))))))
+#+END_SRC
 ** backbutton
 #+BEGIN_SRC emacs-lisp
   (defun sd/pop-global-mark-ring()
