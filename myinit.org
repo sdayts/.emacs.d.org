@@ -169,7 +169,9 @@
 
   ;; search the entire project
   (global-unset-key (kbd "C-M-i"))
-  (global-set-key (kbd "C-M-i") 'counsel-projectile-ag)
+  ;; counsel-project-ag does not seem to work anymore, switching to native counsel command
+  ;; (global-set-key (kbd "C-M-i") 'counsel-projectile-ag)
+  (global-set-key (kbd "C-M-i") 'counsel-git-grep)
 
   ;; keybinding for re-centering the buffer
   (global-unset-key (kbd "M-r"))
@@ -907,7 +909,7 @@ highlighted using different colors at one time."
     :after    (helm-swoop)
     :chords (("LL" . dired-jump))
     :bind ( :map dired-mode-map
-                 ("C-M-i" . counsel-projectile-ag)
+                 ("C-M-i" . 'counsel-git-grep)
                  ("M-i" . swiper)
                  ;; End/Back key goes up one directory in dired mode
                  ("<end>" . dired-up-directory))
