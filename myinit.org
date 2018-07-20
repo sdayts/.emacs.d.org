@@ -2687,9 +2687,6 @@ the specified directory."
 # web-mode
 # simpleclip-mode
 * TODO
-** Add snippets
-*** for include
-*** for return true & false
 ** shortcut/macro for going to the includes section and being able to come back by popping the stack with ctrl-,
 ** random snippets
 (use-package projectile
