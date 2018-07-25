@@ -2334,6 +2334,7 @@ the specified directory."
     :ensure t
     :init
     (unbind-key "M-h" org-mode-map)
+    (unbind-key "C-M-i" org-mode-map)
     ;; indent propertly in org babel mode
     (setq org-src-tab-acts-natively t)
     ;; support shift-selection-mode
@@ -2349,7 +2350,7 @@ the specified directory."
     :ensure t
     :demand t
     :init
-    (setq projectile-completion-system 'helm)
+    ;;(setq projectile-completion-system 'helm)
     ;; solves a performance issue
     ;; without this, every cursor movement is incredibly slow
     (setq projectile-mode-line
