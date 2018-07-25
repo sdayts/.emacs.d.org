@@ -2434,7 +2434,14 @@ the specified directory."
      (setq shell-pop-window-height 60)
      (setq shell-pop-full-span t)
      (setq shell-pop-window-position "bottom"))
-
+#+END_SRC
+** sh-script
+#+BEGIN_SRC emacs-lisp
+  (use-package sh-script
+    :config
+    ;; unbind c++-mode-map keys which interfer with global mappings
+    (unbind-key "C-c C-c" sh-mode-map)
+    (unbind-key "C-c C-u" sh-mode-map))
 #+END_SRC
 ** spaceline
 #+BEGIN_SRC emacs-lisp
