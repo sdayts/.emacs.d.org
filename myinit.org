@@ -2206,6 +2206,7 @@ the specified directory."
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
     :diminish ivy-mode
+    :bind(("<f10>" . ivy-resume))
     :ensure t
     :config
     (setq ivy-height 25)
@@ -2213,6 +2214,8 @@ the specified directory."
     (setq ivy-re-builders-alist
           '((t . ivy--regex-ignore-order)))
     (setq ivy-use-virtual-buffers t)
+    ;; remove annoying ^ prefix
+    (setq ivy-initial-inputs-alist nil)
     (set-face-attribute 'ivy-current-match nil :foreground "green" :weight 'normal )
     (set-face-attribute 'ivy-minibuffer-match-face-2 nil :background "black" :foreground "yellow"  :weight 'normal)
     (set-face-attribute 'ivy-minibuffer-match-face-3 nil :background "black" :foreground "green"  :weight 'normal)
