@@ -213,9 +213,13 @@
   (global-unset-key (kbd "C-M-d"))
   (global-set-key (kbd "C-M-d") 'just-one-space)
 
+  ;; move to first non-blank character of the line
   (global-unset-key (kbd "C-b"))
   (global-set-key (kbd "C-b") 'back-to-indentation)
 
+  ;; mark to the end of line
+  (global-unset-key (kbd "M-="))
+  (global-set-key (kbd "M-=") 'sd/mark-from-point-to-end-of-line)
 #+END_SRC
 
 * Custom functions
@@ -394,6 +398,12 @@
     (interactive)
     "Delete blank lines in a region"
     (flush-lines "^$" (region-beginning) (region-end)))
+
+  (defun sd/mark-from-point-to-end-of-line ()
+    "Marks everything from point to end of line"
+    (interactive)
+    (set-mark (line-end-position))
+    (activate-mark))
 #+END_SRC
 
 * Highlighting related customizations
