@@ -2328,7 +2328,8 @@ the specified directory."
     (global-unset-key (kbd "M-<down-mouse-1>"))
     (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
     :config
-    (set-face-foreground 'mc/cursor-face "red"))
+    (set-face-foreground 'mc/cursor-face "red")
+    (unbind-key "C-v" mc/keymap))
 
 #+END_SRC
 ** nxml
