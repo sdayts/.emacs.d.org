@@ -2219,6 +2219,8 @@ the specified directory."
     :bind(("<f10>" . ivy-resume))
     :ensure t
     :config
+    ;; fix paste in ivy
+    (unbind-key "C-v" ivy-minibuffer-map)
     (setq ivy-height 25)
     ;; for completions, the order does not matter
     (setq ivy-re-builders-alist
