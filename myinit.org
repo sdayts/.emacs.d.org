@@ -2414,7 +2414,7 @@ the specified directory."
     :ensure t
     :bind (("C-." . sd/rtags-find-symbol-at-point)
            ("C-," . rtags-location-stack-back)
-           ("C-x r" . rtags-find-references-at-point)
+           ("C-x r" . rtags-find-all-references-at-point)
            ("C-<f1>" . rtags-imenu))
     :config
     (setq rtags-display-result-backend 'helm)
