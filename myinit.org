@@ -908,6 +908,12 @@ highlighted using different colors at one time."
     ;; make searches case-insensitive
     (setq counsel-projectile-grep-base-command "grep -irnE %s -- %%s ."))
 #+END_SRC
+** define-word
+#+BEGIN_SRC emacs-lisp
+  (use-package define-word
+    :ensure t
+    :bind (("M-?" . define-word-at-point)))
+#+END_SRC
 ** diminish
 #+BEGIN_SRC emacs-lisp
   (use-package diminish
