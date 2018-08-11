@@ -878,7 +878,43 @@ highlighted using different colors at one time."
     :bind (("C-SPC" . company-complete))
     :config
     (global-company-mode)
-    (setq company-idle-delay 0))
+    (setq company-idle-delay 0.4)
+    (custom-set-faces
+     '(company-preview
+       ((t (:foreground "cyan" :background "black" :underline t))))
+     '(company-preview-common
+       ((t (:inherit company-preview))))
+     '(company-tooltip
+       ((t (:background "black" :foreground "gray"))))
+     '(company-tooltip-selection
+       ((t (:background "black" :foreground "yellow"))))
+     '(company-tooltip-common
+       ((((type x)) (:inherit company-tooltip :weight bold))
+        (t (:inherit company-tooltip))))
+     '(company-tooltip-annotation
+       ((t (:background "black" :foreground "darkgray"))))
+     '(company-tooltip-common-selection
+       ((((type x)) (:inherit company-tooltip-selection :weight bold))
+        (t (:inherit company-tooltip-selection)))))
+
+    ;; company-echo
+    ;; company-echo-common
+    ;; company-preview
+    ;; company-preview-common
+    ;; company-preview-search
+    ;; company-scrollbar-bg
+    ;; company-scrollbar-fg
+    ;; company-template-field
+    ;; company-tooltip
+    ;; company-tooltip-annotation
+    ;; company-tooltip-annotation-selection
+    ;; company-tooltip-common
+    ;; company-tooltip-common-selection
+    ;; company-tooltip-mouse
+    ;; company-tooltip-search
+    ;; company-tooltip-search-selection
+    ;; company-tooltip-selection
+    )
 #+END_SRC
 ** company-lsp
  #+BEGIN_SRC emacs-lisp
