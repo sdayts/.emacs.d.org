@@ -551,8 +551,8 @@ highlighted using different colors at one time."
  #+END_SRC
 ** ac-rtags
 #+BEGIN_SRC emacs-lisp
-(use-package ac-rtags
-    :ensure t)
+  ;;(use-package ac-rtags
+  ;;    :ensure t)
 #+END_SRC
 ** ace-jump-mode
 #+BEGIN_SRC emacs-lisp
@@ -593,22 +593,24 @@ highlighted using different colors at one time."
 #+END_SRC
 ** autocomplete
 #+BEGIN_SRC emacs-lisp
-  (use-package auto-complete
-    :diminish auto-complete-mode
-    :ensure t
-    :bind (("C-S-SPC" . auto-complete))
-    :init
-    (ac-config-default)
-    (global-auto-complete-mode t)
-    (setq ac-use-menu-map t)
-    (setq ac-delay 0.1)
-    ;; auto-completion after 2 characters
-    (setq ac-auto-start 2))
+  ;; (use-package auto-complete
+  ;;   :diminish auto-complete-mode
+  ;;   :disabled
+  ;;   :ensure t
+  ;;   :bind (("C-S-SPC" . auto-complete))
+  ;;   :init
+  ;;   (ac-config-default)
+  ;;   (global-auto-complete-mode t)
+  ;;   (setq ac-use-menu-map t)
+  ;;   (setq ac-delay 0.1)
+  ;;   ;; auto-completion after 2 characters
+  ;;   (setq ac-auto-start 2))
 #+END_SRC
 ** auto-complete-c-headers
 #+BEGIN_SRC emacs-lisp
-  (use-package auto-complete-c-headers
-    :ensure t)
+  ;; (use-package auto-complete-c-headers
+  ;;   :ensure t
+  ;;   :disabled)
 #+END_SRC
 ** avy
 #+BEGIN_SRC emacs-lisp
@@ -819,8 +821,8 @@ highlighted using different colors at one time."
     ;; (define-key c-mode-map [(tab)] 'company-complete)
     ;; (define-key c++-mode-map [(tab)] 'company-complete)
 
-    (add-hook 'c++-mode-hook 'irony-mode)
-    (add-hook 'c-mode-hook 'irony-mode)
+    ;; (add-hook 'c++-mode-hook 'irony-mode)
+    ;; (add-hook 'c-mode-hook 'irony-mode)
 
     ;; See http://cc-mode.sourceforge.net/html-manual/Syntactic-Symbols.html#Syntactic-Symbols
     (c-add-style
@@ -851,13 +853,62 @@ highlighted using different colors at one time."
         (brace-list-entry      . /)
         (extern-lang-close     . 0)))))
 #+END_SRC
+** ccls
+#+BEGIN_SRC emacs-lisp
+  (defun ccls//enable ()
+    (interactive)
+    (condition-case nil
+        (lsp-ccls-enable)
+      (user-error nil)))
+
+  (use-package ccls
+    :ensure t
+    :after (lsp-mode)
+    :commands lsp-ccls-enable
+    :init
+    (setq ccls-executable "/usr/local/bin/ccls")
+    (add-hook 'c-mode-hook #'ccls//enable)
+    (add-hook 'c++-mode-hook #'ccls//enable)
+    (setq ccls-extra-init-params '(:completion (:detailedLabel t))))
+#+END_SRC
 ** company
 #+BEGIN_SRC emacs-lisp
   (use-package company
     :ensure t
+    :bind (("C-SPC" . company-complete))
     :config
     (global-company-mode)
     (setq company-idle-delay 0))
+#+END_SRC
+** company-lsp
+ #+BEGIN_SRC emacs-lisp
+   (use-package company-lsp
+     :after (lsp-mode company)
+     :ensure t
+     :init
+     (push 'company-lsp company-backends)
+     (setq company-transformers nil company-lsp-async t company-lsp-cache-candidates nil))
+ #+END_SRC
+** company-irony
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package company-irony
+  ;;   :disabled
+  ;;   :ensure t
+  ;;   :bind (("C-SPC" . company-complete))
+  ;;   :init
+  ;;   (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
+  ;;   (setq company-backends (delete 'company-semantic company-backends))
+  ;;   (setq company-backends (delete 'company-clang company-backends))
+  ;;   :config
+  ;;   (eval-after-load 'company
+  ;;   '(add-to-list
+  ;;     'company-backends '(company-irony-c-headers company-irony))))
+#+END_SRC
+** company-irony-c-headers
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package company-irony-c-headers
+  ;;   :disabled
+  ;;   :ensure t)
 #+END_SRC
 ** company-rtags
 #+BEGIN_SRC emacs-lisp
@@ -867,25 +918,6 @@ highlighted using different colors at one time."
     :ensure t
     :config
     (push 'company-rtags company-backends))
-#+END_SRC
-** company-irony
-#+BEGIN_SRC emacs-lisp
-  (use-package company-irony
-    :ensure t
-    :bind (("C-SPC" . company-complete))
-    :init
-    (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
-    (setq company-backends (delete 'company-semantic company-backends))
-    (setq company-backends (delete 'company-clang company-backends))
-    :config
-    (eval-after-load 'company
-    '(add-to-list
-      'company-backends '(company-irony-c-headers company-irony))))
-#+END_SRC
-** company-irony-c-headers
-#+BEGIN_SRC emacs-lisp
-  (use-package company-irony-c-headers
-    :ensure t)
 #+END_SRC
 ** counsel
 #+BEGIN_SRC emacs-lisp
@@ -1242,8 +1274,8 @@ be a list of strings."
 
     (with-no-warnings (require 'cl))
     (require 'rtags)
-    (require 'ac-rtags)
-    (require 'auto-complete-c-headers)
+    ;;(require 'ac-rtags)
+    ;;(require 'auto-complete-c-headers)
     (require 'projectile)
 
     
@@ -1495,72 +1527,72 @@ be a list of strings."
               (insert-file-contents path nil 0 200)) ;; first 200 content bytes
             (buffer-string)))))
 
-    (ac-define-source my-c-headers
-      `((init       . (setq achead:include-cache nil))
-        (candidates . achead:ac-candidates)
-        (prefix     . ,achead:ac-prefix)
-        (document   . my-documentation-for-candidate)
-        (requires   . 0)
-        (symbol     . "h")
-        (action     . ac-start)
-        (limit      . nil)))
+    ;;(ac-define-source my-c-headers
+    ;;  `((init       . (setq achead:include-cache nil))
+    ;;    (candidates . achead:ac-candidates)
+    ;;    (prefix     . ,achead:ac-prefix)
+    ;;    (document   . my-documentation-for-candidate)
+    ;;    (requires   . 0)
+    ;;    (symbol     . "h")
+    ;;    (action     . ac-start)
+    ;;    (limit      . nil)))
 
     ;;; AC source for RTags
 
-    (defun ac-rtags-init ()
-      (unless rtags-diagnostics-process
-        (rtags-diagnostics)))
+    ;;(defun ac-rtags-init ()
+    ;;  (unless rtags-diagnostics-process
+    ;;    (rtags-diagnostics)))
 
-    (ac-define-source my-rtags
-      '((init       . rtags-ac-init)
-        (prefix     . rtags-ac-prefix)
-        (candidates . rtags-ac-candidates)
-        (action     . rtags-ac-action)
-        (document   . rtags-ac-document)
-        (requires   . 0)
-        (symbol     . "r")))
+    ;;(ac-define-source my-rtags
+    ;;  '((init       . rtags-ac-init)
+    ;;    (prefix     . rtags-ac-prefix)
+    ;;    (candidates . rtags-ac-candidates)
+    ;;    (action     . rtags-ac-action)
+    ;;    (document   . rtags-ac-document)
+    ;;    (requires   . 0)
+    ;;    (symbol     . "r")))
 
     ;;; Functions to enable auto-complete
 
-    (defun rtags-auto-complete ()
-      "Enables auto-complete with RTags.
-    Note that RTags becomes the only source for auto-complete in all
-    C and C++ buffers. Also note that RTags Diagostics must be turned
-    on."
-      (interactive)
-      (require 'ac-rtags)
-      (setq rtags-completions-enabled t)
-      (add-hook 'c++-mode-hook
-                (lambda ()
-                  (setq ac-sources '(ac-source-my-rtags)))))
+    ;;(defun rtags-auto-complete ()
+    ;;  "Enables auto-complete with RTags.
+    ;;Note that RTags becomes the only source for auto-complete in all
+    ;;C and C++ buffers. Also note that RTags Diagostics must be turned
+    ;;on."
+    ;;  (interactive)
+    ;;  ;;(require 'ac-rtags)
+    ;;  (setq rtags-completions-enabled t)
+    ;;  (add-hook 'c++-mode-hook
+    ;;            (lambda ()
+    ;;              (setq ac-sources '(ac-source-my-rtags)))))
 
-    (defun rtags-diagnostics-auto-complete ()
-      "Starts diagnostics and auto-complete with RTags and #includes.
-    Note that this function replaces all other sources of auto-complete
-     for C++ files. Any previously opened C++ file needs to be reopen
-    for this to be effective."
-      (interactive)
-      ;; Require
-      ;; Start RTags diagnostics
-      (unless rtags-diagnostics-process
-        (rtags-diagnostics))
-      ;; FIXME: this is broken, should not depend on compile_includes
-      ;; Create an auto-complete source for headers using compile_includes
-      ;; (let ((plist (rtags-load-compile-includes-file (projectile-project-root))))
-      ;;   (dolist (dir (plist-get plist :src-dirs))
-      ;;     (add-to-list 'achead:include-directories dir))
-      ;;   (dolist (dir (plist-get plist :include-dirs))
-      ;;     (add-to-list 'achead:include-directories dir)))
-      ;; Turn on RTags auto-complete
-      (setq rtags-completions-enabled t)
-      (add-hook 'c++-mode-hook
-                (lambda ()
-                  (setq ac-sources '(ac-source-my-rtags
-                                     ;;ac-source-my-c-headers
-                                     )))))
+    ;;(defun rtags-diagnostics-auto-complete ()
+    ;;  "Starts diagnostics and auto-complete with RTags and #includes.
+    ;;Note that this function replaces all other sources of auto-complete
+    ;; for C++ files. Any previously opened C++ file needs to be reopen
+    ;;for this to be effective."
+    ;;  (interactive)
+    ;;  ;; Require
+    ;;  ;; Start RTags diagnostics
+    ;;  (unless rtags-diagnostics-process
+    ;;    (rtags-diagnostics))
+    ;;  ;; FIXME: this is broken, should not depend on compile_includes
+    ;;  ;; Create an auto-complete source for headers using compile_includes
+    ;;  ;; (let ((plist (rtags-load-compile-includes-file (projectile-project-root))))
+    ;;  ;;   (dolist (dir (plist-get plist :src-dirs))
+    ;;  ;;     (add-to-list 'achead:include-directories dir))
+    ;;  ;;   (dolist (dir (plist-get plist :include-dirs))
+    ;;  ;;     (add-to-list 'achead:include-directories dir)))
+    ;;  ;; Turn on RTags auto-complete
+    ;;  (setq rtags-completions-enabled t)
+    ;;  (add-hook 'c++-mode-hook
+    ;;            (lambda ()
+    ;;              (setq ac-sources '(ac-source-my-rtags
+    ;;                                 ;;ac-source-my-c-headers
+    ;;                                 )))))
 
-    (define-key c-mode-base-map [(control c)(r)(A)]
-      'rtags-diagnostics-auto-complete)
+    ;;(define-key c-mode-base-map [(control c)(r)(A)]
+    ;;  'rtags-diagnostics-auto-complete)
 
     
     ;; Local Variables:
@@ -2067,6 +2099,7 @@ the specified directory."
 #+BEGIN_SRC emacs-lisp
   (use-package golden-ratio
     :ensure t
+    :disabled
     :config
     (golden-ratio-mode 1)
     (golden-ratio-toggle-widescreen))
@@ -2206,17 +2239,18 @@ the specified directory."
 #+END_SRC
 ** irony
 #+BEGIN_SRC emacs-lisp
-  (defun my-irony-mode-hook ()
-    (define-key irony-mode-map [remap completion-at-point]
-      'irony-completion-at-point-async)
-    (define-key irony-mode-map [remap complete-symbol]
-      'irony-completion-at-point-async))
+  ;; (defun my-irony-mode-hook ()
+  ;;   (define-key irony-mode-map [remap completion-at-point]
+  ;;     'irony-completion-at-point-async)
+  ;;   (define-key irony-mode-map [remap complete-symbol]
+  ;;     'irony-completion-at-point-async))
 
-  (use-package irony
-    :ensure t
-    :init
-    (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+  ;; (use-package irony
+  ;;   :disabled
+  ;;   :ensure t
+  ;;   :init
+  ;;   (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+  ;;   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 #+END_SRC
 ** ivy
 #+BEGIN_SRC emacs-lisp
@@ -2266,6 +2300,11 @@ the specified directory."
   ;;(key-chord-define-global "cc" 'sd/whole-line-or-region-kill-ring-save)
   ;; fast paste
   ;;(key-chord-define-global "vv" 'yank)
+#+END_SRC
+** lsp-mode
+#+BEGIN_SRC emacs-lisp
+(use-package lsp-mode
+    :ensure t)
 #+END_SRC
 ** magit
 #+BEGIN_SRC emacs-lisp
