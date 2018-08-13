@@ -946,6 +946,15 @@ highlighted using different colors at one time."
   ;;   :disabled
   ;;   :ensure t)
 #+END_SRC
+** company-posframe
+#+BEGIN_SRC emacs-lisp
+  (use-package company-posframe
+    :after (company)
+    :ensure t
+    :init
+    :config
+    (company-posframe-mode 1))
+#+END_SRC
 ** company-rtags
 #+BEGIN_SRC emacs-lisp
   (use-package company-rtags
