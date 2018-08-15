@@ -2192,10 +2192,12 @@ the specified directory."
 #+END_SRC
 ** git-gutter-fringe+
 #+BEGIN_SRC emacs-lisp
-  (use-package git-gutter-fringe+
-    :ensure    t
-    :init
-    (global-git-gutter+-mode t))
+    (use-package git-gutter-fringe+
+      :ensure    t
+      :bind (("C-M-p" . git-gutter+-previous-hunk )
+             ("C-M-n" . git-gutter+-next-hunk ))
+      :init
+      (global-git-gutter+-mode t))
 #+END_SRC
 ** helm
 #+BEGIN_SRC emacs-lisp
