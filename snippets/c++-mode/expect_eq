@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: EXPECT_EQ
+# key: eq
+# --
+EXPECT_EQ( $1, $2 );
+$0
