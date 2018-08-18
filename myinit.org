@@ -2134,6 +2134,7 @@ the specified directory."
 ** find-where
 #+BEGIN_SRC emacs-lisp
   (use-package find-where
+    :disabled
     :load-path "~/.emacs.d/local-packages/find-where")
 #+END_SRC
 ** flycheck
@@ -2669,7 +2670,8 @@ the specified directory."
 ** thingatpt+
 #+BEGIN_SRC emacs-lisp
   (use-package thingatpt+
-    :after thingatpt+
+    :disabled
+    :after find-where
     :load-path "~/.emacs.d/local-packages/thingatpt+")
 #+END_SRC
 ** transpose-frame
