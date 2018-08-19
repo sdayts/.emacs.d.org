@@ -1004,7 +1004,8 @@ highlighted using different colors at one time."
     :bind (("M-o" . counsel-projectile-find-file))
     :config
     ;; make searches case-insensitive
-    (setq counsel-projectile-grep-base-command "grep -irnE %s -- %%s ."))
+    (setq counsel-projectile-grep-base-command "grep -irnE %s -- %%s .")
+    (setq counsel-find-file-ignore-regexp "ccls-cache"))
 #+END_SRC
 ** define-word
 #+BEGIN_SRC emacs-lisp
@@ -2354,7 +2355,9 @@ the specified directory."
     :ensure t
     :after ivy
     :config
-    (setq ivy-display-function #'ivy-posframe-display-at-frame-center))
+    (setq ivy-display-function #'ivy-posframe-display-at-frame-center)
+    ;; maximum width
+    (setq ivy-posframe-width 150))
 #+END_SRC
 ** json-mode
 #+BEGIN_SRC emacs-lisp
