@@ -2443,6 +2443,7 @@ the specified directory."
     :ensure t
     :demand t
     :bind (("C--" . mc/mark-next-like-this  )
+           ("C-M--" . mc/mark-all-like-this-in-defun  )
            :map mc/keymap
            ("<return>" . nil))
     :init
