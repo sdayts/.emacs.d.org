@@ -1029,6 +1029,8 @@ highlighted using different colors at one time."
                  ;; End/Back key goes up one directory in dired mode
                  ("<end>" . dired-up-directory))
     :init
+    ;; unset dired's biding so that the global can take over
+    (unbind-key "M-l" dired-mode-map)
     (defun sd/dired-config()
       (require 'dired-x)
       (setq dired-omit-files
