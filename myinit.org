@@ -2385,6 +2385,14 @@ the specified directory."
 (use-package lsp-mode
     :ensure t)
 #+END_SRC
+** lsp-ui
+#+BEGIN_SRC emacs-lisp
+    (use-package lsp-ui
+      :ensure t
+      :after lsp-mode
+      :bind (("C-?" . lsp-ui-sideline-toggle-symbols-info))
+      :hook (lsp-mode . lsp-ui-mode))
+#+END_SRC
 ** magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
