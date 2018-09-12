@@ -531,24 +531,29 @@ highlighted using different colors at one time."
 
   ;; Window movements
   (global-unset-key (kbd "M-l"))
-  (global-unset-key (kbd "M-<right>"))
   (global-set-key (kbd "M-l") 'windmove-right)
-  (global-set-key (kbd "M-<right>") 'windmove-right)
 
   (global-unset-key (kbd "M-h"))
-  (global-unset-key (kbd "M-<left>"))
   (global-set-key (kbd "M-h") 'windmove-left)
-  (global-set-key (kbd "M-<left>") 'windmove-left)
 
   (global-unset-key (kbd "M-k"))
-  (global-unset-key (kbd "M-<up>"))
   (global-set-key (kbd "M-k") 'windmove-up)
-  (global-set-key (kbd "M-<up>") 'windmove-up)
 
   (global-unset-key (kbd "M-j"))
-  (global-unset-key (kbd "M-<down>"))
   (global-set-key (kbd "M-j") 'windmove-down)
-  (global-set-key (kbd "M-<down>") 'windmove-down)
+
+  ;; Window sizing commands
+  (global-unset-key (kbd "s-<down>"))
+  (global-set-key (kbd "s-<down>") 'shrink-window)
+
+  (global-unset-key (kbd "s-<up>"))
+  (global-set-key (kbd "s-<up>") 'enlarge-window)
+
+  (global-unset-key (kbd "s-<right>"))
+  (global-set-key (kbd "s-<right>") 'enlarge-window-horizontally)
+
+  (global-unset-key (kbd "s-<left>"))
+  (global-set-key (kbd "s-<left>") 'shrink-window-horizontally)
 
   ;; Start maximised (cross-platf)
   (add-hook 'window-setup-hook 'toggle-frame-maximized t)
@@ -2387,11 +2392,13 @@ the specified directory."
 #+END_SRC
 ** lsp-ui
 #+BEGIN_SRC emacs-lisp
-    (use-package lsp-ui
-      :ensure t
-      :after lsp-mode
-      :bind (("C-?" . lsp-ui-sideline-toggle-symbols-info))
-      :hook (lsp-mode . lsp-ui-mode))
+  (use-package lsp-ui
+    :ensure t
+    :after lsp-mode
+    :bind (("C-?" . lsp-ui-sideline-toggle-symbols-info))
+    :hook (lsp-mode . lsp-ui-mode)
+    :config
+    (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 #+END_SRC
 ** magit
 #+BEGIN_SRC emacs-lisp
