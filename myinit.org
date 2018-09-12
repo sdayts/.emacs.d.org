@@ -18,6 +18,9 @@
   ;; in the mode codfiguration section
   (setq org-src-fontify-natively t)
 
+  ;; prevent accidental exits
+  (global-unset-key (kbd "C-x C-c"))
+
   ;; Paste the way I am used to
   (global-unset-key (kbd "C-v"))
   (global-set-key (kbd "C-v") 'yank)
@@ -2505,7 +2508,7 @@ the specified directory."
     ;; timestamp TODO items
     (setq org-log-done 'time)
     ;; insert notes for DONE items
-    (setq org-log-done 'note))
+    ;; (setq org-log-done 'note))
 #+END_SRC
 ** projectile
 #+BEGIN_SRC  emacs-lisp

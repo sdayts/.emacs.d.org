@@ -17,6 +17,7 @@
         org-self-insert-command
         org-shiftcontrolright
         org-shiftmetaright
+        org-todo
         rtags-find-references-at-point
         sd/comment-line-or-region
         sd/copy-word-under-cursor
