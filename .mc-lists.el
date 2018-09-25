@@ -4,6 +4,7 @@
 (setq mc/cmds-to-run-for-all
       '(
         c-electric-colon
+        c-electric-lt-gt
         c-electric-paren
         c-electric-semi&comma
         c-indent-line-or-region
@@ -13,6 +14,7 @@
         org-cycle
         org-end-of-line
         org-insert-todo-heading
+        org-kill-line
         org-metaleft
         org-self-insert-command
         org-shiftcontrolright
@@ -24,6 +26,7 @@
         sd/mark-from-point-to-end-of-line
         sd/whole-line-or-region-kill-ring-save
         wdired-finish-edit
+        wgrep-finish-edit
         whole-line-or-region-kill-region
         yank
         yas-expand
