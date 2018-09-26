@@ -88,6 +88,9 @@
   ;; y/n instead of yes/no
   (fset 'yes-or-no-p 'y-or-n-p)
 
+  ;; enable saveplace mode
+  (save-place-mode 1)
+
   ;; Kill current buffer
   (global-unset-key (kbd "C-<end>"))
   (global-set-key (kbd "C-<end>") 'kill-this-buffer)
