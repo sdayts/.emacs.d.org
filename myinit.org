@@ -501,6 +501,8 @@ highlighted using different colors at one time."
   (set-face-attribute 'region nil :background "black" :foreground "yellow" )
   (set-face-attribute 'isearch nil :background "black" :foreground "yellow" )
   (set-face-attribute 'lazy-highlight nil :background "black" :foreground "cyan" )
+  ;; color line numbers
+  (face-spec-set 'line-number-current-line '((t (:foreground "cyan1"))))
 #+END_SRC
 
 * Mac specific
