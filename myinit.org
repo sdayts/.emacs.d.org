@@ -901,6 +901,7 @@ highlighted using different colors at one time."
     :commands lsp-ccls-enable
     :init
     (setq ccls-executable "/usr/local/bin/ccls")
+    (setq ccls-cache-dir "/Users/sdayts/workspaces/ccls-cache/.ccls-cache")
     (add-hook 'c-mode-hook #'ccls//enable)
     (add-hook 'c++-mode-hook #'ccls//enable)
     (setq ccls-extra-init-params '(:completion (:detailedLabel t))))
@@ -2540,6 +2541,8 @@ the specified directory."
     (add-to-list 'grep-find-ignored-files "*.tsk")
     (add-to-list 'grep-find-ignored-files "*.depends")
     (add-to-list 'grep-find-ignored-files "*.blob")
+    (add-to-list 'grep-find-ignored-files "compile_commands.json")
+
     ;; ignore directories
     (add-to-list 'projectile-globally-ignored-directories "llcalc*")
     (add-to-list 'projectile-globally-ignored-directories "SunWS_cache*")
@@ -2548,7 +2551,8 @@ the specified directory."
     ;; ignore specific file suffixes from projectile
     (setq projectile-globally-ignored-file-suffixes '(".svn-base"))
     (setq projectile-globally-ignored-file-suffixes '(".blob"))
-
+    ;; ignore
+    (add-to-list 'projectile-globally-ignored-files ".ccls-cache")
     (projectile-global-mode t))
 #+END_SRC
 ** python
