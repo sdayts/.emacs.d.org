@@ -224,8 +224,12 @@
   (global-set-key (kbd "C-b") 'back-to-indentation)
 
   ;; mark to the end of line
+  (global-unset-key (kbd "s-="))
+  (global-set-key (kbd "s-=") 'sd/mark-from-point-to-end-of-line)
+
+  ;; mark whole lines
   (global-unset-key (kbd "M-="))
-  (global-set-key (kbd "M-=") 'sd/mark-from-point-to-end-of-line)
+  (global-set-key (kbd "M-=") 'sd/mark-line)
 
   ;; go to beginning of the next defun
   (global-unset-key (kbd "M-n"))
@@ -431,6 +435,15 @@
     (interactive)
     (let ((current-prefix-arg 1))
       (call-interactively 'beginning-of-defun)))
+
+  (defun sd/mark-line (&optional arg)
+    (interactive "p")
+    (if (not mark-active)
+        (progn
+          (beginning-of-line)
+          (push-mark)
+          (setq mark-active t)))
+    (forward-line))
 #+END_SRC
 
 * Highlighting related customizations
