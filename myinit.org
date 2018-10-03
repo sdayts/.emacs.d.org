@@ -239,6 +239,13 @@
   (global-unset-key (kbd "M-p"))
   (global-set-key (kbd "M-p") 'sd/begin-of-prev-defun)
 
+  ;; buffer movement
+  (global-unset-key (kbd "s-p"))
+  (global-set-key (kbd "s-p") 'previous-buffer)
+
+  (global-unset-key (kbd "s-n"))
+  (global-set-key (kbd "s-n") 'next-buffer)
+
 #+END_SRC
 
 * Custom functions
@@ -2760,17 +2767,20 @@ the specified directory."
 #+END_SRC
 ** wgrep
 #+BEGIN_SRC emacs-lisp
-  ;; Editable grep buffer
-  (use-package wgrep
-    :ensure t
-    :defer t
-    :config
-    (progn
-      (with-eval-after-load 'grep
-        (bind-key "C-x C-q" #'wgrep-change-to-wgrep-mode grep-mode-map))
+    ;; Editable grep buffer
+    (use-package wgrep
+      :ensure t
+      :defer t
+      :config
+      ;; on wgrep-finish-edit, save all changed buffers
+      (setq wgrep-auto-save-buffer t)
 
-      (with-eval-after-load 'wgrep
-        (bind-key "C-c C-c" #'wgrep-finish-edit grep-mode-map))))
+      (progn
+        (with-eval-after-load 'grep
+          (bind-key "C-x C-q" #'wgrep-change-to-wgrep-mode grep-mode-map))
+
+        (with-eval-after-load 'wgrep
+          (bind-key "C-c C-c" #'wgrep-finish-edit grep-mode-map))))
 #+END_SRC
 ** which-function
 #+BEGIN_SRC emacs-lisp
