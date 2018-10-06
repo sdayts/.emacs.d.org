@@ -246,6 +246,8 @@
   (global-unset-key (kbd "s-n"))
   (global-set-key (kbd "s-n") 'next-buffer)
 
+  ;; stop emacs from making any sounds
+  (setq ring-bell-function 'ignore)
 #+END_SRC
 
 * Custom functions
@@ -2957,3 +2959,63 @@ http://syamajala.github.io/c-ide.html
 ** pcre2el
 ** ediff horizontally
 (setq ediff-split-window-function 'split-window-horizontally)
+* tips
+#+BEGIN_SRC emacs-lisp
+(setq sd-tips
+      '(
+        "<C-c C-SPC> jump to the next active ERC buffer. Switch back to last non-ERC buffer visited."
+        "<C-x +> will make windows the same heights and widths."
+        "<C-x ^> increases the height by 1 line."
+        "<C-h i> to open the info manual."
+        "<C-t> to `transpose-chars'."
+        "<C-x C-j> to `dired-jump' and goes to dired of file being visited."
+        "<C-x C-q> to enter Dired Edit mode. When finished <C-c C-c>!"
+        "<C-x C-t> to `transpose-lines'"
+        "[Magit] s to stage; u to unstange; c for commit; F for pulling; P for pushing."
+        "<C-x n n> narrow to region. Press <C-x n w> to widen (or un-narrow)."
+        "<C-x n p> narrow to page. Press <C-x n w> to widen (or un-narrow)."
+        "<C-x n s> narrow to subtree in org-mode. Press <C-x n w> to widen."
+        "<C-x r SPC R> to save a buffer position in register R; jump back to it later."
+        "<C-x r f R> to save frame configuration in register R; jump back to it later."
+        "<C-x r w R> to save window configuration in register R; jump back to it later."
+        "<C-x s> followed by d to see the diff of your buffer before saving it."
+        "<M-=> with a region selected to `count-words'"
+        "<M-t> to `transpose-words'."
+        "<M-z> to use `zap-up-to-char'. Get used to it. Very useful."
+        "<C-x => to display information about the character current under the cursor."
+        "<M-x> `info-display-manual' to find information to specific mode."
+        "<M-x> `occur' and remember that lines can be edited in place in the occur buffer."
+        "<M-x> `write-region' to write a selection to a file."
+        "After renaming file with `dired-jump', press <C-x k RET> to go back to the renamed file."
+        "Syntax for using TRAMP through SSH: C-x C-f /ssh:username@myhost:/path/to/file."
+        "Syntax for using TRAMP through SUDO: C-x C-f /su::/etc/hosts."
+        "There is a very handy `sort-lines' command available in built-in Emacs."
+        "Use `diff-buffer-with-file' to compare your buffer with the corresponding file at disk."
+        "You can ask for a `list-registers' to see what is stored in those little monsters."
+        "You can use <M-g TAB> to goto column. (move-to-column)"
+        "You can use <M-x> `find-name-dired' to find all files recursively matching a pattern."
+        "t inside a Dired buffer to mark all files in there. And Q to query-replace inside of them."
+        "Use <C-x 4 f> when your cursor is over a filename to open in other window."
+        "Use <C-x 5 f> when your cursor is over a filename to open in other frame."
+        "<C-x d <directory>> to open in Dired."
+        "To copy the name of the file at point, use `dired-copy-filename-as-kill'."
+        "<C-x C-r> to open file in READ-ONLY mode."
+        "To copy the path to the folder you're looking at in dired: <M-< w>"
+        "Enable wdired mode in dired to edit the file name by hitting <C-x C-q>"
+        "<C-c C-p> to open `find-file-at-point'."
+        "<C-c C-w> to move a headline under another top level headline in org mode."
+        "<C-c C-t> to show a painel with all the ORG Keyword options."
+        "<C-x }> to enlarge window horizontally."
+        "<C-x C-n> to `set-goal-column' to freeze the cursor when moving to the next line."
+        "<C-c C-m> to call `smex-major-mode-commands' which will enable only relevant commands to your major mode."
+        "<C-c> toggles if a searching of buffer and file names should ignore case."
+        "<C-t> toggles matching by Emacs regular expression."
+        "<C-SPC / C-@> restricts the completion list to anything that matches your current input."
+        "<M-s> inside the IDO mode (C-x C-f) to search for a file matching your input."
+        ))
+
+(defun sd/tips ()
+  (interactive)
+  (random t)
+  (message (concat " " (nth (random (length sd-tips)) sd-tips))))
+#+END_SRC
