@@ -2215,6 +2215,30 @@ the specified directory."
     (golden-ratio-mode 1)
     (golden-ratio-toggle-widescreen))
 #+END_SRC
+** ibuffer
+#+BEGIN_SRC emacs-lisp
+  (use-package ibuffer
+    :bind (("C-'" . ibuffer))
+    :init
+    (setq ibuffer-saved-filter-groups
+          (quote (("default"
+                   ("eqwrnt2" (filename . "/eqwrnt2/"))
+                   ("C++" (mode . c++-mode))
+                   ("dired" (mode . dired-mode))
+                   ("magit" (name . "^.*magit*$"))
+                   ("org" (name . "^.*org$"))
+                   ("shell" (or (mode . eshell-mode) (mode . shell-mode)))
+                   ("Emacs" (or
+                             (name . "^\\*scratch\\*$")
+                             (name . "^\\*Messages\\*$")))))))
+
+    (setq ibuffer-show-empty-filter-groups nil)
+    (setq ibuffer-expert t)
+    (setq ibuffer-show-empty-filter-groups nil)
+    (add-hook 'ibuffer-mode-hook
+              '(lambda ()
+                 (ibuffer-switch-to-saved-filter-groups "default"))))
+#+END_SRC
 ** iedit
 #+BEGIN_SRC emacs-lisp
   (use-package iedit
@@ -2540,6 +2564,13 @@ the specified directory."
     ;; insert notes for DONE items
     ;; (setq org-log-done 'note)
     )
+#+END_SRC
+** pcre2el
+#+BEGIN_SRC emacs-lisp
+  (use-package pcre2el
+    :ensure t
+    :config
+    (pcre-mode))
 #+END_SRC
 ** projectile
 #+BEGIN_SRC  emacs-lisp
@@ -2959,7 +2990,8 @@ http://syamajala.github.io/c-ide.html
 ** pcre2el
 ** ediff horizontally
 (setq ediff-split-window-function 'split-window-horizontally)
-* tips
+** temp
+* Tips
 #+BEGIN_SRC emacs-lisp
 (setq sd-tips
       '(
