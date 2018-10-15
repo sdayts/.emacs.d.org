@@ -1235,8 +1235,6 @@ be a list of strings."
       "Remove leading and trailing whitespace from STRING."
       (string-trim-left (string-trim-right string))))
 
-  (eval-when-compile (assert (not (fboundp 'string-truncate))))
-
   (defun string-truncate (string n)
     "Return STRING minus the last N characters."
     (substring string 0 (max 0(- (length string) n))))
@@ -2479,16 +2477,6 @@ the specified directory."
     :bind ( :map Man-mode-map
                  ("<return>" . sd/man-follow)))
 #+END_SRC
-** markdown-mode
-#+BEGIN_SRC emacs-lisp
-  (use-package markdown-mode
-    :ensure t
-    :commands (markdown-mode gfm-mode)
-    :mode (("README\\.md\\'" . gfm-mode)
-           ("\\.md\\'" . markdown-mode)
-           ("\\.markdown\\'" . markdown-mode))
-    :init (setq markdown-command "multimarkdown"))
-#+END_SRC
 ** modern-cpp-font-lock
 #+BEGIN_SRC emacs-lisp
   (use-package modern-cpp-font-lock
@@ -2616,6 +2604,17 @@ the specified directory."
                 ("C-c C-v" . sd/duplicate-line-or-region)))
 
 #+END_SRC
+** recentf
+#+BEGIN_SRC emacs-lisp
+  (use-package recentf
+    :config
+    (setq recentf-max-saved-items 500
+          recentf-max-menu-items 30
+          ;; disable recentf-cleanup on Emacs start, because it can cause
+          ;; problems with remote files
+          recentf-auto-cleanup 'never)
+    (recentf-mode +1))
+#+END_SRC
 ** rectangle-mark-mode
 #+BEGIN_SRC emacs-lisp
     (use-package rect
@@ -2635,6 +2634,12 @@ the specified directory."
     (setq rtags-display-result-backend 'helm)
     ;; don't jump to first match, very annoying
     (setq rtags-jump-to-first-match nil))
+#+END_SRC
+** savehist
+#+BEGIN_SRC emacs-lisp
+  (use-package savehist
+    :config
+    (savehist-mode +1))
 #+END_SRC
 ** shackle
 #+BEGIN_SRC emacs-lisp
