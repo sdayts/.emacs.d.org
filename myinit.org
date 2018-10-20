@@ -19,6 +19,15 @@
   ;; when deleting in dired, move to trash
   (setq delete-by-moving-to-trash t)
 
+  ;; this is needed for delete-by-moving-to-trash setting
+  ;; to take effect under OSX
+  (defun system-move-file-to-trash (file)
+    "Use \"trash\" to move FILE to the system trash.
+  When using Homebrew, install it using \"brew install trash\"."
+    (call-process (executable-find "trash")
+                  nil 0 nil
+                  file))
+
   ;; fontify code in code blocks for org mode
   ;; somehow this does not work if I place this line
   ;; in the mode codfiguration section
