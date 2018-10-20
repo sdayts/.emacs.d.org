@@ -13,6 +13,12 @@
         ;; load doxymacs
         (require 'doxymacs)))
 
+  ;; prefer newer source to old bytecode
+  (setq load-prefer-newer t)
+
+  ;; when deleting in dired, move to trash
+  (setq delete-by-moving-to-trash t)
+
   ;; fontify code in code blocks for org mode
   ;; somehow this does not work if I place this line
   ;; in the mode codfiguration section
@@ -927,6 +933,12 @@ highlighted using different colors at one time."
     (add-hook 'c-mode-hook #'ccls//enable)
     (add-hook 'c++-mode-hook #'ccls//enable)
     (setq ccls-extra-init-params '(:completion (:detailedLabel t))))
+#+END_SRC
+** clang-format
+#+BEGIN_SRC emacs-lisp
+  (use-package clang-format
+    :ensure t
+    :config)
 #+END_SRC
 ** company
 #+BEGIN_SRC emacs-lisp
@@ -2992,10 +3004,10 @@ http://syamajala.github.io/c-ide.html
 
 (require 'rtags-helm)
 (setq rtags-use-helm t)
-** pcre2el
 ** ediff horizontally
 (setq ediff-split-window-function 'split-window-horizontally)
-** temp
+** investigate phi-search mode
+mc cursor compatible search/replace
 * Tips
 #+BEGIN_SRC emacs-lisp
 (setq sd-tips
