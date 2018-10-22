@@ -3016,6 +3016,7 @@ http://syamajala.github.io/c-ide.html
 ** ediff horizontally
 (setq ediff-split-window-function 'split-window-horizontally)
 ** investigate phi-search mode
+** investigate edit-indirect
 mc cursor compatible search/replace
 * Tips
 #+BEGIN_SRC emacs-lisp
