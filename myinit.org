@@ -689,8 +689,8 @@ highlighted using different colors at one time."
     :ensure t
     :bind (("M-SPC" . avy-goto-word-1 ))
     :config
-    ;; restrict matching to one buffer
-    (setq avy-all-windows nil)
+    ;; match all windows in the current frame
+    (setq avy-all-windows t)
     ;; yellow on black for matching characters
     (custom-set-faces
      '(avy-lead-face

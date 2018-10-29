@@ -3,6 +3,7 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        c-electric-brace
         c-electric-colon
         c-electric-lt-gt
         c-electric-paren
@@ -23,8 +24,10 @@
         rtags-find-references-at-point
         sd/comment-line-or-region
         sd/copy-word-under-cursor
+        sd/forward-or-backward-sexp
         sd/mark-from-point-to-end-of-line
         sd/whole-line-or-region-kill-ring-save
+        undefined
         wdired-finish-edit
         wgrep-finish-edit
         whole-line-or-region-kill-region
@@ -37,7 +40,9 @@
         company-complete
         counsel-M-x
         ff-find-other-file
+        isearch-forward-regexp
         mouse-set-region
         rtags-imenu
+        sp-slurp-hybrid-sexp
         yank-rectangle
         ))
