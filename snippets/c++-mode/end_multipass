@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: END_MULTIPASS
+# key: em
+# --
+END_MULTI_PASS_TEST();

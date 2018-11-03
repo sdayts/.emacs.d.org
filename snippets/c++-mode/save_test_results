@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: SAVE_TEST_RESULTS
+# key: st
+# --
+    SAVE_TEST_RESULTS();
