@@ -191,8 +191,8 @@
   ;; search the entire project
   (global-unset-key (kbd "C-M-i"))
   ;; counsel-project-ag does not seem to work anymore, switching to native counsel command
-  ;; (global-set-key (kbd "C-M-i") 'counsel-projectile-ag)
-  (global-set-key (kbd "C-M-i") 'counsel-git-grep)
+  (global-set-key (kbd "C-M-i") 'counsel-projectile-ag)
+  ;; (global-set-key (kbd "C-M-i") 'counsel-git-grep)
 
   ;; keybinding for re-centering the buffer
   (global-unset-key (kbd "M-r"))
@@ -877,7 +877,7 @@ highlighted using different colors at one time."
                ("C-M-v" . rtags-find-virtuals-at-point))
     :init
     ;; enable electric pair mode for buffers in c-mode
-    (add-hook 'c++-mode-hook #'electric-pair-local-mode)
+    ;; (add-hook 'c++-mode-hook #'electric-pair-local-mode)
     (setq c-default-style
           '((java-mode . "java")
             (awk-mode  . "awk")
@@ -2706,6 +2706,14 @@ the specified directory."
     ;; unbind c++-mode-map keys which interfer with global mappings
     (unbind-key "C-c C-c" sh-mode-map)
     (unbind-key "C-c C-u" sh-mode-map))
+#+END_SRC
+** smartparens
+#+BEGIN_SRC emacs-lisp
+  (use-package smartparens
+    :ensure t
+    :bind ( ("C-M-<right>" . sp-slurp-hybrid-sexp)
+            ("C-M-<left>" . sp-forward-barf-sexp))
+    :defer t)
 #+END_SRC
 ** spaceline
 #+BEGIN_SRC emacs-lisp
