@@ -191,8 +191,8 @@
   ;; search the entire project
   (global-unset-key (kbd "C-M-i"))
   ;; counsel-project-ag does not seem to work anymore, switching to native counsel command
-  (global-set-key (kbd "C-M-i") 'counsel-projectile-ag)
-  ;; (global-set-key (kbd "C-M-i") 'counsel-git-grep)
+  ;; (global-set-key (kbd "C-M-i") 'counsel-projectile-ag)
+  (global-set-key (kbd "C-M-i") 'counsel-git-grep)
 
   ;; keybinding for re-centering the buffer
   (global-unset-key (kbd "M-r"))
