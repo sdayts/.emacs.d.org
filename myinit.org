@@ -261,6 +261,14 @@
   (global-unset-key (kbd "s-n"))
   (global-set-key (kbd "s-n") 'next-buffer)
 
+  ;; map goto line to shit-space
+  (global-unset-key (kbd "S-SPC"))
+  (global-set-key (kbd "S-SPC") 'goto-line)
+
+  ;; choose a snippet
+  (global-unset-key (kbd "s-m"))
+  (global-set-key (kbd "s-m") 'yas-insert-snippet)
+
   ;; stop emacs from making any sounds
   (setq ring-bell-function 'ignore)
 #+END_SRC
@@ -1041,6 +1049,20 @@ highlighted using different colors at one time."
     :ensure t
     :config
     (push 'company-rtags company-backends))
+#+END_SRC
+** corral
+#+BEGIN_SRC emacs-lisp
+  (use-package corral
+    :ensure t
+    :bind ( ("M-9" . 'corral-parentheses-backward)
+            ("M-0" . 'corral-parentheses-forward)
+            ("M-[" . 'corral-brackets-backward)
+            ("M-]" . 'corral-brackets-forward)
+            ("M-{" . 'corral-braces-backward)
+            ("M-}" . 'corral-braces-forward))
+      :init
+      :config
+      (setq corral-preserve-point t))
 #+END_SRC
 ** counsel
 #+BEGIN_SRC emacs-lisp
@@ -2845,7 +2867,6 @@ the specified directory."
       (progn
         (with-eval-after-load 'grep
           (bind-key "C-x C-q" #'wgrep-change-to-wgrep-mode grep-mode-map))
-
         (with-eval-after-load 'wgrep
           (bind-key "C-c C-c" #'wgrep-finish-edit grep-mode-map))))
 #+END_SRC

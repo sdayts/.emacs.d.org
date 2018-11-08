@@ -2,7 +2,7 @@
 # name : if (...) { ... }
 # key: if
 # --
-if ( ${1:condition} )
+if ( $1 )
 {
-    $0
+    `yas-selected-text`$0
 }
