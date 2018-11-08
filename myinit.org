@@ -623,6 +623,8 @@ highlighted using different colors at one time."
   (defalias 'sl  'sort-lines)
   (defalias 'n   'narrow-to-defun)
   (defalias 'w   'widen)
+  (defalias 'h   'rtags-print-class-hierarchy)
+
 #+END_SRC
 * Modes
  #+BEGIN_SRC emacs-lisp
@@ -885,7 +887,6 @@ highlighted using different colors at one time."
                ("<f1>"  . rtags-imenu)
                ("M-m"   . rtags-imenu)
                ("C-M-f" . rtags-find-symbol)
-               ("C-M-h" . rtags-print-class-hierarchy)
                ("C-M-v" . rtags-find-virtuals-at-point))
     :init
     ;; enable electric pair mode for buffers in c-mode
@@ -899,6 +900,7 @@ highlighted using different colors at one time."
     ;; unbind c++-mode-map keys which interfer with global mappings
     (unbind-key "C-c C-c" c++-mode-map)
     (unbind-key "C-c C-u" c++-mode-map)
+    (unbind-key "C-M-h" c++-mode-map)
 
     ;; trigger company completion via tab
     ;; (define-key c-mode-map [(tab)] 'company-complete)
@@ -2214,6 +2216,15 @@ the specified directory."
                (action . rtags-helm-jump-to-line))))))
 
   (define-key c-mode-base-map [(meta control g)] 'rtags-helm-select-taglist)
+#+END_SRC
+** eyebrowse
+#+BEGIN_SRC emacs-lisp
+  (use-package eyebrowse
+    :ensure t
+    :bind (("C-M-h" . eyebrowse-prev-window-config)
+           ("C-M-l" . eyebrowse-next-window-config))
+    :config
+    (eyebrowse-mode t))
 #+END_SRC
 ** find-where
 #+BEGIN_SRC emacs-lisp
