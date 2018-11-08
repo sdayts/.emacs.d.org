@@ -278,7 +278,7 @@
   (defun sd/find-last-include()
     "Find the last include in the current buffer"
     (interactive)
-    (push-mark (point))
+    (rtags-location-stack-push)
     (setq matched-position (search-backward "#include" nil t))
     (if matched-position
         (progn
@@ -3018,7 +3018,6 @@ the specified directory."
 # web-mode
 # simpleclip-mode
 * TODO
-** shortcut/macro for going to the includes section and being able to come back by popping the stack with ctrl-,
 ** random snippets
 (use-package projectile
   :diminish "Pj"
