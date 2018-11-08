@@ -2596,6 +2596,13 @@ the specified directory."
     ;; (setq org-log-done 'note)
     )
 #+END_SRC
+** org-bullets
+#+BEGIN_SRC emacs-lisp
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+END_SRC
 ** pcre2el
 #+BEGIN_SRC emacs-lisp
   (use-package pcre2el
