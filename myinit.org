@@ -618,8 +618,9 @@ highlighted using different colors at one time."
 #+END_SRC
 * Aliases
 #+BEGIN_SRC emacs-lisp
-(defalias 'dbl 'sd/region-delete-blank-lines)
-(defalias 're 'align-regexp)
+  (defalias 'dbl 'sd/region-delete-blank-lines)
+  (defalias 're  'align-regexp)
+  (defalias 'sl  'sort-lines)
 #+END_SRC
 * Modes
  #+BEGIN_SRC emacs-lisp
