@@ -621,6 +621,8 @@ highlighted using different colors at one time."
   (defalias 'dbl 'sd/region-delete-blank-lines)
   (defalias 're  'align-regexp)
   (defalias 'sl  'sort-lines)
+  (defalias 'n   'narrow-to-defun)
+  (defalias 'w   'widen)
 #+END_SRC
 * Modes
  #+BEGIN_SRC emacs-lisp
@@ -3034,7 +3036,6 @@ the specified directory."
     (add-to-list 'projectile-globally-ignored-directories "elpa")
     (add-to-list 'projectile-globally-ignored-directories ".cask")
     (add-to-list 'projectile-globally-ignored-directories ".cache")))
-** invistigate origami mode
 ** smartparens mode
 ** exec-path-from-shell mode
 ** rtags-helm/helm-rtags
@@ -3052,9 +3053,6 @@ http://syamajala.github.io/c-ide.html
 (setq rtags-use-helm t)
 ** ediff horizontally
 (setq ediff-split-window-function 'split-window-horizontally)
-** investigate phi-search mode
-** investigate edit-indirect
-mc cursor compatible search/replace
 * Tips
 #+BEGIN_SRC emacs-lisp
 (setq sd-tips
