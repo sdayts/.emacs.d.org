@@ -2455,6 +2455,8 @@ the specified directory."
     ;; fix paste in ivy
     (unbind-key "C-v" ivy-minibuffer-map)
     (setq ivy-height 25)
+    ;; seems that counsel-yank-pop will respect ivy-height if ivy-height-alist is set to nil
+    (setq ivy-height-alist nil)
     ;; for completions, the order does not matter
     (setq ivy-re-builders-alist
           '((t . ivy--regex-ignore-order)))
