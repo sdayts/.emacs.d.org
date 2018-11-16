@@ -624,7 +624,7 @@ highlighted using different colors at one time."
   (defalias 'n   'narrow-to-defun)
   (defalias 'w   'widen)
   (defalias 'h   'rtags-print-class-hierarchy)
-
+  (defalias 'u   'sd/uncrustify)
 #+END_SRC
 * Modes
  #+BEGIN_SRC emacs-lisp
@@ -955,7 +955,8 @@ highlighted using different colors at one time."
     (setq ccls-cache-dir "/Users/sdayts/workspaces/ccls-cache/.ccls-cache")
     (add-hook 'c-mode-hook #'ccls//enable)
     (add-hook 'c++-mode-hook #'ccls//enable)
-    (setq ccls-extra-init-params '(:completion (:detailedLabel t))))
+    (setq ccls-extra-init-params '(:completion (:detailedLabel t)))
+    (setq ccls-extra-args '("--log-file=/Users/sdayts/workspaces/ccls-cache/logs/ccls.log")))
 #+END_SRC
 ** clang-format
 #+BEGIN_SRC emacs-lisp
@@ -2451,12 +2452,13 @@ the specified directory."
     :diminish ivy-mode
     :bind(("<f10>" . ivy-resume))
     :ensure t
+    :init
+    ;; seems that counsel-yank-pop will respect ivy-height if ivy-height-alist is set to nil
+    (setq ivy-height-alist nil)
     :config
     ;; fix paste in ivy
     (unbind-key "C-v" ivy-minibuffer-map)
     (setq ivy-height 25)
-    ;; seems that counsel-yank-pop will respect ivy-height if ivy-height-alist is set to nil
-    (setq ivy-height-alist nil)
     ;; for completions, the order does not matter
     (setq ivy-re-builders-alist
           '((t . ivy--regex-ignore-order)))
@@ -2501,8 +2503,10 @@ the specified directory."
 ** lsp-mode
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-mode
-      :bind (("C-x r" . xref-find-references))
-      :ensure t)
+    :bind (("C-x r" . xref-find-references)
+           ( "C-."  . xref-find-definitions)
+           ("C-,"   . xref-pop-marker-stack))
+    :ensure t)
 #+END_SRC
 ** lsp-ui
 #+BEGIN_SRC emacs-lisp
@@ -2549,10 +2553,9 @@ the specified directory."
   (use-package move-text
     :ensure t
     ;; Text movement
-    :bind (("C-S-<up>" . move-text-up )
+    :bind (("C-S-<up>"   . move-text-up )
            ("C-S-<down>" . move-text-down ))
-    :config
-    )
+    :config)
 #+END_SRC
 
 ** multiple-cursors
@@ -2693,8 +2696,8 @@ the specified directory."
 #+BEGIN_SRC emacs-lisp
   (use-package rtags
     :ensure t
-    :bind (("C-." . sd/rtags-find-symbol-at-point)
-           ("C-," . rtags-location-stack-back)
+    :bind (("M-." . sd/rtags-find-symbol-at-point)
+           ("M-," . rtags-location-stack-back)
            ;;("C-x r" . rtags-find-all-references-at-point)
            ("C-<f1>" . rtags-imenu))
     :config
@@ -2836,9 +2839,7 @@ the specified directory."
     :bind("C-<f12>" . swap-buffers)
     :init
     (setq swap-buffers-keep-focus t)
-    :config
-    ;;(advice-add 'swap-buffers :after 'sd/update-header)
-    )
+    :config)
 #+END_SRC
 ** swiper
 #+BEGIN_SRC emacs-lisp
@@ -2864,22 +2865,39 @@ the specified directory."
   (use-package transpose-frame
     :ensure t
     :bind("<f12>" . flop-frame)
-    :config
-    ;;(advice-add 'flop-frame :after 'sd/update-header)
-    )
+    :config)
 #+END_SRC
 ** try
 #+BEGIN_SRC emacs-lisp
   (use-package try
     :ensure t)
 #+END_SRC
+** uncrustify-mode
+#+BEGIN_SRC emacs-lisp
+  (defun sd/uncrustify ()
+    "Uncrustify text selection or whole buffer."
+    (interactive)
+    (let (p1 p2)
+      (progn (if (use-region-p)
+                 (progn (setq p1 (region-beginning))
+                        (setq p2 (region-end)))
+               (progn (setq p1 (point-min))
+                      (setq p2 (point-max)))))
+      (require 'uncrustify-mode)
+      (uncrustify-invoke-command (uncrustify-get-lang-from-mode) p1 p2)))
+
+  (use-package uncrustify-mode
+    :ensure t)
+
+;;uncrustify-config-path is a variable defined in ‘uncrustify-mode.el’.
+;;Its value is "~/.uncrustify.cfg"
+;; uncrustify -q -c ~/.uncrustify.cfg -l CPP
+#+END_SRC
 ** vlf
 #+BEGIN_SRC emacs-lisp
   (use-package vlf
     :ensure t
     :init)
-    ;; (global-set-key (kbd "C-x o") 'ace-window)
-    ;; :diminish ace-window-mode)
 #+END_SRC
 ** wgrep
 #+BEGIN_SRC emacs-lisp
@@ -2937,9 +2955,7 @@ the specified directory."
     (use-package whole-line-or-region
       :ensure t
       :bind (("C-w" . whole-line-or-region-kill-region)
-             ;; ("C-c c" . whole-line-or-region-kill-ring-save)
-             ("C-c c" . sd/whole-line-or-region-kill-ring-save)
-             )
+             ("C-c c" . sd/whole-line-or-region-kill-ring-save))
       :config)
 #+END_SRC
 ** wrap-region
