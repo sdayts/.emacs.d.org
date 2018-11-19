@@ -2475,7 +2475,6 @@ the specified directory."
 #+BEGIN_SRC emacs-lisp
   (use-package ivy-posframe
     :ensure t
-    :bind (("C-M-<kp-delete>" . posframe-delete-all))
     :after ivy
     :config
     (setq ivy-display-function #'ivy-posframe-display-at-frame-center)
@@ -2623,6 +2622,13 @@ the specified directory."
     :ensure t
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+END_SRC
+** posframe
+#+BEGIN_SRC emacs-lisp
+  (use-package posframe
+    :ensure t
+    :bind ("C-M-<kp-delete>" . posframe-delete-all)
+    :config)
 #+END_SRC
 ** pcre2el
 #+BEGIN_SRC emacs-lisp
