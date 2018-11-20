@@ -2453,8 +2453,6 @@ the specified directory."
     :bind(("<f10>" . ivy-resume))
     :ensure t
     :init
-    ;; seems that counsel-yank-pop will respect ivy-height if ivy-height-alist is set to nil
-    (setq ivy-height-alist nil)
     :config
     ;; fix paste in ivy
     (unbind-key "C-v" ivy-minibuffer-map)
@@ -2469,10 +2467,21 @@ the specified directory."
     (set-face-attribute 'ivy-minibuffer-match-face-2 nil :background "black" :foreground "yellow"  :weight 'normal)
     (set-face-attribute 'ivy-minibuffer-match-face-3 nil :background "black" :foreground "green"  :weight 'normal)
     (set-face-attribute 'ivy-minibuffer-match-face-4 nil :background "black" :foreground "cyan"  :weight 'normal)
-    (ivy-mode 1))
+    (ivy-mode 1)
+    ;; seems that counsel-yank-pop will respect ivy-height if ivy-height-alist is set to nil
+    (setq ivy-height-alist nil))
 #+END_SRC
 ** ivy-posframe
 #+BEGIN_SRC emacs-lisp
+  (defun sd/posframe_toggle()
+    (interactive)
+    "Move ivy-poswin out of the way"
+    (let ((display_func (symbol-value 'ivy-display-function))
+          )
+      (if (eq display_func 'ivy-posframe-display-at-frame-bottom-left)
+          (setq ivy-display-function #'ivy-posframe-display-at-frame-center)
+        (setq ivy-display-function #'ivy-posframe-display-at-frame-bottom-left))))
+
   (use-package ivy-posframe
     :ensure t
     :after ivy
@@ -2480,6 +2489,10 @@ the specified directory."
     (setq ivy-display-function #'ivy-posframe-display-at-frame-center)
     ;; maximum width
     (setq ivy-posframe-width 150))
+
+  (global-unset-key (kbd "<f8>"))
+  (global-set-key (kbd "<f8>") 'sd/posframe_toggle)
+
 #+END_SRC
 ** json-mode
 #+BEGIN_SRC emacs-lisp
