@@ -2548,6 +2548,12 @@ the specified directory."
     (set-face-attribute 'magit-diff-removed nil :background "DarkRed")
     (set-face-attribute 'magit-diff-hunk-heading nil :background "black" :foreground "turquoise1" ))
 #+END_SRC
+** make-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package make-mode
+    :init
+    (unbind-key "C-M-i" makefile-mode-map))
+#+END_SRC
 ** man
 #+BEGIN_SRC emacs-lisp
   (use-package man
