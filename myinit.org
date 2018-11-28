@@ -55,6 +55,10 @@
   (global-unset-key (kbd "C-M-c"))
   (global-set-key (kbd "C-M-c") 'sd/copy-buffer-name-to-clipboard)
 
+  ;; Copy path of the current buffer
+  (global-unset-key (kbd "C-M-x"))
+  (global-set-key (kbd "C-M-x") 'sd/copy-full-path-of-current-buffer)
+
   ;; Comment bindings
   (global-unset-key (kbd "C-c C-c"))
   (global-set-key (kbd "C-c C-c") 'sd/comment-line-or-region)
@@ -443,6 +447,15 @@
     "Copy the current buffer file name to the clipboard."
     (interactive)
     (kill-new (buffer-name)))
+
+                    ;;;###autoload
+  (defun sd/copy-full-path-of-current-buffer ()
+    "copy full path into the yank ring and OS clipboard"
+    (interactive)
+    (when buffer-file-name
+      (let ((current-directory (file-name-directory (file-truename buffer-file-name))))
+            (kill-new current-directory)
+            (message "%s" current-directory))))
 
   (defun sd/revert-all-buffers ()
     "Refreshes all open buffers from their respective files."
