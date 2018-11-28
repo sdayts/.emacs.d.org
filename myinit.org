@@ -280,9 +280,9 @@
 * Custom functions
 #+BEGIN_SRC emacs-lisp
   (defun sd/toggle-implementation-test-cpp()
-    (interactive)
     "Toggle between C++ implementation and test buffers."
-    "Relies on the tests to reside in directory named 't'"
+    "Relies on the test files to follow \"t.cpp\" convention"
+    (interactive)
     (let ((current-file-name-sans-ext (file-name-base buffer-file-name))
           (current-directory (file-name-directory buffer-file-name)))
       (if (string-suffix-p ".t" current-file-name-sans-ext)
