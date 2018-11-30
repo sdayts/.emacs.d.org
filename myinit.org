@@ -2462,6 +2462,18 @@ the specified directory."
       (setq highlight-indent-guides-character ?\|)
       (setq highlight-indent-guides-responsive 'stack))
 #+END_SRC
+** hl-todo
+#+BEGIN_SRC emacs-lisp
+  (use-package hl-todo
+    :ensure t
+    :init
+    (setq hl-todo-keyword-faces
+          `(("TODO"  . "yellow")
+            ("FIXME" . "VioletRed1")
+            ("NOTE"  . ,(face-foreground 'success))))
+    :config
+    (global-hl-todo-mode))
+#+END_SRC
 ** hydra
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
@@ -2653,7 +2665,8 @@ the specified directory."
   (use-package nxml-mode
       :config
       (unbind-key "C-c C-u" nxml-mode-map)
-      (unbind-key "M-h" nxml-mode-map))
+      (unbind-key "M-h" nxml-mode-map)
+      (unbind-key "C-M-i" nxml-mode-map))
 #+END_SRC
 ** org
 #+BEGIN_SRC emacs-lisp
@@ -2670,6 +2683,8 @@ the specified directory."
     (setq org-log-done 'time)
     ;; insert notes for DONE items
     ;; (setq org-log-done 'note)
+    (setq org-todo-keyword-faces
+          '(("IN-PROGRESS" . "orange1")))
     )
 #+END_SRC
 ** org-bullets
