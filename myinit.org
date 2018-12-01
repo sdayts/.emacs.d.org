@@ -291,11 +291,19 @@
           (current-directory (file-name-directory buffer-file-name)))
       (if (string-suffix-p ".t" current-file-name-sans-ext)
           ;; toggle from test to implementation
-          (when (locate-dominating-file "." ".git")
-            (let ((found-files (directory-files-recursively (locate-dominating-file "." ".git")
-                                                            (concat (file-name-base current-file-name-sans-ext) ".cpp") )))
-              (if found-files
-                  (find-file (car found-files))))))
+          (let ((dominating-file (locate-dominating-file "." ".git")))
+            (when dominating-file
+              (let ((found-files (directory-files-recursively dominating-file
+                                                              (concat (file-name-base current-file-name-sans-ext) ".cpp") )))
+                ;; file found, switch
+                (if found-files
+                    (find-file (car found-files))
+                  ;; .cpp file not found, fall back to looking for .h, as the implementation can be templatized
+                  (progn
+                    (setq found-files (directory-files-recursively dominating-file
+                                                                   (concat (file-name-base current-file-name-sans-ext) ".h") ))
+                    (if found-files
+                        (find-file (car found-files)))))))))
       ;; toggle from implementation to test
       (when (locate-dominating-file "." ".git")
         (let ((found-files (directory-files-recursively (locate-dominating-file "." ".git")
