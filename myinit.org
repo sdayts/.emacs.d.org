@@ -288,7 +288,6 @@
     "Relies on the test files to follow \"t.cpp\" convention"
     (interactive)
     (let ((current-file-name-sans-ext (file-name-base buffer-file-name))
-          (current-directory (file-name-directory buffer-file-name))
           (dominating-file (locate-dominating-file "." ".git")))
       (if (string-suffix-p ".t" current-file-name-sans-ext)
           ;; toggle from test to implementation
