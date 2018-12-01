@@ -288,10 +288,10 @@
     "Relies on the test files to follow \"t.cpp\" convention"
     (interactive)
     (let ((current-file-name-sans-ext (file-name-base buffer-file-name))
-          (current-directory (file-name-directory buffer-file-name)))
+          (current-directory (file-name-directory buffer-file-name))
+          (dominating-file (locate-dominating-file "." ".git")))
       (if (string-suffix-p ".t" current-file-name-sans-ext)
           ;; toggle from test to implementation
-          (let ((dominating-file (locate-dominating-file "." ".git")))
             (when dominating-file
               (let ((found-files (directory-files-recursively dominating-file
                                                               (concat (file-name-base current-file-name-sans-ext) ".cpp") )))
@@ -303,10 +303,10 @@
                     (setq found-files (directory-files-recursively dominating-file
                                                                    (concat (file-name-base current-file-name-sans-ext) ".h") ))
                     (if found-files
-                        (find-file (car found-files)))))))))
+                        (find-file (car found-files))))))))
       ;; toggle from implementation to test
-      (when (locate-dominating-file "." ".git")
-        (let ((found-files (directory-files-recursively (locate-dominating-file "." ".git")
+      (when dominating-file
+        (let ((found-files (directory-files-recursively dominating-file
                                                         (concat current-file-name-sans-ext ".t.cpp") )))
           (if found-files
               (find-file (car found-files)))))))
