@@ -2607,7 +2607,9 @@ the specified directory."
 ** make-mode
 #+BEGIN_SRC emacs-lisp
   (use-package make-mode
+    :defer t
     :init
+    :config
     (unbind-key "C-M-i" makefile-mode-map))
 #+END_SRC
 ** man
