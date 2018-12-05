@@ -641,16 +641,24 @@ highlighted using different colors at one time."
 
   ;; Window sizing commands
   (global-unset-key (kbd "s-<down>"))
-  (global-set-key (kbd "s-<down>") 'shrink-window)
+  (global-set-key (kbd "s-<down>") '(lambda()
+                                    (interactive)
+                                    (shrink-window 2)))
 
   (global-unset-key (kbd "s-<up>"))
-  (global-set-key (kbd "s-<up>") 'enlarge-window)
+  (global-set-key (kbd "s-<up>") '(lambda()
+                                    (interactive)
+                                    (enlarge-window 2)))
 
   (global-unset-key (kbd "s-<right>"))
-  (global-set-key (kbd "s-<right>") 'enlarge-window-horizontally)
+  (global-set-key (kbd "s-<right>") '(lambda()
+                                       (interactive)
+                                       (enlarge-window-horizontally 2)))
 
   (global-unset-key (kbd "s-<left>"))
-  (global-set-key (kbd "s-<left>") 'shrink-window-horizontally)
+  (global-set-key (kbd "s-<left>") '(lambda()
+                                      (interactive)
+                                      (shrink-window-horizontally 2)))
 
   ;; Start maximised (cross-platf)
   (add-hook 'window-setup-hook 'toggle-frame-maximized t)
