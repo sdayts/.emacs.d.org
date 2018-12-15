@@ -1145,6 +1145,15 @@ highlighted using different colors at one time."
     (setq counsel-projectile-grep-base-command "grep -irnE %s -- %%s .")
     (setq counsel-find-file-ignore-regexp "ccls-cache"))
 #+END_SRC
+** diff-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package diff-mode
+    :init
+    (unbind-key "M-h" diff-mode-map)
+    (unbind-key "M-j" diff-mode-map)
+    (unbind-key "M-k" diff-mode-map)
+    (unbind-key "M-l" diff-mode-map))
+#+END_SRC
 ** define-word
 #+BEGIN_SRC emacs-lisp
   (use-package define-word
@@ -3141,6 +3150,12 @@ the specified directory."
     (setq zoom-window-mode-line-color "SteelBlue")
     :config
     )
+#+END_SRC
+** vc-svn
+#+BEGIN_SRC emacs-lisp
+  (use-package vc-svn
+    :config
+    (setq vc-svn-diff-switches '("-x --ignore-eol-style" "-x -w")))
 #+END_SRC
 ** Modes to explore in the future
 # 'ensime
