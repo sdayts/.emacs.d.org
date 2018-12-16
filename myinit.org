@@ -1149,6 +1149,7 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
   (use-package diff-mode
     :init
+    :config
     (unbind-key "M-h" diff-mode-map)
     (unbind-key "M-j" diff-mode-map)
     (unbind-key "M-k" diff-mode-map)
