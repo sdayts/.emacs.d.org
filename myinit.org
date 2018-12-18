@@ -566,7 +566,8 @@ highlighted using different colors at one time."
 (global-hl-line-mode +1)
 ;; slightly prefer this color for the current line
 ;; (set-face-background hl-line-face "#345858")
-(set-face-background hl-line-face "#345865")
+;; (set-face-background hl-line-face "#345865")
+(set-face-background hl-line-face "gray14")
 #+END_SRC
 * Color customizations
 #+BEGIN_SRC emacs-lisp
@@ -574,10 +575,15 @@ highlighted using different colors at one time."
   (set-cursor-color "cyan")
   ;; Make cursor a thin bar
   (setq-default cursor-type '(bar . 1))
+
   ;; set background colors
-  (set-background-color "#2F4F4F")
+;;  (set-background-color "#2F4F4F")
+  (set-background-color "black")
+
   ;; color of border of buffer separator
-  (set-face-background 'fringe "#2F4F4F")
+;;  (set-face-background 'fringe "#2F4F4F")
+  (set-face-background 'fringe "black")
+
   ;; color of comments
   (set-face-foreground 'font-lock-comment-face "#FA8278")
   ;; color of keyword
@@ -587,7 +593,7 @@ highlighted using different colors at one time."
   ;; color of srings
   (set-face-foreground 'font-lock-string-face "#00ECC8")
   ;; selection/search background/foreground
-  (set-face-attribute 'region nil :background "black" :foreground "yellow" )
+  (set-face-attribute 'region nil :background "gray31" :foreground "yellow" )
   (set-face-attribute 'isearch nil :background "black" :foreground "yellow" )
   (set-face-attribute 'lazy-highlight nil :background "black" :foreground "cyan" )
   ;; color line numbers
@@ -2959,6 +2965,55 @@ the specified directory."
     (set-face-attribute 'swiper-match-face-4 nil :foreground "cyan"   :weight 'normal)
     :ensure t)
 #+END_SRC
+** term
+#+BEGIN_SRC emacs-lisp
+    (use-package term
+      :init
+      ;; (set-face-attribute 'default nil :background "black" :foreground "white"
+      ;;                     :font "Courier" :height 180)
+    :config
+      (set-face-attributee 'term nil :background "black" )
+  ;; (set-face-attribute 'default nil :background "#2F4F4F")
+  ;;        Foreground: #FFF8DC
+  ;; DistantForeground: unspecified
+  ;;        Background: #2F4F4F
+
+  ;; ;; term
+  ;; (defface term-color-black
+  ;;   '((t (:foreground "#3f3f3f" :background "#272822")))
+  ;;   "Unhelpful docstring.")
+  ;; (defface term-color-red
+  ;;   '((t (:foreground "#cc9393" :background "#272822")))
+  ;;   "Unhelpful docstring.")
+  ;; (defface term-color-green
+  ;;   '((t (:foreground "#7f9f7f" :background "#272822")))
+  ;;   "Unhelpful docstring.")
+  ;; (defface term-color-yellow
+  ;;   '((t (:foreground "#f0dfaf" :background "#272822")))
+  ;;   "Unhelpful docstring.")
+  ;; (defface term-color-blue
+  ;;   '((t (:foreground "#6d85ba" :background "#272822")))
+  ;;   "Unhelpful docstring.")
+  ;; (defface term-color-magenta
+  ;;   '((t (:foreground "#dc8cc3" :background "#272822")))
+  ;;   "Unhelpful docstring.")
+  ;; (defface term-color-cyan
+  ;;   '((t (:foreground "#93e0e3" :background "#272822")))
+  ;;   "Unhelpful docstring.")
+  ;; (defface term-color-white
+  ;;   '((t (:foreground "#dcdccc" :background "#272822")))
+  ;;   "Unhelpful docstring.")
+  ;; '(term-default-fg-color ((t (:inherit term-color-white))))
+  ;; '(term-default-bg-color ((t (:inherit term-color-black))))
+
+  ;; ;; ansi-term colors
+  ;; (setq ansi-term-color-vector
+  ;;   [term term-color-black term-color-red term-color-green term-color-yellow
+  ;;     term-color-blue term-color-magenta term-color-cyan term-color-white])
+
+  ;; )
+
+#+END_SRC
 ** thingatpt+
 #+BEGIN_SRC emacs-lisp
   (use-package thingatpt+
@@ -2998,6 +3053,28 @@ the specified directory."
 ;;uncrustify-config-path is a variable defined in ‘uncrustify-mode.el’.
 ;;Its value is "~/.uncrustify.cfg"
 ;; uncrustify -q -c ~/.uncrustify.cfg -l CPP
+#+END_SRC
+** undo-tree
+#+BEGIN_SRC emacs-lisp
+  (use-package undo-tree
+    :ensure t
+    :init
+    (global-undo-tree-mode)
+    (unbind-key "C-x r u" undo-tree-map)
+    (unbind-key "C-x r U" undo-tree-map)
+    (unbind-key "C-x r" undo-tree-map))
+#+END_SRC
+** use-package-chors
+#+BEGIN_SRC emacs-lisp
+(use-package use-package-chords
+  :ensure t
+  :config (key-chord-mode 1))
+#+END_SRC
+** vc-svn
+#+BEGIN_SRC emacs-lisp
+  (use-package vc-svn
+    :config
+    (setq vc-svn-diff-switches '("-x --ignore-eol-style" "-x -w")))
 #+END_SRC
 ** vlf
 #+BEGIN_SRC emacs-lisp
@@ -3095,22 +3172,6 @@ the specified directory."
        ("`" "'"   "c"   lisp-mode)                ; code
        )))
 #+END_SRC
-** undo-tree
-#+BEGIN_SRC emacs-lisp
-  (use-package undo-tree
-    :ensure t
-    :init
-    (global-undo-tree-mode)
-    (unbind-key "C-x r u" undo-tree-map)
-    (unbind-key "C-x r U" undo-tree-map)
-    (unbind-key "C-x r" undo-tree-map))
-#+END_SRC
-** use-package-chors
-#+BEGIN_SRC emacs-lisp
-(use-package use-package-chords
-  :ensure t
-  :config (key-chord-mode 1))
-#+END_SRC
 ** yasnippet
 #+BEGIN_SRC emacs-lisp
         ;;;###autoload
@@ -3153,12 +3214,6 @@ the specified directory."
     :config
     )
 #+END_SRC
-** vc-svn
-#+BEGIN_SRC emacs-lisp
-  (use-package vc-svn
-    :config
-    (setq vc-svn-diff-switches '("-x --ignore-eol-style" "-x -w")))
-#+END_SRC
 ** Modes to explore in the future
 # 'ensime
 # 'paredit
@@ -3197,6 +3252,15 @@ http://syamajala.github.io/c-ide.html
 (setq rtags-use-helm t)
 ** ediff horizontally
 (setq ediff-split-window-function 'split-window-horizontally)
+** scratch
+this is not being executed
+(use-package term
+  :init
+  (set-face-attribute 'term nil :background "black" )
+  (set-face-attribute 'default nil :background "black" :foreground "white"
+                      :font "Courier" :height 180)
+:config
+)
 * Tips
 #+BEGIN_SRC emacs-lisp
 (setq sd-tips
