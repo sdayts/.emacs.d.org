@@ -2280,6 +2280,13 @@ the specified directory."
 
   (define-key c-mode-base-map [(meta control g)] 'rtags-helm-select-taglist)
 #+END_SRC
+** expand-region
+#+BEGIN_SRC emacs-lisp
+  (use-package expand-region
+    :ensure t
+    :bind (("C-=" . er/expand-region)
+           ("C-M-=" . er/contract-region)))
+#+END_SRC
 ** eyebrowse
 #+BEGIN_SRC emacs-lisp
   (use-package eyebrowse
@@ -2320,6 +2327,15 @@ the specified directory."
     (setq ispell-program-name "/usr/local/bin/aspell")
     (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 #+END_SRC
+** git-gutter-fringe+
+#+BEGIN_SRC emacs-lisp
+    (use-package git-gutter-fringe+
+      :ensure    t
+      :bind (("C-M-p" . git-gutter+-previous-hunk )
+             ("C-M-n" . git-gutter+-next-hunk ))
+      :init
+      (global-git-gutter+-mode t))
+#+END_SRC
 ** git-timemachine
 #+BEGIN_SRC emacs-lisp
   (use-package git-timemachine
@@ -2333,54 +2349,6 @@ the specified directory."
     :config
     (golden-ratio-mode 1)
     (golden-ratio-toggle-widescreen))
-#+END_SRC
-** ibuffer
-#+BEGIN_SRC emacs-lisp
-  (use-package ibuffer
-    :bind (("C-'" . ibuffer))
-    :init
-    (setq ibuffer-saved-filter-groups
-          (quote (("default"
-                   ("eqwrnt2" (filename . "/eqwrnt2/"))
-                   ("C++" (mode . c++-mode))
-                   ("dired" (mode . dired-mode))
-                   ("magit" (name . "^.*magit*$"))
-                   ("org" (name . "^.*org$"))
-                   ("shell" (or (mode . eshell-mode) (mode . shell-mode)))
-                   ("Emacs" (or
-                             (name . "^\\*scratch\\*$")
-                             (name . "^\\*Messages\\*$")))))))
-
-    (setq ibuffer-show-empty-filter-groups nil)
-    (setq ibuffer-expert t)
-    (setq ibuffer-show-empty-filter-groups nil)
-    (add-hook 'ibuffer-mode-hook
-              '(lambda ()
-                 (ibuffer-switch-to-saved-filter-groups "default"))))
-#+END_SRC
-** iedit
-#+BEGIN_SRC emacs-lisp
-  (use-package iedit
-    :ensure t
-    :bind (("C-;" . iedit-mode))
-    :config
-    )
-#+END_SRC
-** expand-region
-#+BEGIN_SRC emacs-lisp
-  (use-package expand-region
-    :ensure t
-    :bind (("C-=" . er/expand-region)
-           ("C-M-=" . er/contract-region)))
-#+END_SRC
-** git-gutter-fringe+
-#+BEGIN_SRC emacs-lisp
-    (use-package git-gutter-fringe+
-      :ensure    t
-      :bind (("C-M-p" . git-gutter+-previous-hunk )
-             ("C-M-n" . git-gutter+-next-hunk ))
-      :init
-      (global-git-gutter+-mode t))
 #+END_SRC
 ** helm
 #+BEGIN_SRC emacs-lisp
@@ -2504,6 +2472,38 @@ the specified directory."
 (use-package hydra
     :ensure t
     :config)
+#+END_SRC
+** ibuffer
+#+BEGIN_SRC emacs-lisp
+  (use-package ibuffer
+    :bind (("C-'" . ibuffer))
+    :init
+    (setq ibuffer-saved-filter-groups
+          (quote (("default"
+                   ("eqwrnt2" (filename . "/eqwrnt2/"))
+                   ("C++" (mode . c++-mode))
+                   ("dired" (mode . dired-mode))
+                   ("magit" (name . "^.*magit*$"))
+                   ("org" (name . "^.*org$"))
+                   ("shell" (or (mode . eshell-mode) (mode . shell-mode)))
+                   ("Emacs" (or
+                             (name . "^\\*scratch\\*$")
+                             (name . "^\\*Messages\\*$")))))))
+
+    (setq ibuffer-show-empty-filter-groups nil)
+    (setq ibuffer-expert t)
+    (setq ibuffer-show-empty-filter-groups nil)
+    (add-hook 'ibuffer-mode-hook
+              '(lambda ()
+                 (ibuffer-switch-to-saved-filter-groups "default"))))
+#+END_SRC
+** iedit
+#+BEGIN_SRC emacs-lisp
+  (use-package iedit
+    :ensure t
+    :bind (("C-;" . iedit-mode))
+    :config
+    )
 #+END_SRC
 ** irony
 #+BEGIN_SRC emacs-lisp
