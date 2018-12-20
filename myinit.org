@@ -564,6 +564,8 @@ highlighted using different colors at one time."
 
 ;; hilight current line
 (global-hl-line-mode +1)
+;; enables us to turn off hl-line in certain modes
+(make-variable-buffer-local 'global-hl-line-mode)
 ;; slightly prefer this color for the current line
 ;; (set-face-background hl-line-face "#345858")
 (set-face-background hl-line-face "#345865")
@@ -2962,11 +2964,13 @@ the specified directory."
 ** term
 #+BEGIN_SRC emacs-lisp
   (defun sd/term-hook ()
-    (interactive)
-
+    "Term mode hook to set it up."
+    ;; colors
     (setq buffer-face-mode-face `(:background "black"))
     (set-face-attribute 'term nil :background "black" )
-    (buffer-face-mode 1))
+    (buffer-face-mode 1)
+    ;; disable hl-line in term
+    (setq global-hl-line-mode nil))
 
   (use-package term
     :init
