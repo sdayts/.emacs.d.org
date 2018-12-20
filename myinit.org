@@ -2963,24 +2963,26 @@ the specified directory."
 #+END_SRC
 ** term
 #+BEGIN_SRC emacs-lisp
-  (defun sd/term-hook ()
-    "Term mode hook to set it up."
-    ;; colors
-    (setq buffer-face-mode-face `(:background "black"))
-    (set-face-attribute 'term nil :background "black" )
-    (buffer-face-mode 1)
-    ;; disable hl-line in term
-    (setq global-hl-line-mode nil))
+    (defun sd/term-hook ()
+      "Term mode hook to set it up."
+      ;; colors
+      (setq buffer-face-mode-face `(:background "black"))
+      (set-face-attribute 'term nil :background "black" )
+      (buffer-face-mode 1)
+      ;; disable hl-line in term
+      (setq global-hl-line-mode nil))
 
-  (use-package term
-    :init
-    (add-hook 'term-mode-hook #'sd/term-hook)
-    :config
-    (unbind-key "M-x" term-raw-map)
-    (unbind-key "M-h" term-raw-map)
-    (unbind-key "M-j" term-raw-map)
-    (unbind-key "M-k" term-raw-map)
-    (unbind-key "M-k" term-raw-map))
+    (use-package term
+      :init
+      (add-hook 'term-mode-hook #'sd/term-hook)
+      :config
+      (unbind-key "M-x" term-raw-map)
+      (unbind-key "M-h" term-raw-map)
+      (unbind-key "M-j" term-raw-map)
+      (unbind-key "M-k" term-raw-map)
+      (unbind-key "M-l" term-raw-map)
+      (unbind-key "C-M-h" term-raw-map)
+      (unbind-key "C-M-l" term-raw-map))
 #+END_SRC
 ** thingatpt+
 #+BEGIN_SRC emacs-lisp
