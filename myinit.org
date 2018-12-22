@@ -2874,11 +2874,13 @@ the specified directory."
 #+END_SRC
 ** spaceline
 #+BEGIN_SRC emacs-lisp
-  (use-package spaceline :ensure t
+  (use-package spaceline
+    :ensure t
     :config
     (setq-default mode-line-format '("%e" (:eval (spaceline-ml-main)))))
 
-  (use-package spaceline-config :ensure spaceline
+  (use-package spaceline-config
+    :ensure spaceline
     :config
     (spaceline-helm-mode 1)
 
@@ -2903,9 +2905,9 @@ the specified directory."
         (amitp/buffer-id :tight-left t :face highlight-face)
         (which-function :tight-left t)
         (("L" line column) :separator ":" :when active)
-        (selection-info :face region :when mark-active)
+        (selection-info :face highlight-face :when mark-active)
         (projectile-root :when active)
-        (workspace-number :face my/spaceline-perspective-name :when active))
+        (workspace-number :face highlight-face :when active))
       '(((flycheck-error flycheck-warning flycheck-info) :when active)
         (version-control :when active)
         (global :face highlight-face)
@@ -2936,7 +2938,6 @@ the specified directory."
 
   (face 'my/spaceline-read-only :background (hsl 300 0.15 0.5) :foreground "gray80" :box `(:line-width -2 :color ,(hsl 300 0.4 0.5)))
   (face 'my/spaceline-modified :background "Red" :foreground "Black" :weight 'extra-bold)
-  (face 'my/spaceline-perspective-name :background "Black" :foreground "turquoise1" :height (/ 1.0 powerline-text-scale-factor))
   (face 'my/spaceline-unicode-character :inherit 'mode-line :foreground "black" :background (hsl 50 1.0 0.5))
   (face 'amitp/spaceline-filename :family "Helvetica Neue" :foreground nil :background nil :weight 'normal :height (/ 1.0 powerline-text-scale-factor))
 #+END_SRC
