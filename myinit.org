@@ -994,23 +994,14 @@ highlighted using different colors at one time."
 #+END_SRC
 ** ccls
 #+BEGIN_SRC emacs-lisp
-  (defun ccls//enable ()
-    (interactive)
-    (condition-case nil
-        (lsp-ccls-enable)
-      (user-error nil)))
-
   (use-package ccls
-    :ensure t
-    :after (lsp-mode)
-    :commands lsp-ccls-enable
-    :init
+    :config
     (setq ccls-executable "/usr/local/bin/ccls")
-    (setq ccls-cache-dir "/Users/sdayts/workspaces/ccls-cache/.ccls-cache")
-    (add-hook 'c-mode-hook #'ccls//enable)
-    (add-hook 'c++-mode-hook #'ccls//enable)
-    (setq ccls-extra-init-params '(:completion (:detailedLabel t)))
-    (setq ccls-extra-args '("--log-file=/Users/sdayts/workspaces/ccls-cache/logs/ccls.log")))
+    (setq ccls-args '("--log-file=/Users/sdayts/workspaces/ccls-cache/logs/ccls.log"))
+    ;;   (setq ccls-cache-dir "/Users/sdayts/workspaces/ccls-cache/.ccls-cache")
+    ;;   (setq ccls-extra-init-params '(:completion (:detailedLabel t)))
+    :hook ((c-mode c++-mode objc-mode) .
+           (lambda () (require 'ccls) (lsp))))
 #+END_SRC
 ** clang-format
 #+BEGIN_SRC emacs-lisp
@@ -2592,7 +2583,9 @@ the specified directory."
 ** lsp-mode
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-mode
-    :bind (("C-x r" . xref-find-references)
+    :bind (
+           ;; ("C-x r" . xref-find-references) somehow does not work
+           ("C-x r" . lsp-find-references)
            ( "C-."  . xref-find-definitions)
            ("C-,"   . xref-pop-marker-stack))
     :ensure t)
