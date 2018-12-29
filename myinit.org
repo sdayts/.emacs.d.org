@@ -2588,6 +2588,8 @@ the specified directory."
            ("C-x r" . lsp-find-references)
            ( "C-."  . xref-find-definitions)
            ("C-,"   . xref-pop-marker-stack))
+    :config
+    (setq lsp-prefer-flymake nil)
     :ensure t)
 #+END_SRC
 ** lsp-ui
