@@ -2571,6 +2571,12 @@ the specified directory."
   (global-set-key (kbd "<f8>") 'sd/posframe_toggle)
 
 #+END_SRC
+** ivy-xref
+#+BEGIN_SRC emacs-lisp
+(use-package ivy-xref
+  :ensure t
+  :init (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+#+END_SRC
 ** json-mode
 #+BEGIN_SRC emacs-lisp
 (use-package json-mode
@@ -2597,9 +2603,11 @@ the specified directory."
            ;; ("C-x r" . xref-find-references) somehow does not work
            ("C-x r" . lsp-find-references)
            ( "C-."  . xref-find-definitions)
-           ("C-,"   . xref-pop-marker-stack))
+           ("C-,"   . xref-pop-marker-stack)
+           ("C-M-?" . ccls-member-hierarchy))
     :config
     (setq lsp-prefer-flymake nil)
+    (setq lsp-response-timeout 25)
     :ensure t)
 #+END_SRC
 ** lsp-ui
@@ -2984,6 +2992,9 @@ the specified directory."
   (use-package term
     :init
     (add-hook 'term-mode-hook #'sd/term-hook)
+    :bind( :map term-raw-map
+                ("C-v" . term-paste))
+
     :config
     (unbind-key "M-x" term-raw-map)
     (unbind-key "M-h" term-raw-map)
