@@ -1182,6 +1182,7 @@ highlighted using different colors at one time."
     :init
     ;; unset dired's biding so that the global can take over
     (unbind-key "M-l" dired-mode-map)
+    (setq dired-dwim-target t)
     (defun sd/dired-config()
       (require 'dired-x)
       (setq dired-omit-files
@@ -1204,7 +1205,19 @@ highlighted using different colors at one time."
       :ensure t)
     (use-package dired-narrow
       :ensure t
-      :config))
+      :config
+      (bind-key "C-f" #'dired-narrow-fuzzy)
+      (bind-key "C-x C-N" #'dired-narrow-regexp)
+      (bind-key "C-c C-n" #'dired-narrow)))
+#+END_SRC
+** dired-subtree
+#+BEGIN_SRC emacs-lisp
+  (use-package dired-subtree
+    :ensure t
+    :after dired
+    :config
+    (bind-key "<tab>" #'dired-subtree-toggle dired-mode-map)
+    (bind-key "<backtab>" #'dired-subtree-cycle dired-mode-map))
 #+END_SRC
 ** dired+
 #+BEGIN_SRC emacs-lisp
@@ -1212,6 +1225,7 @@ highlighted using different colors at one time."
     :load-path "~/.emacs.d/local-packages/dired+"
     :config
     (diredp-make-find-file-keys-reuse-dirs)
+    (setq diredp-wrap-around-flag nil)
     ;; set up better colors
     (set-face-attribute 'diredp-flag-mark-line nil :background "black" :foreground "yellow" )
     (set-face-attribute 'diredp-flag-mark nil :background "black" :foreground "green" )
