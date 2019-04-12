@@ -995,6 +995,7 @@ highlighted using different colors at one time."
 ** ccls
 #+BEGIN_SRC emacs-lisp
   (use-package ccls
+    :ensure t
     :config
     (setq ccls-executable "/usr/local/bin/ccls")
     (setq ccls-args '("--log-file=/Users/sdayts/workspaces/ccls-cache/logs/ccls.log"))
@@ -2574,6 +2575,7 @@ the specified directory."
         (setq ivy-display-function #'ivy-posframe-display-at-frame-bottom-left))))
 
   (use-package ivy-posframe
+    :disabled
     :ensure t
     :after ivy
     :config
