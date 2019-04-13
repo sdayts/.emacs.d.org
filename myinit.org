@@ -2499,6 +2499,7 @@ the specified directory."
     :init
     (setq ibuffer-saved-filter-groups
           (quote (("default"
+                   ("dired" (mode . dired-mode) )
                    ("eqwrnt2" (filename . "/eqwrnt2/"))
                    ("C++" (mode . c++-mode))
                    ("dired" (mode . dired-mode))
