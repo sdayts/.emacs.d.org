@@ -1201,7 +1201,6 @@ highlighted using different colors at one time."
     (setq-local ace-jump-search-filter
                 (lambda ()
                   (get-text-property (point) 'dired-filename)))
-    (diredp-toggle-find-file-reuse-dir 1)
     ;; subpackages
     (use-package dired-hacks-utils
       :ensure t)
