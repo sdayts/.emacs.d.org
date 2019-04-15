@@ -1127,6 +1127,8 @@ highlighted using different colors at one time."
             ("M-m"     . counsel-imenu)
             ("C-c C-f" . counsel-find-file)
             ("C-M-r"   . counsel-recentf ))
+    :config
+    (add-to-list 'ivy-height-alist '(counsel-yank-pop . 25))
     :ensure t)
 #+END_SRC
 ** counsel-dash
