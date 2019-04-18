@@ -3149,6 +3149,13 @@ the specified directory."
     :config
     (setq vc-svn-diff-switches '("-x --ignore-eol-style" "-x -w")))
 #+END_SRC
+** visual-regexp
+#+BEGIN_SRC emacs-lisp
+  (use-package visual-regexp
+    :ensure t
+    :config
+    (define-key global-map (kbd "s-r") 'vr/replace))
+#+END_SRC
 ** vlf
 #+BEGIN_SRC emacs-lisp
   (use-package vlf
