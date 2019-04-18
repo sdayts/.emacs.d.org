@@ -5,15 +5,18 @@
       '(
         c-electric-brace
         c-electric-colon
+        c-electric-delete-forward
         c-electric-lt-gt
         c-electric-paren
         c-electric-semi&comma
         c-indent-line-or-region
         counsel-yank-pop
+        ivy-wgrep-change-to-wgrep-mode
         markdown-outdent-or-delete
         org-beginning-of-line
         org-cycle
         org-end-of-line
+        org-force-self-insert
         org-insert-todo-heading
         org-kill-line
         org-metaleft
@@ -27,6 +30,7 @@
         sd/forward-or-backward-sexp
         sd/mark-from-point-to-end-of-line
         sd/whole-line-or-region-kill-ring-save
+        transpose-words
         undefined
         wdired-finish-edit
         wgrep-finish-edit
@@ -42,7 +46,10 @@
         ff-find-other-file
         isearch-forward-regexp
         mouse-set-region
+        org-table-copy-down
+        rtags-find-symbol
         rtags-imenu
+        sd/rtags-find-symbol-at-point
         sp-slurp-hybrid-sexp
         yank-rectangle
         ))
