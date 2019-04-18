@@ -13,6 +13,10 @@
         ;; load doxymacs
         (require 'doxymacs)))
 
+  ;; Store custom-file separately, don’t freak out when it’s not found.
+  (setq custom-file "~/.emacs.d/custom.el")
+  (load custom-file 'noerror)
+
   ;; prefer newer source to old bytecode
   (setq load-prefer-newer t)
 
@@ -23,7 +27,7 @@
   ;; to take effect under OSX
   (defun system-move-file-to-trash (file)
     "Use \"trash\" to move FILE to the system trash.
-  When using Homebrew, install it using \"brew install trash\"."
+    When using Homebrew, install it using \"brew install trash\"."
     (call-process (executable-find "trash")
                   nil 0 nil
                   file))
@@ -45,7 +49,7 @@
 
   ;; Paste the way I am used to
   (global-unset-key (kbd "C-M-j"))
-  (global-set-key (kbd "C-M-j") 'join-line)
+  (global-set-key (kbd "C-M-j") 'sd/smart-join-line)
 
   ;; Copy word under the cursor
   (global-unset-key (kbd "M-c"))
@@ -520,6 +524,28 @@
           (push-mark)
           (setq mark-active t)))
     (forward-line))
+
+  (defun sd/smart-join-line (beg end)
+    "If in a region, join all the lines in it. If not, join the current line with the next line."
+    (interactive "r")
+    (if mark-active
+        (sd/join-region beg end)
+        (sd/top-join-line)))
+
+  (defun sd/top-join-line ()
+    "Join the current line with the next line."
+    (interactive)
+    (delete-indentation 1))
+
+  (defun sd/join-region (beg end)
+    "Join all the lines in the region."
+    (interactive "r")
+    (if mark-active
+        (let ((beg (region-beginning))
+              (end (copy-marker (region-end))))
+          (goto-char beg)
+          (while (< (point) end)
+            (join-line 1)))))
 #+END_SRC
 
 * Highlighting related customizations
