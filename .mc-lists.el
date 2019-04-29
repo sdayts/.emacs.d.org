@@ -11,6 +11,7 @@
         c-electric-semi&comma
         c-indent-line-or-region
         counsel-yank-pop
+        indent-for-tab-command
         ivy-wgrep-change-to-wgrep-mode
         markdown-outdent-or-delete
         org-beginning-of-line
@@ -52,4 +53,5 @@
         sd/rtags-find-symbol-at-point
         sp-slurp-hybrid-sexp
         yank-rectangle
+        zoom-window-zoom
         ))
