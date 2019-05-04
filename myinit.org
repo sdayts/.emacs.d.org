@@ -1154,6 +1154,9 @@ highlighted using different colors at one time."
             ("C-M-r"   . counsel-recentf ))
     :config
     (add-to-list 'ivy-height-alist '(counsel-yank-pop . 25))
+    (setq counsel-git-cmd "rg --files")
+    (setq counsel-rg-base-command
+          "rg -i -M 120 --no-heading --line-number --color never %s .")
     :ensure t)
 #+END_SRC
 ** counsel-dash
@@ -1263,6 +1266,14 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
 (use-package esup
   :ensure t)
+#+END_SRC
+** exec-path-from-shell
+#+BEGIN_SRC emacs-lisp
+  (use-package exec-path-from-shell
+    :ensure t
+    :config
+    (when (memq window-system '(mac ns x))
+      (exec-path-from-shell-initialize)))
 #+END_SRC
 ** exordium
 Relevant code from exordium, by Philippe Grenet. All the credit is his.
