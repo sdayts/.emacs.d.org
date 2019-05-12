@@ -316,13 +316,19 @@
   (defun sd/find-last-include()
     "Find the last include in the current buffer"
     (interactive)
-    ;;(rtags-location-stack-push)
+    (xref-push-marker-stack)
     (setq matched-position (search-backward "#include" nil t))
     (if matched-position
         (progn
           (next-line)
           (recenter-top-bottom))
       (message "Did not find a #include")))
+
+  (defun sd/pop-marker-stack()
+    "Pop marker stack and re-center"
+    (interactive)
+    (xref-pop-marker-stack)
+    (recenter-top-bottom))
 
                     ;;;###autoload
   (defun sd/forward-or-backward-sexp (&optional arg)
@@ -782,22 +788,6 @@ highlighted using different colors at one time."
      '(avy-lead-face
        ((t (:inherit avy-lead-face :height 1.0 :foreground "yellow" :background "black" ))))))
 #+END_SRC
-** backbutton
-#+BEGIN_SRC emacs-lisp
-  (defun sd/pop-global-mark-ring()
-    (interactive)
-    (back-button-global-backward)
-    (setq global-mark-ring (butlast global-mark-ring 1))
-    )
-
-  (use-package back-button
-    :ensure t
-    ;; :bind (("C-," . sd/pop-global-mark-ring )
-           ;; )
-    :init
-    :config
-    )
-#+END_SRC
 ** beacon
 #+BEGIN_SRC emacs-lisp
   (use-package beacon
@@ -1023,12 +1013,6 @@ highlighted using different colors at one time."
     :hook ((c-mode c++-mode objc-mode) .
            (lambda () (require 'ccls) (lsp))))
 #+END_SRC
-** clang-format
-#+BEGIN_SRC emacs-lisp
-  (use-package clang-format
-    :ensure t
-    :config)
-#+END_SRC
 ** company
 #+BEGIN_SRC emacs-lisp
   (use-package company
@@ -1112,20 +1096,6 @@ highlighted using different colors at one time."
     :init
     :config
     (company-posframe-mode 1))
-#+END_SRC
-** corral
-#+BEGIN_SRC emacs-lisp
-  (use-package corral
-    :ensure t
-    :bind ( ("M-9" . 'corral-parentheses-backward)
-            ("M-0" . 'corral-parentheses-forward)
-            ("M-[" . 'corral-brackets-backward)
-            ("M-]" . 'corral-brackets-forward)
-            ("M-{" . 'corral-braces-backward)
-            ("M-}" . 'corral-braces-forward))
-      :init
-      :config
-      (setq corral-preserve-point t))
 #+END_SRC
 ** counsel
 #+BEGIN_SRC emacs-lisp
@@ -1320,15 +1290,6 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
   (use-package git-timemachine
     :ensure t )
-#+END_SRC
-** golden-ratio
-#+BEGIN_SRC emacs-lisp
-  (use-package golden-ratio
-    :ensure t
-    :disabled
-    :config
-    (golden-ratio-mode 1)
-    (golden-ratio-toggle-widescreen))
 #+END_SRC
 ** helm
 #+BEGIN_SRC emacs-lisp
@@ -1615,6 +1576,7 @@ highlighted using different colors at one time."
            ("C-x r" . lsp-find-references)
            ( "C-."  . xref-find-definitions)
            ("C-,"   . xref-pop-marker-stack)
+;;           ("C-,"   . sd/pop-marker-stack)
            ("C-M-?" . ccls-member-hierarchy))
     :config
     (setq lsp-prefer-flymake nil)
@@ -2021,27 +1983,6 @@ highlighted using different colors at one time."
   (use-package try
     :ensure t)
 #+END_SRC
-** uncrustify-mode
-#+BEGIN_SRC emacs-lisp
-  (defun sd/uncrustify ()
-    "Uncrustify text selection or whole buffer."
-    (interactive)
-    (let (p1 p2)
-      (progn (if (use-region-p)
-                 (progn (setq p1 (region-beginning))
-                        (setq p2 (region-end)))
-               (progn (setq p1 (point-min))
-                      (setq p2 (point-max)))))
-      (require 'uncrustify-mode)
-      (uncrustify-invoke-command (uncrustify-get-lang-from-mode) p1 p2)))
-
-  (use-package uncrustify-mode
-    :ensure t)
-
-;;uncrustify-config-path is a variable defined in ‘uncrustify-mode.el’.
-;;Its value is "~/.uncrustify.cfg"
-;; uncrustify -q -c ~/.uncrustify.cfg -l CPP
-#+END_SRC
 ** undo-tree
 #+BEGIN_SRC emacs-lisp
   (use-package undo-tree
@@ -2211,10 +2152,7 @@ highlighted using different colors at one time."
     )
 #+END_SRC
 ** Modes to explore in the future
-# 'ensime
-# 'paredit
 # web-mode
-# simpleclip-mode
 * TODO
 ** random snippets
 (use-package projectile
