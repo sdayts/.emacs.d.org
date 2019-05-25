@@ -754,27 +754,6 @@ highlighted using different colors at one time."
         ((t (:inherit ace-jump-face-foreground :height 6.0)))))
      :diminish ace-window-mode)
 #+END_SRC
-** autocomplete
-#+BEGIN_SRC emacs-lisp
-  ;; (use-package auto-complete
-  ;;   :diminish auto-complete-mode
-  ;;   :disabled
-  ;;   :ensure t
-  ;;   :bind (("C-S-SPC" . auto-complete))
-  ;;   :init
-  ;;   (ac-config-default)
-  ;;   (global-auto-complete-mode t)
-  ;;   (setq ac-use-menu-map t)
-  ;;   (setq ac-delay 0.1)
-  ;;   ;; auto-completion after 2 characters
-  ;;   (setq ac-auto-start 2))
-#+END_SRC
-** auto-complete-c-headers
-#+BEGIN_SRC emacs-lisp
-  ;; (use-package auto-complete-c-headers
-  ;;   :ensure t
-  ;;   :disabled)
-#+END_SRC
 ** avy
 #+BEGIN_SRC emacs-lisp
   (use-package avy
@@ -1067,27 +1046,6 @@ highlighted using different colors at one time."
      (push 'company-lsp company-backends)
      (setq company-transformers nil company-lsp-async t company-lsp-cache-candidates nil))
  #+END_SRC
-** company-irony
-#+BEGIN_SRC emacs-lisp
-  ;; (use-package company-irony
-  ;;   :disabled
-  ;;   :ensure t
-  ;;   :bind (("C-SPC" . company-complete))
-  ;;   :init
-  ;;   (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
-  ;;   (setq company-backends (delete 'company-semantic company-backends))
-  ;;   (setq company-backends (delete 'company-clang company-backends))
-  ;;   :config
-  ;;   (eval-after-load 'company
-  ;;   '(add-to-list
-  ;;     'company-backends '(company-irony-c-headers company-irony))))
-#+END_SRC
-** company-irony-c-headers
-#+BEGIN_SRC emacs-lisp
-  ;; (use-package company-irony-c-headers
-  ;;   :disabled
-  ;;   :ensure t)
-#+END_SRC
 ** company-posframe
 #+BEGIN_SRC emacs-lisp
   (use-package company-posframe
@@ -1480,21 +1438,6 @@ highlighted using different colors at one time."
     :bind (("C-;" . iedit-mode))
     :config
     )
-#+END_SRC
-** irony
-#+BEGIN_SRC emacs-lisp
-  ;; (defun my-irony-mode-hook ()
-  ;;   (define-key irony-mode-map [remap completion-at-point]
-  ;;     'irony-completion-at-point-async)
-  ;;   (define-key irony-mode-map [remap complete-symbol]
-  ;;     'irony-completion-at-point-async))
-
-  ;; (use-package irony
-  ;;   :disabled
-  ;;   :ensure t
-  ;;   :init
-  ;;   (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-  ;;   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 #+END_SRC
 ** ivy
 #+BEGIN_SRC emacs-lisp
