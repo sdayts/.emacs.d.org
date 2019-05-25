@@ -2123,7 +2123,6 @@ highlighted using different colors at one time."
     (add-to-list 'projectile-globally-ignored-directories "elpa")
     (add-to-list 'projectile-globally-ignored-directories ".cask")
     (add-to-list 'projectile-globally-ignored-directories ".cache")))
-** smartparens mode
 ** ediff horizontally
 (setq ediff-split-window-function 'split-window-horizontally)
 ** emacs keybindings everywhere
