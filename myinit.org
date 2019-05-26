@@ -1116,19 +1116,21 @@ highlighted using different colors at one time."
 ** dired
 #+BEGIN_SRC emacs-lisp
   (use-package dired
-    :after    (helm-swoop)
     :chords (("LL" . dired-jump))
     :bind ( :map dired-mode-map
                  ("C-M-i" . 'counsel-git-grep)
                  ("M-i" . swiper)
                  ;; End/Back key goes up one directory in dired mode
-                 ("<end>" . dired-up-directory))
+                 ("<end>" . dired-up-directory)
+                 ;; instead of burying the buffer, kill it
+                 ("q" . 'kill-current-buffer))
     :init
     ;; unset dired's biding so that the global can take over
     (unbind-key "M-l" dired-mode-map)
     ;; unset Cntl+Shift+b in dired mode which is by default wants to bookmark a file
     ;; while I like it to bring up the helm-mini
     (unbind-key "C-S-b" dired-mode-map)
+    ;; if another dired buffer is open, make it a default target
     (setq dired-dwim-target t)
     (defun sd/dired-config()
       (require 'dired-x)
