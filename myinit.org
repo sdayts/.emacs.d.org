@@ -1512,8 +1512,7 @@ highlighted using different colors at one time."
 
   ;; fast copy
   ;;(key-chord-define-global "cc" 'sd/whole-line-or-region-kill-ring-save)
-  ;; fast paste
-  ;;(key-chord-define-global "vv" 'yank)
+  (key-chord-define-global "KK" 'kill-current-buffer)
 #+END_SRC
 ** lsp-mode
 #+BEGIN_SRC emacs-lisp
@@ -1546,8 +1545,12 @@ highlighted using different colors at one time."
   (use-package magit
     :ensure t
     :chords (("MM" . magit-status))
-    :bind (("C-x g" . magit-status)
-           ("C-x m l" . magit-log-all))
+    :bind ( ("C-x g" . magit-status)
+            ("C-x m l" . magit-log-all)
+            :map magit-mode-map
+            ;; instead of burying the buffer, kill it
+            ("q" . 'kill-current-buffer))
+
     :config
     ;; update magit heading line to yellow on black, the way I like it...
     (set-face-attribute 'magit-diff-hunk-heading-highlight nil :background "black" :foreground "yellow")
