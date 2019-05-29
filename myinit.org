@@ -1542,6 +1542,10 @@ highlighted using different colors at one time."
 #+END_SRC
 ** magit
 #+BEGIN_SRC emacs-lisp
+  (defun sd/magit-kill-current-buffer()
+    (interactive)
+    (magit-mode-bury-buffer t))
+
   (use-package magit
     :ensure t
     :chords (("MM" . magit-status))
@@ -1549,7 +1553,7 @@ highlighted using different colors at one time."
             ("C-x m l" . magit-log-all)
             :map magit-mode-map
             ;; instead of burying the buffer, kill it
-            ("q" . kill-current-buffer))
+            ("q" . sd/magit-kill-current-buffer))
     :config
     ;; update magit heading line to yellow on black, the way I like it...
     (set-face-attribute 'magit-diff-hunk-heading-highlight nil :background "black" :foreground "yellow")
