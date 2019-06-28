@@ -1517,17 +1517,19 @@ highlighted using different colors at one time."
 ** lsp-mode
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-mode
+    :ensure t
     :bind (
            ;; ("C-x r" . xref-find-references) somehow does not work
            ("C-x r" . lsp-find-references)
            ( "C-."  . xref-find-definitions)
            ("C-,"   . xref-pop-marker-stack)
-;;           ("C-,"   . sd/pop-marker-stack)
            ("C-M-?" . ccls-member-hierarchy))
     :config
-    (setq lsp-prefer-flymake nil)
-    (setq lsp-response-timeout 25)
-    :ensure t)
+    (setq lsp-response-timeout 40)
+    (setq lsp-auto-guess-root t
+          lsp-prefer-flymake nil
+    )
+    )
 #+END_SRC
 ** lsp-ui
 #+BEGIN_SRC emacs-lisp
@@ -1580,7 +1582,7 @@ highlighted using different colors at one time."
 ** modern-cpp-font-lock
 #+BEGIN_SRC emacs-lisp
   (use-package modern-cpp-font-lock
-    :diminish ‘modern-c++-font-lock-mode
+    :diminish modern-c++-font-lock-mode
     :ensure t)
   (modern-c++-font-lock-global-mode t)
 #+END_SRC
