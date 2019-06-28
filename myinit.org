@@ -1519,17 +1519,14 @@ highlighted using different colors at one time."
   (use-package lsp-mode
     :ensure t
     :bind (
-           ;; ("C-x r" . xref-find-references) somehow does not work
-           ("C-x r" . lsp-find-references)
+           ("C-x r" . xref-find-references)
            ( "C-."  . xref-find-definitions)
            ("C-,"   . xref-pop-marker-stack)
            ("C-M-?" . ccls-member-hierarchy))
     :config
-    (setq lsp-response-timeout 40)
-    (setq lsp-auto-guess-root t
-          lsp-prefer-flymake nil
-    )
-    )
+    (setq lsp-response-timeout 40
+          lsp-auto-guess-root t
+          lsp-prefer-flymake nil))
 #+END_SRC
 ** lsp-ui
 #+BEGIN_SRC emacs-lisp
