@@ -1185,17 +1185,17 @@ highlighted using different colors at one time."
 #+END_SRC
 ** doom-modeline
 #+BEGIN_SRC emacs-lisp
-(set-face-attribute 'mode-line nil
-                    :background "black"
-                    :foreground "white"
-                    :box '(:line-width 1 :color "yellow")
-                    :overline nil
-                    :underline nil)
+  (set-face-attribute 'mode-line nil
+                      :background "black"
+                      :foreground "white"
+                      :box '(:line-width 1 :color "yellow")
+                      :overline nil
+                      :underline nil)
 
-(set-face-attribute 'mode-line-inactive nil
-                    :background "black"
-                    :overline nil
-                    :underline nil)
+  (set-face-attribute 'mode-line-inactive nil
+                      :background "black"
+                      :overline nil
+                      :underline nil)
   (use-package doom-modeline
     :ensure t
     :hook (after-init . doom-modeline-mode)
@@ -1208,13 +1208,12 @@ highlighted using different colors at one time."
     (set-face-foreground 'doom-modeline-highlight "yellow")
 
     (doom-modeline-def-modeline 'my-simple-line
-      '(vcs buffer-info buffer-position selection-info lsp matches)
-      )
+      '(vcs buffer-info buffer-position selection-info lsp matches))
+
     (defun setup-custom-doom-modeline ()
       (doom-modeline-set-modeline 'my-simple-line 'default))
 
-    (add-hook 'doom-modeline-mode-hook 'setup-custom-doom-modeline)
-    )
+    (add-hook 'doom-modeline-mode-hook 'setup-custom-doom-modeline))
 #+END_SRC
 ** esup
 #+BEGIN_SRC emacs-lisp
