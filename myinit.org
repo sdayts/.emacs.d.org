@@ -754,6 +754,11 @@ highlighted using different colors at one time."
         ((t (:inherit ace-jump-face-foreground :height 6.0)))))
      :diminish ace-window-mode)
 #+END_SRC
+** all-the-icons
+#+BEGIN_SRC emacs-lisp
+  (use-package all-the-icons
+      :ensure t)
+#+END_SRC
 ** avy
 #+BEGIN_SRC emacs-lisp
   (use-package avy
@@ -1177,6 +1182,39 @@ highlighted using different colors at one time."
     (set-face-attribute 'diredp-flag-mark-line nil :background "black" :foreground "yellow" )
     (set-face-attribute 'diredp-flag-mark nil :background "black" :foreground "green" )
     (set-face-attribute 'diredp-deletion nil :background "black" :foreground "firebrick1" ))
+#+END_SRC
+** doom-modeline
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'mode-line nil
+                    :background "black"
+                    :foreground "white"
+                    :box '(:line-width 1 :color "yellow")
+                    :overline nil
+                    :underline nil)
+
+(set-face-attribute 'mode-line-inactive nil
+                    :background "black"
+                    :overline nil
+                    :underline nil)
+  (use-package doom-modeline
+    :ensure t
+    :hook (after-init . doom-modeline-mode)
+    :config
+    (setq doom-modeline-height 10)
+    (set-face-foreground 'doom-modeline-buffer-file "green")
+    (set-face-foreground 'doom-modeline-buffer-modified "red")
+    (set-face-foreground 'doom-modeline-buffer-major-mode "yellow")
+    (set-face-background 'doom-modeline-highlight "black")
+    (set-face-foreground 'doom-modeline-highlight "yellow")
+
+    (doom-modeline-def-modeline 'my-simple-line
+      '(vcs buffer-info buffer-position selection-info lsp matches)
+      )
+    (defun setup-custom-doom-modeline ()
+      (doom-modeline-set-modeline 'my-simple-line 'default))
+
+    (add-hook 'doom-modeline-mode-hook 'setup-custom-doom-modeline)
+    )
 #+END_SRC
 ** esup
 #+BEGIN_SRC emacs-lisp
@@ -1797,75 +1835,6 @@ highlighted using different colors at one time."
             ("C-M-<left>" . sp-forward-barf-sexp))
     :defer t)
 #+END_SRC
-** spaceline
-#+BEGIN_SRC emacs-lisp
-  (use-package spaceline
-    :ensure t
-    :config
-    (setq-default mode-line-format '("%e" (:eval (spaceline-ml-main)))))
-
-  (use-package spaceline-config
-    :ensure spaceline
-    :config
-    (spaceline-helm-mode 1)
-
-    (spaceline-define-segment my/buffer-status
-      "Buffer status (read-only, modified), with color"
-      (cond (buffer-read-only (propertize "RO" 'face 'my/spaceline-read-only))
-            ((buffer-modified-p) (propertize "MODIFIED" 'face 'my/spaceline-modified))
-            (t "  ")))
-
-    (spaceline-define-segment amitp/buffer-id
-      "Name of filename relative to project, or buffer id"
-      (propertize
-       (amitp/spaceline-buffer-id)
-       'face 'amitp/spaceline-filename))
-
-    ;; When there are segments that may or may not appear, they will
-    ;; affect the alternating background colors. I try to put the
-    ;; indicators that appear/disappear the most towards the center.
-    (spaceline-install
-      'main
-      '((my/buffer-status :tight-left t)
-        (amitp/buffer-id :tight-left t :face highlight-face)
-        (which-function :tight-left t)
-        (("L" line column) :separator ":" :when active)
-        (selection-info :face highlight-face :when mark-active)
-        (projectile-root :when active)
-        (workspace-number :face highlight-face :when active))
-      '(((flycheck-error flycheck-warning flycheck-info) :when active)
-        (version-control :when active)
-        (global :face highlight-face)
-        (major-mode))))
-
-  (defun amitp/spaceline-buffer-id ()
-    (cond (buffer-file-name
-           (file-name-nondirectory buffer-file-name))
-          (t (s-trim (powerline-buffer-id 'mode-line-buffer-id)))))
-
-  (defun hsl (H S L) ; convenience fn
-    (apply 'color-rgb-to-hex (color-hsl-to-rgb (/ H 360.0) S L)))
-  (defun face (face &rest spec) ; convenience fn
-    (face-spec-set face (list (cons t spec))))
-  (setq powerline-text-scale-factor 0.8)
-
-  (face 'mode-line :family "M+ 1m" :height 1.0 :background "gray20" :foreground "gray80" :box nil)
-  (face 'mode-line-inactive :inherit 'mode-line :background "gray55" :foreground "gray80" :box nil)
-  (face 'mode-line-highlight :inherit 'mode-line :background "GoldenRod2" :foreground "white"
-        :box '(:line-width -2 :color "GoldenRod2" :style released-button))
-
-  (face 'powerline-active1   :inherit 'mode-line          :height powerline-text-scale-factor :background "gray30")
-  (face 'powerline-inactive1 :inherit 'mode-line-inactive :height powerline-text-scale-factor)
-  (face 'powerline-active2   :inherit 'mode-line          :height powerline-text-scale-factor :background "gray40")
-  (face 'powerline-inactive2 :inherit 'mode-line-inactive :height powerline-text-scale-factor)
-
-  (face 'spaceline-highlight :inherit 'mode-line :foreground "white" :background "gray80" :height powerline-text-scale-factor)
-
-  (face 'my/spaceline-read-only :background (hsl 300 0.15 0.5) :foreground "gray80" :box `(:line-width -2 :color ,(hsl 300 0.4 0.5)))
-  (face 'my/spaceline-modified :background "Red" :foreground "Black" :weight 'extra-bold)
-  (face 'my/spaceline-unicode-character :inherit 'mode-line :foreground "black" :background (hsl 50 1.0 0.5))
-  (face 'amitp/spaceline-filename :family "Helvetica Neue" :foreground nil :background nil :weight 'normal :height (/ 1.0 powerline-text-scale-factor))
-#+END_SRC
 ** swap-buffers
 #+BEGIN_SRC emacs-lisp
   (use-package swap-buffers
@@ -1990,8 +1959,10 @@ highlighted using different colors at one time."
 ** which-function
 #+BEGIN_SRC emacs-lisp
   (use-package which-func
+    :disabled
     :config
-    (set-face-attribute 'which-func nil :background "Black" :foreground "Orange" :height 1.5))
+    ;; (set-face-attribute 'which-func nil :background "Black" :foreground "Orange" :height 1.5)
+    )
 #+END_SRC
 ** which-key
 #+BEGIN_SRC emacs-lisp
