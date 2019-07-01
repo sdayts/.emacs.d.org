@@ -2089,7 +2089,7 @@ highlighted using different colors at one time."
     :bind (("C-M-z" . zoom-window-zoom)
 	   )
     :init
-    (setq zoom-window-mode-line-color "SteelBlue")
+    (setq zoom-window-mode-line-color "MidnightBlue")
     :config
     )
 #+END_SRC
