@@ -1208,6 +1208,7 @@ highlighted using different colors at one time."
     :hook (after-init . doom-modeline-mode)
     :config
     (setq doom-modeline-height 10)
+    (setq column-number-mode t)
     (set-face-foreground 'doom-modeline-buffer-file "green")
     (set-face-foreground 'doom-modeline-buffer-modified "red")
     (set-face-foreground 'doom-modeline-buffer-major-mode "yellow")
