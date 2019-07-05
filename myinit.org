@@ -1178,6 +1178,21 @@ highlighted using different colors at one time."
     (bind-key "<tab>" #'dired-subtree-toggle dired-mode-map)
     (bind-key "<backtab>" #'dired-subtree-cycle dired-mode-map))
 #+END_SRC
+** dired-sidebar
+#+BEGIN_SRC emacs-lisp
+  (use-package dired-sidebar
+    :ensure t
+    :commands (dired-sidebar-toggle-sidebar)
+    :bind (("<M-tab>" . dired-sidebar-toggle-sidebar))
+    :config
+    (setq dired-sidebar-width 45)
+    (setq dired-sidebar-theme 'nerd)
+    (unbind-key "M-h" dired-sidebar-mode-map)
+    (unbind-key "M-j" dired-sidebar-mode-map)
+    (unbind-key "M-k" dired-sidebar-mode-map)
+    (unbind-key "M-l" dired-sidebar-mode-map)
+  )
+#+END_SRC
 ** dired+
 #+BEGIN_SRC emacs-lisp
   (use-package dired+
