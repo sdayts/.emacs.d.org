@@ -2,11 +2,10 @@
 # name: implementation
 # key: .cpp
 # --
-#ifndef ${1:INCLUDED_`(upcase (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))`}
-#define $1
-
 #include <sysutil_ident.h>
 SYSUTIL_IDENT_RCSID(`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`_h,"$Id$ $CSID$")
+
+#include <`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`.h>
 
 namespace BloombergLP {
 namespace $2 {
@@ -16,4 +15,3 @@ $0
 }  // close package namespace
 }  // close enterprise namespace
 
-#endif // $1
