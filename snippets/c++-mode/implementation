@@ -3,7 +3,7 @@
 # key: .cpp
 # --
 #include <sysutil_ident.h>
-SYSUTIL_IDENT_RCSID(`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`_h,"$Id$ $CSID$")
+SYSUTIL_IDENT_RCSID(`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`_cpp,"$Id$ $CSID$")
 
 #include <`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`.h>
 
