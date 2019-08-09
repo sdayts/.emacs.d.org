@@ -1,6 +1,6 @@
 # -*- mode: snippet; require-final-newline: nil -*-
-# name: BAEL SET CATEGORY
+# name: BAAL SET NAMESPACE CATEGORY
 # key: cat
 # binding: direct-keybinding
 # --
-BAEL_LOG_SET_CATEGORY($1_LOG_CATEGORY);
+BALL_LOG_SET_NAMESPACE_CATEGORY($1_LOG_CATEGORY);

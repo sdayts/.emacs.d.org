@@ -1,6 +1,6 @@
 # -*- mode: snippet; require-final-newline: nil -*-
-# name: BAEL ERROR
-# key: le
+# name: BAAL TRACE
+# key: lt
 # binding: direct-keybinding
 # --
-BAEL_LOG_ERROR << "$0" << BAEL_LOG_END;
+BAAL_LOG_TRACE << "$0";
