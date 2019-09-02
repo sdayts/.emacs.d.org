@@ -1506,7 +1506,9 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
     :diminish ivy-mode
-    :bind(("<f10>" . ivy-resume))
+    :bind(("<f10>" . ivy-resume)
+          :map ivy-minibuffer-map
+          ("M-SPC" . ivy-avy))
     :ensure t
     :init
     :config
