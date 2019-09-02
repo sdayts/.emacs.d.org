@@ -1529,26 +1529,26 @@ highlighted using different colors at one time."
 #+END_SRC
 ** ivy-posframe
 #+BEGIN_SRC emacs-lisp
-    (defun sd/posframe_toggle()
-      (interactive)
-      "Move ivy-poswin out of the way"
-      (let ((display_func (symbol-value 'ivy-display-function))
-            )
-        (if (eq display_func 'ivy-posframe-display-at-frame-bottom-left)
-            (setq ivy-display-function #'ivy-posframe-display-at-frame-center)
-          (setq ivy-display-function #'ivy-posframe-display-at-frame-bottom-left))))
+  (defun sd/posframe_toggle()
+    (interactive)
+    "Move ivy-poswin out of the way"
+    (let ((display_func (cdr (assoc t ivy-posframe-display-functions-alist)))
+          )
+      (if (eq display_func 'ivy-posframe-display-at-frame-bottom-left)
+          (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+        (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-bottom-left))))))
 
-    (use-package ivy-posframe
-      :ensure t
-      :after (ivy posframe)
-      :init
-      :config
-      (setq ivy-display-function #'ivy-posframe-display-at-frame-center)
-      (set-face-attribute 'ivy-posframe nil :background "gray18" )
-      (set-face-attribute 'ivy-posframe-cursor nil :background "red" ))
+  (use-package ivy-posframe
+    :ensure t
+    :after (ivy posframe)
+    :init
+    :config
+    (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+    (set-face-attribute 'ivy-posframe nil :background "gray18" )
+    (set-face-attribute 'ivy-posframe-cursor nil :background "red" ))
 
-    (global-unset-key (kbd "<f8>"))
-    (global-set-key (kbd "<f8>") 'sd/posframe_toggle)
+  (global-unset-key (kbd "<f8>"))
+  (global-set-key (kbd "<f8>") 'sd/posframe_toggle)
 
 #+END_SRC
 ** ivy-xref
