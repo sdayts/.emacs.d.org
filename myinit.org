@@ -1056,7 +1056,7 @@ highlighted using different colors at one time."
      :ensure t
      :init
      (push 'company-lsp company-backends)
-     (setq company-transformers nil company-lsp-async t company-lsp-cache-candidates nil))
+     (setq company-transformers nil company-lsp-async t company-lsp-cache-candidates 'auto))
  #+END_SRC
 ** company-posframe
 #+BEGIN_SRC emacs-lisp
