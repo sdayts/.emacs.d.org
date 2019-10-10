@@ -1439,6 +1439,7 @@ highlighted using different colors at one time."
     :init
     (setq ibuffer-saved-filter-groups
           (quote (("default"
+                   ("lcldev" (filename . "/.lcldev/"))
                    ("dired" (mode . dired-mode) )
                    ("eqwrnt2" (filename . "/eqwrnt2/"))
                    ("C++" (mode . c++-mode))
@@ -1492,7 +1493,9 @@ highlighted using different colors at one time."
     (setq ibuffer-show-empty-filter-groups nil)
     (add-hook 'ibuffer-mode-hook
               '(lambda ()
-                 (ibuffer-switch-to-saved-filter-groups "default"))))
+                 (ibuffer-switch-to-saved-filter-groups "default")))
+    :config
+    (unbind-key "M-j" ibuffer-mode-map))
 #+END_SRC
 ** iedit
 #+BEGIN_SRC emacs-lisp
