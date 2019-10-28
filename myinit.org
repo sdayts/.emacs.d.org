@@ -1579,6 +1579,9 @@ highlighted using different colors at one time."
   ;; fast copy
   ;;(key-chord-define-global "cc" 'sd/whole-line-or-region-kill-ring-save)
   (key-chord-define-global "KK" 'kill-current-buffer)
+  (key-chord-define-global "WW" 'widen)
+  (key-chord-define-global "NN" 'narrow-to-defun)
+
 #+END_SRC
 ** lsp-mode
 #+BEGIN_SRC emacs-lisp
