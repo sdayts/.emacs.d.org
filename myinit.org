@@ -282,6 +282,9 @@
 
   ;; stop emacs from making any sounds
   (setq ring-bell-function 'ignore)
+
+  ;; disable electric indent mode globally
+  (electric-indent-mode -1)
 #+END_SRC
 
 * Custom functions
