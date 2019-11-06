@@ -158,7 +158,7 @@
 
   ;; toggle h-cpp
   (global-unset-key (kbd "C-<return>"))
-  (global-set-key (kbd "C-<return>") 'ff-find-other-file)
+  (global-set-key (kbd "C-<return>") 'sd/ff-find-other-file)
 
   ;; toggle test to implementation and vice versa
   (global-unset-key (kbd "C-t"))
@@ -561,6 +561,12 @@
     (dolist (buffer (buffer-list))
       (with-current-buffer buffer
         (vc-refresh-state))))
+
+  (defun sd/ff-find-other-file ()
+    (interactive)
+    "ff-find-other-file ignoring #include lines."
+    (ff-find-other-file nil t))
+
 #+END_SRC
 
 * Highlighting related customizations
