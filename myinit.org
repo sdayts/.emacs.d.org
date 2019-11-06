@@ -1598,7 +1598,8 @@ highlighted using different colors at one time."
     :config
     (setq lsp-response-timeout 40
           lsp-auto-guess-root t
-          lsp-prefer-flymake nil))
+          lsp-prefer-flymake nil
+          lsp-enable-on-type-formatting nil))
 #+END_SRC
 ** lsp-ui
 #+BEGIN_SRC emacs-lisp
