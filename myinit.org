@@ -2151,6 +2151,8 @@ highlighted using different colors at one time."
 (setq ediff-split-window-function 'split-window-horizontally)
 ** emacs keybindings everywhere
 https://gist.github.com/cheapRoc/9670905
+** emacs-vdiff
+** lsp-ivy
 * Tips
 #+BEGIN_SRC emacs-lisp
 (setq sd-tips
