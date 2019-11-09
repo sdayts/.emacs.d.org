@@ -1982,6 +1982,11 @@ highlighted using different colors at one time."
     :config
     (setq vc-svn-diff-switches '("-x --ignore-eol-style" "-x -w")))
 #+END_SRC
+** vdiff
+#+BEGIN_SRC emacs-lisp
+  (use-package vdiff
+    :ensure t)
+#+END_SRC
 ** visual-regexp
 #+BEGIN_SRC emacs-lisp
   (use-package visual-regexp
@@ -2163,7 +2168,6 @@ highlighted using different colors at one time."
 (setq ediff-split-window-function 'split-window-horizontally)
 ** emacs keybindings everywhere
 https://gist.github.com/cheapRoc/9670905
-** emacs-vdiff
 * Tips
 #+BEGIN_SRC emacs-lisp
 (setq sd-tips
