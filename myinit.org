@@ -1097,7 +1097,6 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
   (use-package counsel-dash
     :ensure t
-    :bind (("C-?" . counsel-dash))
     :config
     (setq counsel-dash-docsets-path "~/.docsets")
     (setq counsel-dash-browser-func 'eww)
@@ -1606,6 +1605,13 @@ highlighted using different colors at one time."
           lsp-auto-guess-root t
           lsp-prefer-flymake nil
           lsp-enable-on-type-formatting nil))
+#+END_SRC
+** lsp-ivy
+#+BEGIN_SRC emacs-lisp
+  (use-package lsp-ivy
+    :ensure t
+    :bind (("C-?" . lsp-ivy-workspace-symbol))
+    :config)
 #+END_SRC
 ** lsp-ui
 #+BEGIN_SRC emacs-lisp
@@ -2152,7 +2158,6 @@ highlighted using different colors at one time."
 ** emacs keybindings everywhere
 https://gist.github.com/cheapRoc/9670905
 ** emacs-vdiff
-** lsp-ivy
 * Tips
 #+BEGIN_SRC emacs-lisp
 (setq sd-tips
