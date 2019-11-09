@@ -1276,6 +1276,12 @@ highlighted using different colors at one time."
     :config
     (eyebrowse-mode t))
 #+END_SRC
+** files
+#+BEGIN_SRC emacs-lisp
+  (use-package files
+    :chords (("RR" . revert-buffer))
+    :config)
+#+END_SRC
 ** find-where
 #+BEGIN_SRC emacs-lisp
   (use-package find-where
