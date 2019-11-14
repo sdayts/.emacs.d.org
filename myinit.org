@@ -567,6 +567,13 @@
     "ff-find-other-file ignoring #include lines."
     (ff-find-other-file nil t))
 
+(defun sd/protect-lcldev-buffers ()
+  (interactive)
+    "Make buffers in .lcldev directory read-only."
+  (when (and (stringp buffer-file-name)
+             (string-match "\\.lcldev" buffer-file-name))
+    (message "Making %s file protected." buffer-file-name)
+    (setq buffer-read-only t)))
 #+END_SRC
 
 * Highlighting related customizations
@@ -1278,9 +1285,11 @@ highlighted using different colors at one time."
 #+END_SRC
 ** files
 #+BEGIN_SRC emacs-lisp
-  (use-package files
-    :chords (("RR" . revert-buffer))
-    :config)
+    (use-package files
+      :chords (("RR" . revert-buffer))
+      :init
+      (add-hook 'find-file-hook 'sd/protect-lcldev-buffers)
+      :config)
 #+END_SRC
 ** find-where
 #+BEGIN_SRC emacs-lisp
