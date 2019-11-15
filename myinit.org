@@ -1342,7 +1342,8 @@ highlighted using different colors at one time."
     :ensure t
     :config
     (golden-ratio-mode 1)
-    (setq golden-ratio--value 1.5))
+    (setq golden-ratio--value 1.5)
+    (setq golden-ratio-max-width 150))
 #+END_SRC
 ** helm
 #+BEGIN_SRC emacs-lisp
