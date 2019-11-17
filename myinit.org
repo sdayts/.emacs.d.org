@@ -776,16 +776,17 @@ highlighted using different colors at one time."
 #+END_SRC
 ** ace-window
 #+BEGIN_SRC emacs-lisp
-   (use-package ace-window
-     :ensure t
-     :init
-     (setq aw-background nil)
-     (global-set-key (kbd "C-x o") 'ace-window)
-     :config
-     (custom-set-faces
-      '(aw-leading-char-face
-        ((t (:inherit ace-jump-face-foreground :height 6.0)))))
-     :diminish ace-window-mode)
+  (use-package ace-window
+    :ensure t
+    :chords (("jj" . ace-window))
+    :init
+    (setq aw-background nil)
+    (global-set-key (kbd "C-x o") 'ace-window)
+    :config
+    (setq aw-keys '(?a ?b ?c ?d ?e ?f ?g ?h ?i ?j ?k ?l ?m ?n ?o ?p))
+    (custom-set-faces
+     '(aw-leading-char-face
+       ((t (:inherit ace-jump-face-foreground :height 6.0))))))
 #+END_SRC
 ** all-the-icons
 #+BEGIN_SRC emacs-lisp
@@ -1353,7 +1354,13 @@ highlighted using different colors at one time."
     :config
     (golden-ratio-mode 1)
     (setq golden-ratio--value 1.5)
-    (setq golden-ratio-max-width 150))
+    (setq golden-ratio-max-width 150)
+    ;; make sure golden ratio gets triggered after the following commands
+    (setq golden-ratio-extra-commands
+          (append golden-ratio-extra-commands
+                  '(ace-window
+                    avy-goto-word-1
+                    magit-status))))
 #+END_SRC
 ** helm
 #+BEGIN_SRC emacs-lisp
