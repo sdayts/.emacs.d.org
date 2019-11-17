@@ -799,8 +799,8 @@ highlighted using different colors at one time."
     :ensure t
     :bind (("M-SPC" . avy-goto-word-1 ))
     :config
-    ;; match all windows in the current frame
-    (setq avy-all-windows t)
+    ;; match current window only
+    (setq avy-all-windows nil)
     ;; yellow on black for matching characters
     (custom-set-faces
      '(avy-lead-face
@@ -2185,22 +2185,6 @@ highlighted using different colors at one time."
 ** Modes to explore in the future
 # web-mode
 * TODO
-** random snippets
-(use-package projectile
-  :diminish "Pj"
-  :init
-  (progn
-    (projectile-global-mode)
-    (setq projectile-indexing-method 'alien
-          projectile-sort-order 'recentf
-          projectile-cache-file "~/.emacs.d/cache/projectile.cache"
-          projectile-known-projects-file "~/.emacs.d/cache/projectile-bookmarks.eld"
-          projectile-enable-caching t)
-    (add-to-list 'projectile-globally-ignored-directories "elpa")
-    (add-to-list 'projectile-globally-ignored-directories ".cask")
-    (add-to-list 'projectile-globally-ignored-directories ".cache")))
-** ediff horizontally
-(setq ediff-split-window-function 'split-window-horizontally)
 ** emacs keybindings everywhere
 https://gist.github.com/cheapRoc/9670905
 * Tips
