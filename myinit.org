@@ -1350,6 +1350,7 @@ highlighted using different colors at one time."
 ** golden-ratio
 #+BEGIN_SRC emacs-lisp
   (use-package golden-ratio
+    :disabled
     :ensure t
     :config
     (golden-ratio-mode 1)
