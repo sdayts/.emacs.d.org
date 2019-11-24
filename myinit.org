@@ -1163,8 +1163,6 @@ highlighted using different colors at one time."
                  ;; instead of burying the buffer, kill it
                  ("q" . 'kill-current-buffer))
     :init
-    ;; if another dired buffer is open, make it a default target
-    (setq dired-dwim-target t)
     (defun sd/dired-config()
       (require 'dired-x)
       (setq dired-omit-files
@@ -1181,6 +1179,7 @@ highlighted using different colors at one time."
     ;; unset Cntl+Shift+b in dired mode which is by default wants to bookmark a file
     ;; while I like it to bring up the helm-mini
     (unbind-key "C-S-b" dired-mode-map)
+    ;; if another dired buffer is open, make it a default target
     (setq dired-dwim-target t)
     (setq-local ace-jump-search-filter
                 (lambda ()
@@ -1350,10 +1349,10 @@ highlighted using different colors at one time."
 ** golden-ratio
 #+BEGIN_SRC emacs-lisp
   (use-package golden-ratio
-    :disabled
     :ensure t
     :config
-    (golden-ratio-mode 1)
+    ;; don't enable golden ratio by default
+    ;(golden-ratio-mode 1)
     (setq golden-ratio--value 1.5)
     (setq golden-ratio-max-width 150)
     ;; make sure golden ratio gets triggered after the following commands
@@ -1819,6 +1818,8 @@ highlighted using different colors at one time."
                               (projectile-project-name))
                     "")))
     :config
+    ;; make projectile file searches very fast
+    (setq projectile-generMic-command "fd . -0 --type f --color=never")
     ;; ignore files
     (add-to-list 'grep-find-ignored-files "*.d")
     (add-to-list 'grep-find-ignored-files "*.dd")
