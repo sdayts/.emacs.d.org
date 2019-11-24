@@ -1101,24 +1101,28 @@ highlighted using different colors at one time."
 #+END_SRC
 ** counsel
 #+BEGIN_SRC emacs-lisp
-    (use-package counsel
-      :ensure t
-      :bind ( ("M-y"     . counsel-yank-pop)
-              ("C-S-b"   . counsel-ibuffer)
-              ("M-x"     . counsel-M-x)
-              ("<f1>"    . counsel-imenu)
-              ("M-m"     . counsel-imenu)
-              ("C-x C-f" . counsel-find-file)
-              ("C-M-r"   . counsel-recentf ))
-      :config
-      (add-to-list 'ivy-height-alist '(counsel-yank-pop . 25))
-      (setq counsel-git-cmd "rg --files")
-      (setq counsel-rg-base-command
-            "rg -i -M 120 --no-heading --line-number --color never %s .")
-      ;; don't use find for file occur
-      (setq counsel-find-file-occur-use-find nil)
-      (setq counsel-find-file-occur-cmd
-            "gls -a | %s | gxargs -d '\\n' gls -d --group-directories-first"))
+  (use-package counsel
+    :ensure t
+    :bind ( ("M-y"     . counsel-yank-pop)
+            ("C-S-b"   . counsel-ibuffer)
+            ("M-x"     . counsel-M-x)
+            ("<f1>"    . counsel-imenu)
+            ("M-m"     . counsel-imenu)
+            ("C-x C-f" . counsel-find-file)
+            ("C-M-r"   . counsel-recentf ))
+    :config
+    ;; remove annoying ^ prefix
+    ;; should be done via ivy config, but because of the bug described at
+    ;; https://github.com/jwiegley/use-package/issues/796, no longer works
+    (setq ivy-initial-inputs-alist nil)
+    (add-to-list 'ivy-height-alist '(counsel-yank-pop . 25))
+    (setq counsel-git-cmd "rg --files")
+    (setq counsel-rg-base-command
+          "rg -i -M 120 --no-heading --line-number --color never %s .")
+    ;; don't use find for file occur
+    (setq counsel-find-file-occur-use-find nil)
+    (setq counsel-find-file-occur-cmd
+          "gls -a | %s | gxargs -d '\\n' gls -d --group-directories-first"))
 #+END_SRC
 ** counsel-dash
 #+BEGIN_SRC emacs-lisp
@@ -2196,12 +2200,6 @@ highlighted using different colors at one time."
     (setq zoom-window-mode-line-color "MidnightBlue")
     :config
     )
-#+END_SRC
-** use package bug
-#+BEGIN_SRC emacs-lisp
-;; https://github.com/jwiegley/use-package/issues/796
-;; remove annoying ^ prefix
-(setq ivy-initial-inputs-alist nil)
 #+END_SRC
 ** Modes to explore in the future
 # web-mode
