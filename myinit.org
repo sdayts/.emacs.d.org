@@ -1102,13 +1102,15 @@ highlighted using different colors at one time."
             ("M-x"     . counsel-M-x)
             ("<f1>"    . counsel-imenu)
             ("M-m"     . counsel-imenu)
-            ("C-c C-f" . counsel-find-file)
+            ("C-x C-f" . counsel-find-file)
             ("C-M-r"   . counsel-recentf ))
     :config
     (add-to-list 'ivy-height-alist '(counsel-yank-pop . 25))
     (setq counsel-git-cmd "rg --files")
     (setq counsel-rg-base-command
           "rg -i -M 120 --no-heading --line-number --color never %s .")
+    (setq counsel-find-file-occur-cmd
+          "gls -a | %s | gxargs -d '\\n' gls -d --group-directories-first")
     :ensure t)
 #+END_SRC
 ** counsel-dash
@@ -1295,11 +1297,11 @@ highlighted using different colors at one time."
 #+END_SRC
 ** files
 #+BEGIN_SRC emacs-lisp
-    (use-package files
-      :chords (("RR" . revert-buffer))
-      :init
-      (add-hook 'find-file-hook 'sd/protect-lcldev-buffers)
-      :config)
+  (use-package files
+    :chords (("RR" . revert-buffer))
+    :init
+    (add-hook 'find-file-hook 'sd/protect-lcldev-buffers)
+    :config)
 #+END_SRC
 ** find-where
 #+BEGIN_SRC emacs-lisp
