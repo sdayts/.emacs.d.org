@@ -1,5 +1,9 @@
 #+STARTUP: overview
 
+* Prerequisites
+brew install findutils
+brew install coreutils
+brew install/reinstall ccls
 * Global settings
 #+BEGIN_SRC emacs-lisp
   ;; set the default font
