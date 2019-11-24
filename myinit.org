@@ -2197,6 +2197,12 @@ highlighted using different colors at one time."
     :config
     )
 #+END_SRC
+** use package bug
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/jwiegley/use-package/issues/796
+;; remove annoying ^ prefix
+(setq ivy-initial-inputs-alist nil)
+#+END_SRC
 ** Modes to explore in the future
 # web-mode
 * TODO
