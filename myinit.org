@@ -338,7 +338,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (xref-pop-marker-stack)
     (recenter-top-bottom))
 
-                      ;;;###autoload
+                        ;;;###autoload
   (defun sd/forward-or-backward-sexp (&optional arg)
     "Go to the matching parenthesis character if one is adjacent to point."
     (interactive "^p")
@@ -348,11 +348,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
           ((looking-at "\\s)") (forward-char) (backward-sexp arg))
           ((looking-back "\\s(" 1) (backward-char) (forward-sexp arg))))
 
-                      ;;;###autoload
+                        ;;;###autoload
   (defun sd/duplicate-line-or-region(arg)
     "Duplicates the current line or region ARG times.
-                      If there's no region, the current line will be duplicated. However, if
-                      there's a region, all lines that region covers will be duplicated."
+                        If there's no region, the current line will be duplicated. However, if
+                        there's a region, all lines that region covers will be duplicated."
     (interactive "p")
     (let (beg end (origin (point)))
       (if (and mark-active (> (point) (mark)))
@@ -371,9 +371,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   (defvar sd/copy-word-under-cursor-regex "[^[:word:]_]"
     "Regular expression to use when copying with `copy-word-under-cursor'.
-                      Can be customized for each major mode.")
+                        Can be customized for each major mode.")
 
-                      ;;;###autoload
+                        ;;;###autoload
   (defun sd/copy-word-under-cursor ()
     "Copy the word under the cursor to the kill ring."
     (interactive)
@@ -383,7 +383,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
             (end (re-search-forward sd/copy-word-under-cursor-regex)))
         (copy-region-as-kill beg (- end 1)))))
 
-                      ;;;###autoload
+                        ;;;###autoload
   (defun sd/update-header()
     (interactive)
     (mapc
@@ -406,12 +406,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
      (window-list)))
 
 
-                      ;;;###autoload
+                        ;;;###autoload
   (defun sd/comment-line-or-region (n)
     "Comment or uncomment current line and leave point after it.
-               With positive prefix, apply to N lines including current one.
-               With negative prefix, apply to -N lines above.
-               If region is active, apply to active region instead."
+                 With positive prefix, apply to N lines including current one.
+                 With negative prefix, apply to -N lines above.
+                 If region is active, apply to active region instead."
     (interactive "p")
     (save-excursion
       (if (use-region-p)
@@ -426,36 +426,36 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
         (forward-line 1)
         (back-to-indentation))))
 
-                      ;;;###autoload
+                        ;;;###autoload
   (defun sd/open-org-init()
     (interactive)
     "Open initialization file and move to the end of the buffer."
     (sd/open-file-move-to-end "~/.emacs.d/myinit.org"))
 
-                      ;;;###autoload
+                        ;;;###autoload
   (defun sd/open-dev-notes()
     (interactive)
     "Load org initialization file and move to the end of the buffer."
     (sd/open-file-move-to-end "~/notes/development_notes.org"))
 
-                      ;;;###autoload
+                        ;;;###autoload
   (defun sd/open-file-move-to-end(file-name)
     (interactive)
     "Open a file and move to the end of the buffer."
     (find-file file-name)
     (end-of-buffer))
 
-                      ;;;###autoload
+                        ;;;###autoload
   (defmacro sd/advise-commands-after (advice-name commands &rest body)
     "Apply advice named ADVICE-NAME to multiple COMMANDS.
-                  The body of the advice is in BODY."
+                    The body of the advice is in BODY."
     `(progn
        ,@(mapcar (lambda (command)
                    `(defadvice ,command (after ,(intern (concat (symbol-name command) "-" advice-name)) activate)
                       ,@body))
                  commands)))
 
-                      ;;;###autoload
+                        ;;;###autoload
   (defun sd/copy-file-name-to-clipboard ()
     "Copy the current buffer file name to the clipboard."
     (interactive)
@@ -466,13 +466,13 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
         (kill-new filename)
         (message "Copied buffer file name '%s' to the clipboard." filename))))
 
-                      ;;;###autoload
+                        ;;;###autoload
   (defun sd/copy-buffer-name-to-clipboard ()
     "Copy the current buffer file name to the clipboard."
     (interactive)
     (kill-new (buffer-name)))
 
-                      ;;;###autoload
+                        ;;;###autoload
   (defun sd/copy-full-path-of-current-buffer ()
     "copy full path into the yank ring and OS clipboard"
     (interactive)
@@ -572,24 +572,28 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     "ff-find-other-file ignoring #include lines."
     (ff-find-other-file nil t))
 
-(defun sd/protect-lcldev-buffers ()
-  (interactive)
+  (defun sd/protect-lcldev-buffers ()
+    (interactive)
     "Make buffers in .lcldev directory read-only."
-  (when (and (stringp buffer-file-name)
-             (string-match "\\.lcldev" buffer-file-name))
-    (message "Making %s file protected." buffer-file-name)
-    (setq buffer-read-only t)))
+    (when (and (stringp buffer-file-name)
+               (string-match "\\.lcldev" buffer-file-name))
+      (message "Making %s file protected." buffer-file-name)
+      (setq buffer-read-only t)))
 
-(defun diff-last-two-kills ()
-  "Write the last two kills to temporary files and diff them."
-  (interactive)
-  (let ((old "/tmp/old-kill") (new "/tmp/new-kill"))
-    (with-temp-file new
-      (insert (current-kill 0 t)))
-    (with-temp-file old
-      (insert (current-kill 1 t)))
-    (diff old new "-u" t)))
+  (defun diff-last-two-kills ()
+    "Write the last two kills to temporary files and diff them."
+    (interactive)
+    (let ((old "/tmp/old-kill") (new "/tmp/new-kill"))
+      (with-temp-file new
+        (insert (current-kill 0 t)))
+      (with-temp-file old
+        (insert (current-kill 1 t)))
+      (diff old new "-u" t)))
 
+  (defun sd/switch-to-scratch ()
+    "Switch to scratch buffer"
+    (interactive)
+    (switch-to-buffer "*scratch*"))
 #+END_SRC
 * Highlighting related customizations
 #+BEGIN_SRC emacs-lisp
@@ -2095,6 +2099,11 @@ highlighted using different colors at one time."
     (add-hook 'before-save-hook #'whitespace-cleanup)
     :config
     (setq whitespace-style '(face trailing)))
+#+END_SRC
+** window
+#+BEGIN_SRC emacs-lisp
+  (use-package window
+      :chords (("SS" . sd/switch-to-scratch)))
 #+END_SRC
 ** whole-line-or-region
 #+BEGIN_SRC emacs-lisp
