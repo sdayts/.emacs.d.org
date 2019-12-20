@@ -381,7 +381,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
       (save-excursion (re-search-backward sd/copy-word-under-cursor-regex))
       (let ((beg (+ (match-beginning 0) 1))
             (end (re-search-forward sd/copy-word-under-cursor-regex)))
-        (copy-region-as-kill beg (- end 1)))))
+        (copy-region-as-kill beg (- end 1))
+        (message "Copied %s" (car kill-ring)))))
 
                         ;;;###autoload
   (defun sd/update-header()
