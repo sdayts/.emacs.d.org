@@ -32,7 +32,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   ;; to take effect under OSX
   (defun system-move-file-to-trash (file)
     "Use \"trash\" to move FILE to the system trash.
-    When using Homebrew, install it using \"brew install trash\"."
+      When using Homebrew, install it using \"brew install trash\"."
     (call-process (executable-find "trash")
                   nil 0 nil
                   file))
@@ -290,6 +290,13 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   ;; disable electric indent mode globally
   (electric-indent-mode -1)
+
+  ;; treat dash and underscore as part of the word for all modes
+  (add-hook 'after-change-major-mode-hook
+            (lambda ()
+              (modify-syntax-entry ?_ "w")
+              (modify-syntax-entry ?- "w")))
+
 #+END_SRC
 
 * Custom functions
@@ -1574,6 +1581,18 @@ highlighted using different colors at one time."
 #+END_SRC
 ** ivy
 #+BEGIN_SRC emacs-lisp
+  (defun sd/move-to-begin-word(&optional arg)
+    "Move point to beginning of word"
+    (with-ivy-window
+      ;; if the preceding-char is part of the word or a number, back up
+      (let ((char (preceding-char)))
+        (if (and (eq (char-syntax char) ?w)
+                 (or (> char ?9)
+                     (< char ?1)))
+            (backward-word arg)))))
+
+  (advice-add 'ivy-yank-word :before 'sd/move-to-begin-word)
+
   (use-package ivy
     :diminish ivy-mode
     :bind(("<f10>" . ivy-resume)
