@@ -1125,6 +1125,8 @@ highlighted using different colors at one time."
             ("C-h f"   . counsel-describe-function)
             ("C-h v"   . counsel-describe-variable))
     :config
+    (setq counsel-yank-pop-preselect-last t)
+    (setq counsel-yank-pop-separator "\n————————————————————————————————————————————————————————————————————————\n")
     ;; remove annoying ^ prefix
     ;; should be done via ivy config, but because of the bug described at
     ;; https://github.com/jwiegley/use-package/issues/796, no longer works
