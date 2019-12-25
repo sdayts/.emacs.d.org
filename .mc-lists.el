@@ -37,6 +37,7 @@
         sd/duplicate-line-or-region
         sd/forward-or-backward-sexp
         sd/mark-from-point-to-end-of-line
+        sd/smart-join-line
         sd/whole-line-or-region-kill-ring-save
         transpose-words
         undefined
@@ -49,6 +50,7 @@
 
 (setq mc/cmds-to-run-once
       '(
+        c-set-offset
         company-complete
         counsel-M-x
         counsel-recentf

@@ -2027,14 +2027,16 @@ highlighted using different colors at one time."
 ** swiper
 #+BEGIN_SRC emacs-lisp
   (use-package swiper
+    :ensure t
     :bind ( ("M-i" . swiper) )
     :config
+    (setq swiper-goto-start-of-match t)
+    (setq swiper-action-recenter t)
     ;; currently doesn't seem to work, with any luck will get fixed in the future
     (set-face-attribute 'swiper-match-face-1 nil :background "black" :weight 'normal)
     (set-face-attribute 'swiper-match-face-2 nil :foreground "yellow" :weight 'normal)
     (set-face-attribute 'swiper-match-face-3 nil :foreground "green"  :weight 'normal)
-    (set-face-attribute 'swiper-match-face-4 nil :foreground "cyan"   :weight 'normal)
-    :ensure t)
+    (set-face-attribute 'swiper-match-face-4 nil :foreground "cyan"   :weight 'normal))
 #+END_SRC
 ** term
 #+BEGIN_SRC emacs-lisp
