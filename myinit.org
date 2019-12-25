@@ -1121,7 +1121,9 @@ highlighted using different colors at one time."
             ("<f1>"    . counsel-imenu)
             ("M-m"     . counsel-imenu)
             ("C-x C-f" . counsel-find-file)
-            ("C-M-r"   . counsel-recentf ))
+            ("C-M-r"   . counsel-recentf )
+            ("C-h f"   . counsel-describe-function)
+            ("C-h v"   . counsel-describe-variable))
     :config
     ;; remove annoying ^ prefix
     ;; should be done via ivy config, but because of the bug described at
@@ -1231,6 +1233,7 @@ highlighted using different colors at one time."
 ** dired-sidebar
 #+BEGIN_SRC emacs-lisp
   (use-package dired-sidebar
+    :disabled
     :ensure t
     :commands (dired-sidebar-toggle-sidebar)
     :bind (("<M-tab>" . dired-sidebar-toggle-sidebar))
@@ -1634,6 +1637,45 @@ highlighted using different colors at one time."
     (set-face-attribute 'ivy-posframe-cursor nil :background "red" ))
 
 #+END_SRC
+** ivy-rich
+#+BEGIN_SRC emacs-lisp
+  (use-package ivy-rich
+    :ensure t
+    :config
+    (setcdr (assq t ivy-format-functions-alist)
+            #'ivy-format-function-line)
+    (ivy-rich-mode 1))
+#+END_SRC
+** ivy-prescient
+#+BEGIN_SRC emacs-lisp
+  (use-package ivy-prescient
+    :ensure t
+    :after (prescient ivy)
+    :custom
+    (ivy-prescient-sort-commands
+     '(:not swiper ivy-switch-buffer counsel-switch-buffer))
+    (ivy-prescient-retain-classic-highlighting t)
+    (ivy-prescient-enable-filtering t)
+    (ivy-prescient-enable-sorting t)
+    :config
+    (defun sd/ivy-prescient-filters (str)
+      "Specify an exception for `prescient-filter-method'.
+
+  This new rule can be used to tailor the results of individual
+  Ivy-powered commands, using `ivy-prescient-re-builder'."
+      (let ((prescient-filter-method '(literal regexp)))
+        (ivy-prescient-re-builder str)))
+
+    (setq ivy-re-builders-alist
+          '((counsel-rg       . sd/ivy-prescient-filters)
+            (counsel-grep     . sd/ivy-prescient-filters)
+            (counsel-yank-pop . sd/ivy-prescient-filters)
+            (swiper           . sd/ivy-prescient-filters)
+            (swiper-isearch   . sd/ivy-prescient-filters)
+            (swiper-all       . sd/ivy-prescient-filters)
+            (t                . ivy-prescient-re-builder)))
+    (ivy-prescient-mode 1))
+#+END_SRC
 ** ivy-xref
 #+BEGIN_SRC emacs-lisp
   (use-package ivy-xref
@@ -1835,6 +1877,17 @@ highlighted using different colors at one time."
     :ensure t
     :config
     (pcre-mode))
+#+END_SRC
+** prescient
+#+BEGIN_SRC emacs-lisp
+(use-package prescient
+  :ensure t
+  :custom
+  (prescient-history-length 100)
+  (prescient-save-file "~/.emacs.d/prescient-items")
+  (prescient-filter-method '(fuzzy initialism regexp))
+  :config
+  (prescient-persist-mode 1))
 #+END_SRC
 ** projectile
 #+BEGIN_SRC  emacs-lisp
