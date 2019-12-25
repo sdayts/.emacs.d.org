@@ -1626,8 +1626,9 @@ highlighted using different colors at one time."
     :init
     :config
     (setq ivy-posframe-display-functions-alist
-          '((swiper . nil)
-            (t      . ivy-posframe-display-at-frame-center)))
+          '((swiper           . nil)
+            (counsel-git-grep . nil)
+            (t                . ivy-posframe-display-at-frame-center)))
 
     (set-face-attribute 'ivy-posframe nil :background "gray18" )
     (set-face-attribute 'ivy-posframe-cursor nil :background "red" ))
