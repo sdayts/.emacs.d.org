@@ -1599,11 +1599,13 @@ highlighted using different colors at one time."
   (advice-add 'ivy-yank-word :before 'sd/move-to-begin-word)
 
   (use-package ivy
+    :ensure t
     :diminish ivy-mode
     :bind(("<f10>" . ivy-resume)
           :map ivy-minibuffer-map
           ("M-SPC" . ivy-avy))
-    :ensure t
+    :chords (("vv" . ivy-push-view)
+             ("VV" . ivy-switch-view))
     :init
     :config
     ;; fix paste in ivy
