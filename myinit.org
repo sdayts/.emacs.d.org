@@ -1586,6 +1586,8 @@ highlighted using different colors at one time."
 #+END_SRC
 ** ivy
 #+BEGIN_SRC emacs-lisp
+  (defconst sd/ivy-height 25)
+
   (defun sd/move-to-begin-word(&optional arg)
     "Move point to beginning of word"
     (with-ivy-window
@@ -1596,7 +1598,13 @@ highlighted using different colors at one time."
                      (< char ?1)))
             (backward-word arg)))))
 
+  (defun sd/ivy-minimum-height()
+    (if (eq this-command 'counsel-git-grep)
+        (set-window-text-height nil sd/ivy-height)))
+
   (advice-add 'ivy-yank-word :before 'sd/move-to-begin-word)
+  (advice-add 'ivy--minibuffer-setup :after 'sd/ivy-minimum-height)
+
 
   (use-package ivy
     :ensure t
@@ -1610,7 +1618,7 @@ highlighted using different colors at one time."
     :config
     ;; fix paste in ivy
     (unbind-key "C-v" ivy-minibuffer-map)
-    (setq ivy-height 25)
+    (setq ivy-height sd/ivy-height)
     ;; for completions, the order does not matter
     (setq ivy-re-builders-alist
           '((t . ivy--regex-ignore-order)))
