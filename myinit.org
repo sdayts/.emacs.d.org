@@ -1598,13 +1598,14 @@ highlighted using different colors at one time."
                      (< char ?1)))
             (backward-word arg)))))
 
-  (defun sd/ivy-minimum-height()
+  (advice-add 'ivy-yank-word :before 'sd/move-to-begin-word)
+
+  (defun sd/counsel-git-grep-minimum-height()
     "Set the height of the ivy minibuffer to the value of sd/ivy-height"
     (if (eq this-command 'counsel-git-grep)
         (set-window-text-height nil sd/ivy-height)))
 
-  (advice-add 'ivy-yank-word :before 'sd/move-to-begin-word)
-  (advice-add 'ivy--minibuffer-setup :after 'sd/ivy-minimum-height)
+  (add-hook 'minibuffer-setup-hook #'sd/counsel-git-grep-minimum-height)
 
   (use-package ivy
     :ensure t
