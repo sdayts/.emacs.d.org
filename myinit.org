@@ -1617,6 +1617,7 @@ highlighted using different colors at one time."
              ("VV" . ivy-switch-view))
     :init
     :config
+    (setq ivy-use-selectable-prompt t)
     ;; fix paste in ivy
     (unbind-key "C-v" ivy-minibuffer-map)
     (setq ivy-height sd/ivy-height)
