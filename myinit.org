@@ -2003,8 +2003,10 @@ highlighted using different colors at one time."
     :config
     ;; Don't ask to kill the shell buffer
     (add-hook 'shell-mode-hook (lambda() (set-process-query-on-exit-flag (get-process "shell") nil)) )
+    ;; (setq shell-pop-shell-type
+    ;;       (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
     (setq shell-pop-shell-type
-          (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
+          (quote ("vterm" "*vterm*" (lambda nil (vterm)))))
     (setq shell-pop-term-shell "/bin/bash")
     (setq shell-pop-window-height 60)
     (setq shell-pop-full-span t)
@@ -2138,6 +2140,17 @@ highlighted using different colors at one time."
   (use-package vlf
     :ensure t
     :init)
+#+END_SRC
+** vterm
+#+BEGIN_SRC emacs-lisp
+  (use-package vterm
+    :ensure t
+    :config
+    (set-face-background 'vterm-color-default "black")
+    (unbind-key "M-h" vterm-mode-map)
+    (unbind-key "M-j" vterm-mode-map)
+    (unbind-key "M-k" vterm-mode-map)
+    (unbind-key "M-l" vterm-mode-map))
 #+END_SRC
 ** wgrep
 #+BEGIN_SRC emacs-lisp
