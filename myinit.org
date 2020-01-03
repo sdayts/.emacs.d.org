@@ -2145,6 +2145,10 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
   (use-package vterm
     :ensure t
+    :hook ((vterm-mode) .
+           (lambda ()
+             (setq-local global-hl-line-mode
+                         nil)))
     :config
     (set-face-background 'vterm-color-default "black")
     (unbind-key "M-h" vterm-mode-map)
