@@ -290,13 +290,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   ;; disable electric indent mode globally
   (electric-indent-mode -1)
-
-  ;; treat dash and underscore as part of the word for all modes
-  (add-hook 'after-change-major-mode-hook
-            (lambda ()
-              (modify-syntax-entry ?_ "w")
-              (modify-syntax-entry ?- "w")))
-
 #+END_SRC
 
 * Custom functions
@@ -999,6 +992,8 @@ highlighted using different colors at one time."
     (unbind-key "C-c C-c" c++-mode-map)
     (unbind-key "C-c C-u" c++-mode-map)
     (unbind-key "C-M-h" c++-mode-map)
+    ;; treat an underscore as word constituent
+    (modify-syntax-entry ?_ "w")
 
     ;; trigger company completion via tab
     ;; (define-key c-mode-map [(tab)] 'company-complete)
@@ -1716,6 +1711,14 @@ highlighted using different colors at one time."
   (key-chord-define-global "WW" 'widen)
   (key-chord-define-global "NN" 'narrow-to-defun)
 
+#+END_SRC
+** lisp-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package lisp-mode
+    :config
+    ;; treat dash and underscore as word constituents
+    (modify-syntax-entry ?- "w")
+    (modify-syntax-entry ?_ "w"))
 #+END_SRC
 ** lsp-mode
 #+BEGIN_SRC emacs-lisp

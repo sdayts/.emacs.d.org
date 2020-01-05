@@ -67,6 +67,7 @@
         sd/rtags-find-symbol-at-point
         sp-slurp-hybrid-sexp
         swiper-mc
+        xref-find-definitions
         yank-rectangle
         zoom-window-zoom
         ))
