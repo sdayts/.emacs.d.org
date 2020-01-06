@@ -981,8 +981,11 @@ highlighted using different colors at one time."
                )
     :init
     ;; enable electric pair mode for buffers in c-mode
-    ;; (add-hook 'c++-mode-hook #'electric-pair-local-mode)
-    (setq c-default-style
+
+    (add-hook 'c++-mode-hook (lambda ()
+                               ;; treat an underscore as word constituent
+                               (modify-syntax-entry ?_ "w")))
+  (setq c-default-style
           '((java-mode . "java")
             (awk-mode  . "awk")
             (c++-mode  . "bde")
@@ -992,8 +995,6 @@ highlighted using different colors at one time."
     (unbind-key "C-c C-c" c++-mode-map)
     (unbind-key "C-c C-u" c++-mode-map)
     (unbind-key "C-M-h" c++-mode-map)
-    ;; treat an underscore as word constituent
-    (modify-syntax-entry ?_ "w")
 
     ;; trigger company completion via tab
     ;; (define-key c-mode-map [(tab)] 'company-complete)
