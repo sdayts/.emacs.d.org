@@ -2147,14 +2147,23 @@ highlighted using different colors at one time."
 #+END_SRC
 ** vterm
 #+BEGIN_SRC emacs-lisp
+  (defun sd/vterm-hook ()
+      "Term mode hook to set it up."
+      ;; colors
+      (setq buffer-face-mode-face `(:background "black"))
+      (set-face-attribute 'vterm-color-default nil :background "black" )
+      (buffer-face-mode 1)
+      ;; eliminate fringes in vterm mode
+      (setq left-fringe-width 0)
+      (setq right-fringe-width 0)
+      ;; disable hl-line in vterm
+      (setq global-hl-line-mode nil))
+
   (use-package vterm
     :ensure t
-    :hook ((vterm-mode) .
-           (lambda ()
-             (setq-local global-hl-line-mode
-                         nil)))
+    :init
+    (add-hook 'vterm-mode-hook #'sd/vterm-hook)
     :config
-    (set-face-background 'vterm-color-default "black")
     (unbind-key "M-h" vterm-mode-map)
     (unbind-key "M-j" vterm-mode-map)
     (unbind-key "M-k" vterm-mode-map)
