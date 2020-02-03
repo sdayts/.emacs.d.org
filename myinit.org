@@ -1864,7 +1864,7 @@ highlighted using different colors at one time."
     ;; indent propertly in org babel mode
     (setq org-src-tab-acts-natively t)
     ;; support shift-selection-mode
-    (setq org-support-shift-select t)
+    (setq org-support-shift-select 'always)
     ;; timestamp TODO items
     ;; (setq org-log-done 'time)
     (setq org-log-done 'nil)
