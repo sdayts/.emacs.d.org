@@ -1364,7 +1364,6 @@ highlighted using different colors at one time."
     :init
     (unbind-key "C-z" global-map))
 #+END_SRC
-
 ** git-gutter-fringe+
 #+BEGIN_SRC emacs-lisp
     (use-package git-gutter-fringe+
