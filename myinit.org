@@ -1358,6 +1358,13 @@ highlighted using different colors at one time."
     (setq ispell-program-name "/usr/local/bin/aspell")
     (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 #+END_SRC
+** frame
+#+BEGIN_SRC emacs-lisp
+  (use-package frame
+    :init
+    (unbind-key "C-z" global-map))
+#+END_SRC
+
 ** git-gutter-fringe+
 #+BEGIN_SRC emacs-lisp
     (use-package git-gutter-fringe+
