@@ -1623,9 +1623,10 @@ highlighted using different colors at one time."
     ;; fix paste in ivy
     (unbind-key "C-v" ivy-minibuffer-map)
     (setq ivy-height sd/ivy-height)
-    ;; for completions, the order does not matter
+    ;; different matching approaches per function
     (setq ivy-re-builders-alist
-          '((t . ivy--regex-ignore-order)))
+          '( (counsel-recentf . ivy--regex-plus)
+             (t               . ivy--regex-ignore-order)))
     (setq ivy-use-virtual-buffers t)
     ;; remove annoying ^ prefix
     (setq ivy-initial-inputs-alist nil)
