@@ -304,20 +304,20 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
           ;; toggle from test to implementation
           (when dominating-file
             (let ((found-files (directory-files-recursively dominating-file
-                                                            (concat (file-name-base current-file-name-sans-ext) ".cpp") )))
+                                                            (concat (file-name-base current-file-name-sans-ext) ".cpp$") )))
               ;; file found, switch
               (if found-files
                   (find-file (car found-files))
                 ;; .cpp file not found, fall back to looking for .h, as the implementation can be templatized
                 (progn
                   (setq found-files (directory-files-recursively dominating-file
-                                                                 (concat (file-name-base current-file-name-sans-ext) ".h") ))
+                                                                 (concat (file-name-base current-file-name-sans-ext) ".h$") ))
                   (if found-files
                       (find-file (car found-files))))))))
       ;; toggle from implementation to test
       (when dominating-file
         (let ((found-files (directory-files-recursively dominating-file
-                                                        (concat current-file-name-sans-ext ".t.cpp") )))
+                                                        (concat current-file-name-sans-ext ".t.cpp$") )))
           (if found-files
               (find-file (car found-files)))))))
 
