@@ -1625,7 +1625,8 @@ highlighted using different colors at one time."
     (setq ivy-height sd/ivy-height)
     ;; different matching approaches per function
     (setq ivy-re-builders-alist
-          '( (counsel-recentf . ivy--regex-plus)
+          '( (counsel-imenu   . ivy--regex-plus)
+             (counsel-recentf . ivy--regex-plus)
              (t               . ivy--regex-ignore-order)))
     (setq ivy-use-virtual-buffers t)
     ;; remove annoying ^ prefix
