@@ -1627,7 +1627,7 @@ highlighted using different colors at one time."
     (setq ivy-re-builders-alist
           '( (counsel-imenu   . ivy--regex-plus)
              (counsel-recentf . ivy--regex-plus)
-             (t               . ivy--regex-ignore-order)))
+             (t               . ivy--regex-plus)))
     (setq ivy-use-virtual-buffers t)
     ;; remove annoying ^ prefix
     (setq ivy-initial-inputs-alist nil)
