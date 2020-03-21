@@ -1394,9 +1394,16 @@ highlighted using different colors at one time."
                     avy-goto-word-1
                     magit-status))))
 #+END_SRC
+** goto-last-change
+#+BEGIN_SRC emacs-lisp
+(use-package goto-last-change
+  :ensure t
+  :bind ("C-z" . goto-last-change))
+#+END_SRC
 ** helm
 #+BEGIN_SRC emacs-lisp
   (use-package helm
+    :disabled
     :ensure t
     :bind (
            ;;("C-S-b"   . helm-mini)
@@ -1464,6 +1471,7 @@ highlighted using different colors at one time."
     )
 
     (use-package helm-swoop
+      :disabled
       :ensure    t
       :config
       ;; make sure helm swoop plays nice with shackle
@@ -1481,6 +1489,7 @@ highlighted using different colors at one time."
 ** helm-projectile
 #+BEGIN_SRC emacs-lisp
   (use-package helm-projectile
+    :disabled
     :ensure    t
   ;;  :bind      ("M-o" . helm-projectile)
     :after     (projectile))
