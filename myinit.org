@@ -2222,7 +2222,27 @@ highlighted using different colors at one time."
 ** window
 #+BEGIN_SRC emacs-lisp
   (use-package window
-      :chords (("SS" . sd/switch-to-scratch)))
+    :chords (("SS" . sd/switch-to-scratch))
+    :init
+    (setq display-buffer-alist
+          '(("magit:.*"
+             (display-buffer-in-side-window)
+             (window-height . 0.75)
+             (side . bottom)
+             (slot . -1))
+            (".*COMMIT_EDITMSG"
+             (display-buffer-in-side-window)
+             (window-height . 0.75)
+             (side . bottom)
+             (slot . 0))
+            ("magit-diff:.*"
+             (display-buffer-in-side-window)
+             (window-height . 1)
+             (side . bottom)
+             (slot . 1))))
+    (setq window-combination-resize t)
+    (setq even-window-sizes 'height-only)
+    (setq window-sides-vertical nil))
 #+END_SRC
 ** whole-line-or-region
 #+BEGIN_SRC emacs-lisp
