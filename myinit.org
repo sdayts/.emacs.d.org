@@ -2239,7 +2239,12 @@ highlighted using different colors at one time."
              (display-buffer-in-side-window)
              (window-height . 0.75)
              (side . bottom)
-             (slot . 1))))
+             (slot . 1))
+            ("magit-log:.*"
+               (display-buffer-in-side-window)
+               (window-height . 0.75)
+               (side . bottom)
+               (slot . 1))))
     (setq window-combination-resize t)
     (setq even-window-sizes 'height-only)
     (setq window-sides-vertical nil))
