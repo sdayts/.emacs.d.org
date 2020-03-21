@@ -2237,7 +2237,7 @@ highlighted using different colors at one time."
              (slot . 0))
             ("magit-diff:.*"
              (display-buffer-in-side-window)
-             (window-height . 1)
+             (window-height . 0.75)
              (side . bottom)
              (slot . 1))))
     (setq window-combination-resize t)
