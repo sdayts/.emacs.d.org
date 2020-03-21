@@ -2244,10 +2244,15 @@ highlighted using different colors at one time."
                (display-buffer-in-side-window)
                (window-height . 0.75)
                (side . bottom)
-               (slot . 1))))
+               (slot . 1))
+            ;; left side window
+            ("\\*Help.*"
+             (display-buffer-in-side-window)
+             (side . bottom)
+             (window-height . 0.5)
+             (slot . -1))))
     (setq window-combination-resize t)
-    (setq even-window-sizes 'height-only)
-    (setq window-sides-vertical nil))
+    (setq even-window-sizes 'height-only))
 #+END_SRC
 ** whole-line-or-region
 #+BEGIN_SRC emacs-lisp
