@@ -810,7 +810,8 @@ highlighted using different colors at one time."
     :bind (("M-SPC" . avy-goto-word-1 ))
     :config
     ;; match current window only
-    (setq avy-all-windows nil)
+    (setq avy-all-windows nil
+          avy-case-fold-search nil) ; case sensitive
     ;; yellow on black for matching characters
     (custom-set-faces
      '(avy-lead-face
