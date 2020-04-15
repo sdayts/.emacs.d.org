@@ -2116,6 +2116,12 @@ highlighted using different colors at one time."
     (unbind-key "C-M-h" term-raw-map)
     (unbind-key "C-M-l" term-raw-map))
 #+END_SRC
+** text-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package text-mode
+    :init
+    (unbind-key "C-M-i" text-mode-map))
+#+END_SRC
 ** thingatpt+
 #+BEGIN_SRC emacs-lisp
   (use-package thingatpt+
