@@ -1636,7 +1636,7 @@ highlighted using different colors at one time."
     ;; different matching approaches per function
     (setq ivy-re-builders-alist
           '( (counsel-imenu   . ivy--regex-plus)
-             (counsel-recentf . ivy--regex-plus)
+             (counsel-recentf . ivy--regex)
              (t               . ivy--regex-plus)))
     (setq ivy-use-virtual-buffers t)
     ;; remove annoying ^ prefix
