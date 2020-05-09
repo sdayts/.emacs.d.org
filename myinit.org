@@ -1080,7 +1080,7 @@ highlighted using different colors at one time."
      '(company-tooltip
        ((t (:background "black" :foreground "gray"))))
      '(company-tooltip-selection
-       ((t (:background "black" :foreground "yellow"))))
+       ((t (:background "RoyalBlue4" :foreground "yellow"))))
      '(company-tooltip-common
        ((((type x)) (:inherit company-tooltip :weight bold))
         (t (:inherit company-tooltip))))
@@ -1115,9 +1115,16 @@ highlighted using different colors at one time."
     :ensure t
     :after company
     :hook (company-mode . company-box-mode)
+      :bind ( :map company-mode-map
+                   ("C-n" . company-select-next)
+                   ("C-p" . company-select-previous))
+
     :config
     (setq company-box-show-single-candidate t)
-    (setq company-box-icons-alist 'company-box-icons-all-the-icons))
+    (setq company-box-icons-alist 'company-box-icons-all-the-icons)
+    (custom-set-faces
+   '(company-box-scrollbar
+         ((t (:background "gray26" :foreground "gray26"))))))
 #+END_SRC
 ** company-lsp
  #+BEGIN_SRC emacs-lisp
