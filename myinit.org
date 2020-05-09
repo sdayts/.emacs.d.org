@@ -1070,6 +1070,8 @@ highlighted using different colors at one time."
     :config
     (global-company-mode)
     (setq company-idle-delay 0.4)
+    ;; number of candidates to display
+    (setq company-tooltip-limit 20)
     (custom-set-faces
      '(company-preview
        ((t (:foreground "cyan" :background "black" :underline t))))
@@ -1106,6 +1108,16 @@ highlighted using different colors at one time."
     ;; company-tooltip-search-selection
     ;; company-tooltip-selection
     )
+#+END_SRC
+** company-box
+#+BEGIN_SRC emacs-lisp
+  (use-package company-box
+    :ensure t
+    :after company
+    :hook (company-mode . company-box-mode)
+    :config
+    (setq company-box-show-single-candidate t)
+    (setq company-box-icons-alist 'company-box-icons-all-the-icons))
 #+END_SRC
 ** company-lsp
  #+BEGIN_SRC emacs-lisp
