@@ -2017,7 +2017,9 @@ highlighted using different colors at one time."
   (use-package python
     :bind( :map python-mode-map
                 ("C-c C-c" . sd/comment-line-or-region)
-                ("C-c C-v" . sd/duplicate-line-or-region)))
+                ("C-c C-v" . sd/duplicate-line-or-region))
+    :init
+    (add-hook 'python-mode-hook #'lsp))
 
 #+END_SRC
 ** recentf
@@ -2204,6 +2206,20 @@ highlighted using different colors at one time."
 #+BEGIN_SRC emacs-lisp
   (use-package vdiff
     :ensure t)
+#+END_SRC
+** virtualenvwrapper
+#+BEGIN_SRC emacs-lisp
+  (use-package virtualenvwrapper
+    :ensure t
+    :config
+    (venv-initialize-interactive-shells)
+    (venv-initialize-eshell))
+
+  (venv-workon "p3")
+
+  (setq lsp-python-executable-cmd "python3")
+  (setq python-shell-interpreter "python3"
+        python-shell-interpreter-args "-i")
 #+END_SRC
 ** visual-regexp
 #+BEGIN_SRC emacs-lisp
