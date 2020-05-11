@@ -618,7 +618,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   (defun sd/minibuffer-setup ()
     (set (make-local-variable 'face-remapping-alist)
-         '((default :background "black"))))
+         '((default :background "gray18"))))
 
 #+END_SRC
 * Highlighting related customizations
@@ -2137,8 +2137,8 @@ highlighted using different colors at one time."
   (defun sd/term-hook ()
     "Term mode hook to set it up."
     ;; colors
-    (setq buffer-face-mode-face `(:background "black"))
-    (set-face-attribute 'term nil :background "black" )
+    (setq buffer-face-mode-face `(:background "gray18"))
+    (set-face-attribute 'term nil :background "gray18" )
     (buffer-face-mode 1)
     ;; eliminate fringes in term mode
     (setq left-fringe-width 0)
@@ -2246,8 +2246,8 @@ highlighted using different colors at one time."
   (defun sd/vterm-hook ()
       "Term mode hook to set it up."
       ;; colors
-      (setq buffer-face-mode-face `(:background "black"))
-      (set-face-attribute 'vterm-color-default nil :background "black" )
+      (setq buffer-face-mode-face `(:background "gray18"))
+      (set-face-attribute 'vterm-color-default nil :background "gray18" )
       (buffer-face-mode 1)
       ;; eliminate fringes in vterm mode
       (setq left-fringe-width 0)
