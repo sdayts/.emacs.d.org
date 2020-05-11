@@ -32,7 +32,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   ;; to take effect under OSX
   (defun system-move-file-to-trash (file)
     "Use \"trash\" to move FILE to the system trash.
-      When using Homebrew, install it using \"brew install trash\"."
+        When using Homebrew, install it using \"brew install trash\"."
     (call-process (executable-find "trash")
                   nil 0 nil
                   file))
@@ -290,311 +290,314 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   ;; disable electric indent mode globally
   (electric-indent-mode -1)
+
+  ;; setup minibuffer to my liking
+  (add-hook 'minibuffer-setup-hook 'sd/minibuffer-setup)
 #+END_SRC
 
 * Custom functions
 #+BEGIN_SRC emacs-lisp
-    (defun sd/toggle-implementation-test-cpp()
-      "Toggle between C++ implementation and test buffers."
-      "Relies on the test files to follow \"t.cpp\" convention"
-      (interactive)
-      (let ((current-file-name-sans-ext (file-name-base buffer-file-name))
-            (dominating-file (locate-dominating-file "." ".git")))
-        (if (string-suffix-p ".t" current-file-name-sans-ext)
-            ;; toggle from test to implementation
-            (when dominating-file
-              (let ((found-files (directory-files-recursively dominating-file
-                                                              (concat (file-name-base current-file-name-sans-ext) ".cpp$") )))
-                ;; file found, switch
-                (if found-files
-                    (find-file (car found-files))
-                  ;; .cpp file not found, fall back to looking for .h, as the implementation can be templatized
-                  (progn
-                    (setq found-files (directory-files-recursively dominating-file
-                                                                   (concat (file-name-base current-file-name-sans-ext) ".h$") ))
-                    (if found-files
-                        (find-file (car found-files))))))))
-        ;; toggle from implementation to test
-        (when dominating-file
-          (let ((found-files (directory-files-recursively dominating-file
-                                                          (concat current-file-name-sans-ext ".t.cpp$") )))
-            (if found-files
-                (find-file (car found-files)))))))
+  (defun sd/toggle-implementation-test-cpp()
+    "Toggle between C++ implementation and test buffers."
+    "Relies on the test files to follow \"t.cpp\" convention"
+    (interactive)
+    (let ((current-file-name-sans-ext (file-name-base buffer-file-name))
+          (dominating-file (locate-dominating-file "." ".git")))
+      (if (string-suffix-p ".t" current-file-name-sans-ext)
+          ;; toggle from test to implementation
+          (when dominating-file
+            (let ((found-files (directory-files-recursively dominating-file
+                                                            (concat (file-name-base current-file-name-sans-ext) ".cpp$") )))
+              ;; file found, switch
+              (if found-files
+                  (find-file (car found-files))
+                ;; .cpp file not found, fall back to looking for .h, as the implementation can be templatized
+                (progn
+                  (setq found-files (directory-files-recursively dominating-file
+                                                                 (concat (file-name-base current-file-name-sans-ext) ".h$") ))
+                  (if found-files
+                      (find-file (car found-files))))))))
+      ;; toggle from implementation to test
+      (when dominating-file
+        (let ((found-files (directory-files-recursively dominating-file
+                                                        (concat current-file-name-sans-ext ".t.cpp$") )))
+          (if found-files
+              (find-file (car found-files)))))))
 
-    (defun sd/find-last-include()
-      "Find the last include in the current buffer"
-      (interactive)
-      (xref-push-marker-stack)
-      (setq matched-position (search-backward "#include" nil t))
-      (if matched-position
-          (progn
-            (next-line)
-            (recenter-top-bottom))
-        (message "Did not find a #include")))
+  (defun sd/find-last-include()
+    "Find the last include in the current buffer"
+    (interactive)
+    (xref-push-marker-stack)
+    (setq matched-position (search-backward "#include" nil t))
+    (if matched-position
+        (progn
+          (next-line)
+          (recenter-top-bottom))
+      (message "Did not find a #include")))
 
-    (defun sd/pop-marker-stack()
-      "Pop marker stack and re-center"
-      (interactive)
-      (xref-pop-marker-stack)
-      (recenter-top-bottom))
+  (defun sd/pop-marker-stack()
+    "Pop marker stack and re-center"
+    (interactive)
+    (xref-pop-marker-stack)
+    (recenter-top-bottom))
 
-                          ;;;###autoload
-    (defun sd/forward-or-backward-sexp (&optional arg)
-      "Go to the matching parenthesis character if one is adjacent to point."
-      (interactive "^p")
-      (cond ((looking-at "\\s(") (forward-sexp arg))
-            ((looking-back "\\s)" 1) (backward-sexp arg))
-            ;; Now, try to succeed from inside of a bracket
-            ((looking-at "\\s)") (forward-char) (backward-sexp arg))
-            ((looking-back "\\s(" 1) (backward-char) (forward-sexp arg))))
+                            ;;;###autoload
+  (defun sd/forward-or-backward-sexp (&optional arg)
+    "Go to the matching parenthesis character if one is adjacent to point."
+    (interactive "^p")
+    (cond ((looking-at "\\s(") (forward-sexp arg))
+          ((looking-back "\\s)" 1) (backward-sexp arg))
+          ;; Now, try to succeed from inside of a bracket
+          ((looking-at "\\s)") (forward-char) (backward-sexp arg))
+          ((looking-back "\\s(" 1) (backward-char) (forward-sexp arg))))
 
-                          ;;;###autoload
-    (defun sd/duplicate-line-or-region(arg)
-      "Duplicates the current line or region ARG times.
-                          If there's no region, the current line will be duplicated. However, if
-                          there's a region, all lines that region covers will be duplicated."
-      (interactive "p")
-      (let (beg end (origin (point)))
-        (if (and mark-active (> (point) (mark)))
-            (exchange-point-and-mark))
-        (setq beg (line-beginning-position))
-        (if mark-active
-            (exchange-point-and-mark))
-        (setq end (line-end-position))
-        (let ((region (buffer-substring-no-properties beg end)))
-          (dotimes (i arg)
-            (goto-char end)
-            (newline)
-            (insert region)
-            (setq end (point)))
-          (goto-char (+ origin (* (length region) arg) arg)))))
-
-    (defvar sd/copy-word-under-cursor-regex "[^[:word:]_]"
-      "Regular expression to use when copying with `copy-word-under-cursor'.
-                          Can be customized for each major mode.")
-
-                          ;;;###autoload
-    (defun sd/copy-word-under-cursor ()
-      "Copy the word under the cursor to the kill ring."
-      (interactive)
-      (save-excursion
-        (save-excursion (re-search-backward sd/copy-word-under-cursor-regex))
-        (let ((beg (+ (match-beginning 0) 1))
-              (end (re-search-forward sd/copy-word-under-cursor-regex)))
-          (copy-region-as-kill beg (- end 1))
-          (message "Copied %s" (car kill-ring)))))
-
-                          ;;;###autoload
-    (defun sd/update-header()
-      (interactive)
-      (mapc
-       (lambda (window)
-         (with-current-buffer (window-buffer window)
-           ;; don't mess with buffers that don't have a header line
-           (when header-line-format
-             (let ((original-format (get 'header-line-format 'original))
-                   (inactive-face 'mode-line-inactive)
-                   (active-face 'mode-line)
-                   ) ; change this to your favorite inactive header line face
-               ;; if we didn't save original format yet, do it now
-               (when (not original-format)
-                 (put 'header-line-format 'original header-line-format)
-                 (setq original-format header-line-format))
-               ;; check if this window is selected, set faces accordingly
-               (if (eq window (selected-window))
-                   (setq header-line-format `(:propertize ,original-format face ,active-face))
-                 (setq header-line-format `(:propertize ,original-format face ,inactive-face)))))))
-       (window-list)))
-
-
-                          ;;;###autoload
-    (defun sd/comment-line-or-region (n)
-      "Comment or uncomment current line and leave point after it.
-                   With positive prefix, apply to N lines including current one.
-                   With negative prefix, apply to -N lines above.
-                   If region is active, apply to active region instead."
-      (interactive "p")
-      (save-excursion
-        (if (use-region-p)
-            (comment-or-uncomment-region
-             (region-beginning) (region-end))
-          (let ((range
-                 (list (line-beginning-position)
-                       (goto-char (line-end-position n)))))
-            (comment-or-uncomment-region
-             (apply #'min range)
-             (apply #'max range)))
-          (forward-line 1)
-          (back-to-indentation))))
-
-                          ;;;###autoload
-    (defun sd/open-org-init()
-      (interactive)
-      "Open initialization file and move to the end of the buffer."
-      (sd/open-file-move-to-end "~/.emacs.d/myinit.org"))
-
-                          ;;;###autoload
-    (defun sd/open-dev-notes()
-      (interactive)
-      "Load org initialization file and move to the end of the buffer."
-      (sd/open-file-move-to-end "~/notes/development_notes.org"))
-
-                          ;;;###autoload
-    (defun sd/open-file-move-to-end(file-name)
-      (interactive)
-      "Open a file and move to the end of the buffer."
-      (find-file file-name)
-      (end-of-buffer))
-
-                          ;;;###autoload
-    (defmacro sd/advise-commands-after (advice-name commands &rest body)
-      "Apply advice named ADVICE-NAME to multiple COMMANDS.
-                      The body of the advice is in BODY."
-      `(progn
-         ,@(mapcar (lambda (command)
-                     `(defadvice ,command (after ,(intern (concat (symbol-name command) "-" advice-name)) activate)
-                        ,@body))
-                   commands)))
-
-                          ;;;###autoload
-    (defun sd/copy-file-name-to-clipboard ()
-      "Copy the current buffer file name to the clipboard."
-      (interactive)
-      (let ((filename (if (equal major-mode 'dired-mode)
-                          default-directory
-                        (buffer-file-name))))
-        (when filename
-          (kill-new filename)
-          (message "Copied buffer file name '%s' to the clipboard." filename))))
-
-                          ;;;###autoload
-    (defun sd/copy-buffer-name-to-clipboard ()
-      "Copy the current buffer file name to the clipboard."
-      (interactive)
-      (kill-new (buffer-name)))
-
-                          ;;;###autoload
-    (defun sd/copy-full-path-of-current-buffer ()
-      "copy full path into the yank ring and OS clipboard"
-      (interactive)
-      (when buffer-file-name
-        (let ((current-directory (file-name-directory (file-truename buffer-file-name))))
-          (kill-new current-directory)
-          (message "%s" current-directory))))
-
-    (defun sd/revert-all-buffers ()
-      "Refreshes all open buffers from their respective files."
-      (interactive)
-      (dolist (buf (buffer-list))
-        (with-current-buffer buf
-          (when (and (buffer-file-name) (file-exists-p (buffer-file-name)) (not (buffer-modified-p)))
-            (revert-buffer t t t) )))
-      (message "Refreshed open files.") )
-
-    (defun sd/man-follow ()
-      "When viewing cppman man page, format the arguments in a way built in man command understands."
-      (interactive)
-      (if ( and (string-match-p "std::" (buffer-name)) (string-match-p "::" (Man-default-man-entry)))
-          (man-follow (concat "std::" (Man-default-man-entry))))
-      (man (Man-default-man-entry)))
-
-    (defun sd/split-current-line ()
-      "Split current line."
-      (interactive)
-      (move-beginning-of-line nil)
-      (set-mark-command nil)
-      (move-end-of-line nil)
-      (replace-regexp "[ \t]+" "\n" nil (region-beginning) (region-end)))
-
-
-    (defun sd/region-delete-blank-lines()
-      (interactive)
-      "Delete blank lines in a region"
-      (flush-lines "^$" (region-beginning) (region-end)))
-
-    (defun sd/mark-from-point-to-end-of-line ()
-      "Marks everything from point to end of line"
-      (interactive)
-      (set-mark (line-end-position))
-      (activate-mark))
-
-    (defun sd/beginning-of-next-defun ()
-      "Go to the beginning of the next defun"
-      (interactive)
-      (let ((current-prefix-arg -1))
-        (call-interactively 'beginning-of-defun)))
-
-    (defun sd/begin-of-prev-defun ()
-      "Go to the beginning of the prev defun"
-      (interactive)
-      (let ((current-prefix-arg 1))
-        (call-interactively 'beginning-of-defun)))
-
-    (defun sd/mark-line (&optional arg)
-      (interactive "p")
-      (if (not mark-active)
-          (progn
-            (beginning-of-line)
-            (push-mark)
-            (setq mark-active t)))
-      (forward-line))
-
-    (defun sd/smart-join-line (beg end)
-      "If in a region, join all the lines in it. If not, join the current line with the next line."
-      (interactive "r")
+                            ;;;###autoload
+  (defun sd/duplicate-line-or-region(arg)
+    "Duplicates the current line or region ARG times.
+                            If there's no region, the current line will be duplicated. However, if
+                            there's a region, all lines that region covers will be duplicated."
+    (interactive "p")
+    (let (beg end (origin (point)))
+      (if (and mark-active (> (point) (mark)))
+          (exchange-point-and-mark))
+      (setq beg (line-beginning-position))
       (if mark-active
-          (sd/join-region beg end)
-        (sd/top-join-line)))
+          (exchange-point-and-mark))
+      (setq end (line-end-position))
+      (let ((region (buffer-substring-no-properties beg end)))
+        (dotimes (i arg)
+          (goto-char end)
+          (newline)
+          (insert region)
+          (setq end (point)))
+        (goto-char (+ origin (* (length region) arg) arg)))))
 
-    (defun sd/top-join-line ()
-      "Join the current line with the next line."
-      (interactive)
-      (delete-indentation 1))
+  (defvar sd/copy-word-under-cursor-regex "[^[:word:]_]"
+    "Regular expression to use when copying with `copy-word-under-cursor'.
+                            Can be customized for each major mode.")
 
-    (defun sd/join-region (beg end)
-      "Join all the lines in the region."
-      (interactive "r")
-      (if mark-active
-          (let ((beg (region-beginning))
-                (end (copy-marker (region-end))))
-            (goto-char beg)
-            (while (< (point) end)
-              (join-line 1)))))
+                            ;;;###autoload
+  (defun sd/copy-word-under-cursor ()
+    "Copy the word under the cursor to the kill ring."
+    (interactive)
+    (save-excursion
+      (save-excursion (re-search-backward sd/copy-word-under-cursor-regex))
+      (let ((beg (+ (match-beginning 0) 1))
+            (end (re-search-forward sd/copy-word-under-cursor-regex)))
+        (copy-region-as-kill beg (- end 1))
+        (message "Copied %s" (car kill-ring)))))
 
-    (defun sd/vc-refresh-state-all ()
-      "Refresh version control mode line indicator for all buffers."
-      (interactive)
-      (dolist (buffer (buffer-list))
-        (with-current-buffer buffer
-          (vc-refresh-state))))
+                            ;;;###autoload
+  (defun sd/update-header()
+    (interactive)
+    (mapc
+     (lambda (window)
+       (with-current-buffer (window-buffer window)
+         ;; don't mess with buffers that don't have a header line
+         (when header-line-format
+           (let ((original-format (get 'header-line-format 'original))
+                 (inactive-face 'mode-line-inactive)
+                 (active-face 'mode-line)
+                 ) ; change this to your favorite inactive header line face
+             ;; if we didn't save original format yet, do it now
+             (when (not original-format)
+               (put 'header-line-format 'original header-line-format)
+               (setq original-format header-line-format))
+             ;; check if this window is selected, set faces accordingly
+             (if (eq window (selected-window))
+                 (setq header-line-format `(:propertize ,original-format face ,active-face))
+               (setq header-line-format `(:propertize ,original-format face ,inactive-face)))))))
+     (window-list)))
 
-    (defun sd/ff-find-other-file ()
-      (interactive)
-      "ff-find-other-file ignoring #include lines."
-      (ff-find-other-file nil t))
 
-    (defun sd/protect-lcldev-buffers ()
-      (interactive)
-      "Make buffers in .lcldev directory read-only."
-      (when (and (stringp buffer-file-name)
-                 (string-match "\\.lcldev" buffer-file-name))
-        (message "Making %s file protected." buffer-file-name)
-        (setq buffer-read-only t)))
+                            ;;;###autoload
+  (defun sd/comment-line-or-region (n)
+    "Comment or uncomment current line and leave point after it.
+                     With positive prefix, apply to N lines including current one.
+                     With negative prefix, apply to -N lines above.
+                     If region is active, apply to active region instead."
+    (interactive "p")
+    (save-excursion
+      (if (use-region-p)
+          (comment-or-uncomment-region
+           (region-beginning) (region-end))
+        (let ((range
+               (list (line-beginning-position)
+                     (goto-char (line-end-position n)))))
+          (comment-or-uncomment-region
+           (apply #'min range)
+           (apply #'max range)))
+        (forward-line 1)
+        (back-to-indentation))))
 
-    (defun diff-last-two-kills ()
-      "Write the last two kills to temporary files and diff them."
-      (interactive)
-      (let ((old "/tmp/old-kill") (new "/tmp/new-kill"))
-        (with-temp-file new
-          (insert (current-kill 0 t)))
-        (with-temp-file old
-          (insert (current-kill 1 t)))
-        (diff old new "-u" t)))
+                            ;;;###autoload
+  (defun sd/open-org-init()
+    (interactive)
+    "Open initialization file and move to the end of the buffer."
+    (sd/open-file-move-to-end "~/.emacs.d/myinit.org"))
 
-    (defun sd/switch-to-scratch ()
-      "Switch to scratch buffer"
-      (interactive)
-      (switch-to-buffer "*scratch*"))
+                            ;;;###autoload
+  (defun sd/open-dev-notes()
+    (interactive)
+    "Load org initialization file and move to the end of the buffer."
+    (sd/open-file-move-to-end "~/notes/development_notes.org"))
+
+                            ;;;###autoload
+  (defun sd/open-file-move-to-end(file-name)
+    (interactive)
+    "Open a file and move to the end of the buffer."
+    (find-file file-name)
+    (end-of-buffer))
+
+                            ;;;###autoload
+  (defmacro sd/advise-commands-after (advice-name commands &rest body)
+    "Apply advice named ADVICE-NAME to multiple COMMANDS.
+                        The body of the advice is in BODY."
+    `(progn
+       ,@(mapcar (lambda (command)
+                   `(defadvice ,command (after ,(intern (concat (symbol-name command) "-" advice-name)) activate)
+                      ,@body))
+                 commands)))
+
+                            ;;;###autoload
+  (defun sd/copy-file-name-to-clipboard ()
+    "Copy the current buffer file name to the clipboard."
+    (interactive)
+    (let ((filename (if (equal major-mode 'dired-mode)
+                        default-directory
+                      (buffer-file-name))))
+      (when filename
+        (kill-new filename)
+        (message "Copied buffer file name '%s' to the clipboard." filename))))
+
+                            ;;;###autoload
+  (defun sd/copy-buffer-name-to-clipboard ()
+    "Copy the current buffer file name to the clipboard."
+    (interactive)
+    (kill-new (buffer-name)))
+
+                            ;;;###autoload
+  (defun sd/copy-full-path-of-current-buffer ()
+    "copy full path into the yank ring and OS clipboard"
+    (interactive)
+    (when buffer-file-name
+      (let ((current-directory (file-name-directory (file-truename buffer-file-name))))
+        (kill-new current-directory)
+        (message "%s" current-directory))))
+
+  (defun sd/revert-all-buffers ()
+    "Refreshes all open buffers from their respective files."
+    (interactive)
+    (dolist (buf (buffer-list))
+      (with-current-buffer buf
+        (when (and (buffer-file-name) (file-exists-p (buffer-file-name)) (not (buffer-modified-p)))
+          (revert-buffer t t t) )))
+    (message "Refreshed open files.") )
+
+  (defun sd/man-follow ()
+    "When viewing cppman man page, format the arguments in a way built in man command understands."
+    (interactive)
+    (if ( and (string-match-p "std::" (buffer-name)) (string-match-p "::" (Man-default-man-entry)))
+        (man-follow (concat "std::" (Man-default-man-entry))))
+    (man (Man-default-man-entry)))
+
+  (defun sd/split-current-line ()
+    "Split current line."
+    (interactive)
+    (move-beginning-of-line nil)
+    (set-mark-command nil)
+    (move-end-of-line nil)
+    (replace-regexp "[ \t]+" "\n" nil (region-beginning) (region-end)))
+
+
+  (defun sd/region-delete-blank-lines()
+    (interactive)
+    "Delete blank lines in a region"
+    (flush-lines "^$" (region-beginning) (region-end)))
+
+  (defun sd/mark-from-point-to-end-of-line ()
+    "Marks everything from point to end of line"
+    (interactive)
+    (set-mark (line-end-position))
+    (activate-mark))
+
+  (defun sd/beginning-of-next-defun ()
+    "Go to the beginning of the next defun"
+    (interactive)
+    (let ((current-prefix-arg -1))
+      (call-interactively 'beginning-of-defun)))
+
+  (defun sd/begin-of-prev-defun ()
+    "Go to the beginning of the prev defun"
+    (interactive)
+    (let ((current-prefix-arg 1))
+      (call-interactively 'beginning-of-defun)))
+
+  (defun sd/mark-line (&optional arg)
+    (interactive "p")
+    (if (not mark-active)
+        (progn
+          (beginning-of-line)
+          (push-mark)
+          (setq mark-active t)))
+    (forward-line))
+
+  (defun sd/smart-join-line (beg end)
+    "If in a region, join all the lines in it. If not, join the current line with the next line."
+    (interactive "r")
+    (if mark-active
+        (sd/join-region beg end)
+      (sd/top-join-line)))
+
+  (defun sd/top-join-line ()
+    "Join the current line with the next line."
+    (interactive)
+    (delete-indentation 1))
+
+  (defun sd/join-region (beg end)
+    "Join all the lines in the region."
+    (interactive "r")
+    (if mark-active
+        (let ((beg (region-beginning))
+              (end (copy-marker (region-end))))
+          (goto-char beg)
+          (while (< (point) end)
+            (join-line 1)))))
+
+  (defun sd/vc-refresh-state-all ()
+    "Refresh version control mode line indicator for all buffers."
+    (interactive)
+    (dolist (buffer (buffer-list))
+      (with-current-buffer buffer
+        (vc-refresh-state))))
+
+  (defun sd/ff-find-other-file ()
+    (interactive)
+    "ff-find-other-file ignoring #include lines."
+    (ff-find-other-file nil t))
+
+  (defun sd/protect-lcldev-buffers ()
+    (interactive)
+    "Make buffers in .lcldev directory read-only."
+    (when (and (stringp buffer-file-name)
+               (string-match "\\.lcldev" buffer-file-name))
+      (message "Making %s file protected." buffer-file-name)
+      (setq buffer-read-only t)))
+
+  (defun diff-last-two-kills ()
+    "Write the last two kills to temporary files and diff them."
+    (interactive)
+    (let ((old "/tmp/old-kill") (new "/tmp/new-kill"))
+      (with-temp-file new
+        (insert (current-kill 0 t)))
+      (with-temp-file old
+        (insert (current-kill 1 t)))
+      (diff old new "-u" t)))
+
+  (defun sd/switch-to-scratch ()
+    "Switch to scratch buffer"
+    (interactive)
+    (switch-to-buffer "*scratch*"))
 
   (defun sd/json-format-region()
     (interactive)
@@ -612,6 +615,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
                                (point-max)
                                "python -m json.tool"
                                (buffer-name) t)))
+
+  (defun sd/minibuffer-setup ()
+    (set (make-local-variable 'face-remapping-alist)
+         '((default :background "black"))))
+
 #+END_SRC
 * Highlighting related customizations
 #+BEGIN_SRC emacs-lisp
@@ -1893,11 +1901,17 @@ highlighted using different colors at one time."
 #+END_SRC
 ** nxml
 #+BEGIN_SRC emacs-lisp
+  (defun sd/xml-format ()
+    "XML formating"
+    (interactive)
+    (save-excursion
+      (shell-command-on-region (mark) (point) "xmllint --encode utf-8 --format -" (buffer-name) t)))
+
   (use-package nxml-mode
-      :config
-      (unbind-key "C-c C-u" nxml-mode-map)
-      (unbind-key "M-h" nxml-mode-map)
-      (unbind-key "C-M-i" nxml-mode-map))
+    :config
+    (unbind-key "C-c C-u" nxml-mode-map)
+    (unbind-key "M-h" nxml-mode-map)
+    (unbind-key "C-M-i" nxml-mode-map))
 #+END_SRC
 ** org
 #+BEGIN_SRC emacs-lisp
