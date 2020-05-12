@@ -1392,8 +1392,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** flycheck
 #+BEGIN_SRC emacs-lisp
-  (use-package flycheck
-    :ensure t)
+    (use-package flycheck
+      :ensure t
+      :chords (("FF" . flycheck-list-errors)))
 #+END_SRC
 ** flyspell
 #+BEGIN_SRC emacs-lisp
@@ -2335,6 +2336,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
             (".*COMMIT_EDITMSG"
              (display-buffer-in-side-window)
              (window-height . 0.75)
+             (side . bottom)
+             (slot . 0))
+            (".*Flycheck errors.*"
+             (display-buffer-in-side-window)
+             (window-height . 0.25)
              (side . bottom)
              (slot . 0))
             ("magit-diff:.*"
