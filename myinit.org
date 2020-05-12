@@ -1392,9 +1392,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** flycheck
 #+BEGIN_SRC emacs-lisp
-    (use-package flycheck
-      :ensure t
-      :chords (("FF" . flycheck-list-errors)))
+  (use-package flycheck
+    :ensure t
+    :chords (("FF" . flycheck-list-errors))
+    :init
+    (define-key flycheck-mode-map (kbd "M-p") #'flycheck-previous-error)
+    (define-key flycheck-mode-map (kbd "M-n") #'flycheck-next-error))
 #+END_SRC
 ** flyspell
 #+BEGIN_SRC emacs-lisp
