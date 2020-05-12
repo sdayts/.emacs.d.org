@@ -843,7 +843,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     ;; yellow on black for matching characters
     (custom-set-faces
      '(avy-lead-face
-       ((t (:inherit avy-lead-face :height 1.0 :foreground "yellow" :background "black" ))))))
+       ((t (:inherit avy-lead-face :height 1.0 :foreground "Cyan" :background "black" :weight normal))))))
 #+END_SRC
 ** beacon
 #+BEGIN_SRC emacs-lisp
