@@ -618,56 +618,57 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   (defun sd/minibuffer-setup ()
     (set (make-local-variable 'face-remapping-alist)
-         '((default :background "gray18"))))
+         '((default :background "black"))))
 
 #+END_SRC
 * Highlighting related customizations
 #+BEGIN_SRC emacs-lisp
 
-; adopted from the excellent exordium, by Philippe Grenet. All the credit is his.
-(defvar sd/highlighted-symbols ()
-  "list of regexps for the currently highlighted symbols. This
-  variable is buffer-local.")
+  ; adopted from the excellent exordium, by Philippe Grenet. All the credit is his.
+  (defvar sd/highlighted-symbols ()
+    "list of regexps for the currently highlighted symbols. This
+    variable is buffer-local.")
 
-(make-variable-buffer-local 'sd/highlighted-symbols)
+  (make-variable-buffer-local 'sd/highlighted-symbols)
 
-(defun sd/highlight-symbol ()
-  "Toggles highlighting of occurrences of the symbol under point
-in the current buffer. Up to 4 different symbols can be
-highlighted using different colors at one time."
-  (interactive)
-  (let ((regex (find-tag-default-as-symbol-regexp)))
-    (cond ((member regex sd/highlighted-symbols)
-           ;; Remove highlight for this symbol.
-           (setq sd/highlighted-symbols (remove regex sd/highlighted-symbols))
-           (hi-lock-unface-buffer regex))
-          (t
-           ;; Add highlight for this symbol.
-           (setq sd/highlighted-symbols (cons regex sd/highlighted-symbols))
-           (hi-lock-face-symbol-at-point)))
-    ; disable hl-mode when there are highlighted symbols as the
-    ; hl-line face background interferes witht he highlighting
-    (if sd/highlighted-symbols
-      (progn
-        (global-hl-line-mode 0)
-	(setq-default cursor-type '(bar . 7))
-        (set-cursor-color "red")
-        )
-      (progn
-        (setq-default cursor-type '(bar . 1))
-        (set-cursor-color "cyan")
-        (global-hl-line-mode +1))
-)))
+  (defun sd/highlight-symbol ()
+    "Toggles highlighting of occurrences of the symbol under point
+  in the current buffer. Up to 4 different symbols can be
+  highlighted using different colors at one time."
+    (interactive)
+    (let ((regex (find-tag-default-as-symbol-regexp)))
+      (cond ((member regex sd/highlighted-symbols)
+             ;; Remove highlight for this symbol.
+             (setq sd/highlighted-symbols (remove regex sd/highlighted-symbols))
+             (hi-lock-unface-buffer regex))
+            (t
+             ;; Add highlight for this symbol.
+             (setq sd/highlighted-symbols (cons regex sd/highlighted-symbols))
+             (hi-lock-face-symbol-at-point)))
+      ; disable hl-mode when there are highlighted symbols as the
+      ; hl-line face background interferes witht he highlighting
+      (if sd/highlighted-symbols
+        (progn
+          (global-hl-line-mode 0)
+          (setq-default cursor-type '(bar . 7))
+          (set-cursor-color "red")
+          )
+        (progn
+          (setq-default cursor-type '(bar . 1))
+          (set-cursor-color "cyan")
+          (global-hl-line-mode +1))
+  )))
 
-(global-set-key (kbd "<f2>") 'sd/highlight-symbol)
+  (global-set-key (kbd "<f2>") 'sd/highlight-symbol)
 
-;; hilight current line
-(global-hl-line-mode +1)
-;; enables us to turn off hl-line in certain modes
-(make-variable-buffer-local 'global-hl-line-mode)
-;; slightly prefer this color for the current line
-;; (set-face-background hl-line-face "#345858")
-(set-face-background hl-line-face "#345865")
+  ;; hilight current line
+  (global-hl-line-mode +1)
+  ;; enables us to turn off hl-line in certain modes
+  (make-variable-buffer-local 'global-hl-line-mode)
+  ;; slightly prefer this color for the current line
+  ;; (set-face-background hl-line-face "#345858")
+  ;; (set-face-background hl-line-face "#345865")
+  (set-face-background hl-line-face "gray26")
 #+END_SRC
 * Color customizations
 #+BEGIN_SRC emacs-lisp
@@ -676,9 +677,11 @@ highlighted using different colors at one time."
   ;; Make cursor a thin bar
   (setq-default cursor-type '(bar . 1))
   ;; set background colors
-  (set-background-color "#2F4F4F")
+  ;; (set-background-color "#2F4F4F")
+  (set-background-color "gray18")
   ;; color of border of buffer separator
-  (set-face-background 'fringe "#2F4F4F")
+  ;; (set-face-background 'fringe "#2F4F4F")
+  (set-face-background 'fringe "gray18")
   ;; color of comments
   (set-face-foreground 'font-lock-comment-face "#FA8278")
   ;; color of keyword
@@ -1696,7 +1699,7 @@ highlighted using different colors at one time."
             (counsel-git-grep . nil)
             (t                . ivy-posframe-display-at-frame-center)))
 
-    (set-face-attribute 'ivy-posframe nil :background "gray18" )
+    (set-face-attribute 'ivy-posframe nil :background "black" )
     (set-face-attribute 'ivy-posframe-cursor nil :background "red" ))
 
 #+END_SRC
@@ -2246,8 +2249,8 @@ highlighted using different colors at one time."
   (defun sd/vterm-hook ()
       "Term mode hook to set it up."
       ;; colors
-      (setq buffer-face-mode-face `(:background "gray18"))
-      (set-face-attribute 'vterm-color-default nil :background "gray18" )
+      (setq buffer-face-mode-face `(:background "black"))
+      (set-face-attribute 'vterm-color-default nil :background "black" )
       (buffer-face-mode 1)
       ;; eliminate fringes in vterm mode
       (setq left-fringe-width 0)
