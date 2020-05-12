@@ -1011,9 +1011,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :init
     ;; enable electric pair mode for buffers in c-mode
 
-    (add-hook 'c++-mode-hook (lambda ()
-                               ;; treat an underscore as word constituent
-                               (modify-syntax-entry ?_ "w")))
+  (add-hook 'c++-mode-hook (lambda ()
+                             ;; treat an underscore as word constituent
+                             (modify-syntax-entry ?_ "w")
+                             ;; turn on fci mode
+                             (fci-mode)))
   (setq c-default-style
           '((java-mode . "java")
             (awk-mode  . "awk")
@@ -1373,6 +1375,13 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :init
     (add-hook 'find-file-hook 'sd/protect-lcldev-buffers)
     :config)
+#+END_SRC
+** fill-column-indicator
+#+BEGIN_SRC emacs-lisp
+  (use-package fill-column-indicator
+    :ensure t
+    :init
+    (setq fci-rule-column 80))
 #+END_SRC
 ** find-where
 #+BEGIN_SRC emacs-lisp
