@@ -68,12 +68,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (global-unset-key (kbd "C-M-x"))
   (global-set-key (kbd "C-M-x") 'sd/copy-full-path-of-current-buffer)
 
-  ;; Comment bindings
-  (global-unset-key (kbd "C-c C-c"))
-  (global-set-key (kbd "C-c C-c") 'sd/comment-line-or-region)
-  (global-unset-key (kbd "C-c C-u"))
-  (global-set-key (kbd "C-c C-u") 'sd/comment-line-or-region)
-
   ;; Map F6 to describe-key
   (global-unset-key (kbd "<f6>"))
   (global-set-key (kbd "<f6>") 'describe-key)
@@ -2217,9 +2211,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** use-package-chors
 #+BEGIN_SRC emacs-lisp
-(use-package use-package-chords
-  :ensure t
-  :config (key-chord-mode 1))
+  (use-package use-package-chords
+    :ensure t
+    :chords (("UU" . sd/comment-line-or-region))
+    :config
+    (key-chord-mode 1))
 #+END_SRC
 ** vc-svn
 #+BEGIN_SRC emacs-lisp
