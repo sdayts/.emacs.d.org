@@ -2213,7 +2213,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+BEGIN_SRC emacs-lisp
   (use-package use-package-chords
     :ensure t
-    :chords (("UU" . sd/comment-line-or-region))
+    :chords (("uu" . sd/comment-line-or-region))
     :config
     (key-chord-mode 1))
 #+END_SRC
