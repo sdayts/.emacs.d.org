@@ -614,6 +614,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (set (make-local-variable 'face-remapping-alist)
          '((default :background "black"))))
 
+
 #+END_SRC
 * Highlighting related customizations
 #+BEGIN_SRC emacs-lisp
@@ -1062,6 +1063,18 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (use-package ccls
     :ensure t
     :config
+
+    (defun sd/base()
+      (interactive)
+      (ccls-inheritance-hierarchy nil))
+
+    (defun sd/derived()
+      (interactive)
+      (ccls-inheritance-hierarchy t))
+
+    (defalias 'b 'sd/base)
+    (defalias 'd 'sd/derived)
+
     (setq ccls-executable "/usr/local/bin/ccls")
     (setq ccls-args '("--log-file=/Users/sdayts/workspaces/ccls-cache/logs/ccls.log"))
     ;;   (setq ccls-cache-dir "/Users/sdayts/workspaces/ccls-cache/.ccls-cache")
