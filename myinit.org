@@ -769,9 +769,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 * Aliases
 #+BEGIN_SRC emacs-lisp
-  (defalias 'dbl 'sd/region-delete-blank-lines)
-  (defalias 're  'align-regexp)
-  (defalias 'sl  'sort-lines)
+  (defalias 'dl  'sd/region-delete-blank-lines)
+  (defalias 'a   'align-regexp)
+  (defalias 's   'sort-lines)
   (defalias 'n   'narrow-to-defun)
   (defalias 'w   'widen)
 #+END_SRC
@@ -1065,10 +1065,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :config
 
     (defun sd/base()
+      "Display base class hierarchy"
       (interactive)
       (ccls-inheritance-hierarchy nil))
 
     (defun sd/derived()
+      "Display derived class hierarchy"
       (interactive)
       (ccls-inheritance-hierarchy t))
 
@@ -1781,12 +1783,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   ;; turn on the key-chord mode
   (key-chord-mode 1)
 
-  ;; fast copy
-  ;;(key-chord-define-global "cc" 'sd/whole-line-or-region-kill-ring-save)
   (key-chord-define-global "KK" 'kill-current-buffer)
-  (key-chord-define-global "WW" 'widen)
-  (key-chord-define-global "NN" 'narrow-to-defun)
-
 #+END_SRC
 ** lisp-mode
 #+BEGIN_SRC emacs-lisp
