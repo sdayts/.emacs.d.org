@@ -1811,6 +1811,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
           lsp-enable-on-type-formatting nil)
     (set-face-background 'lsp-face-highlight-textual "navy")
     (set-face-background 'lsp-face-highlight-read "blue")
+    (set-face-background 'lsp-face-highlight-write "blue")
     :custom
     (lsp-file-watch-threshold nil))
 #+END_SRC
@@ -1847,6 +1848,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
             ;; instead of burying the buffer, kill it
             ("q" . sd/magit-kill-current-buffer))
     :config
+    (setq magit-section-initial-visibility-alist
+          '((untracked . hide)
+            (unpushed  . show)))
     ;; update magit heading line to yellow on black, the way I like it...
     (set-face-attribute 'magit-diff-hunk-heading-highlight nil :background "black" :foreground "yellow")
     ;; make changes look nice
