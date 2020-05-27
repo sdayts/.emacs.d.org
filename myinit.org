@@ -811,7 +811,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+BEGIN_SRC emacs-lisp
   (use-package ace-window
     :ensure t
-    :chords (("jj" . ace-window))
     :init
     (setq aw-background nil)
     (global-set-key (kbd "C-x o") 'ace-window)
