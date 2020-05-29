@@ -1255,9 +1255,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
     (add-hook 'dired-mode-hook 'sd/dired-config)
 
-    :config
     ;; unset dired's biding so that the global can take over
     (unbind-key "M-l" dired-mode-map)
+    :config
     ;; unset Cntl+Shift+b in dired mode which is by default wants to bookmark a file
     ;; while I like it to bring up the helm-mini
     (unbind-key "C-S-b" dired-mode-map)
