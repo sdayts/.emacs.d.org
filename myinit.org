@@ -1714,6 +1714,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :after (ivy posframe)
     :init
     :config
+    (setq ivy-posframe-min-width 190)
     (setq ivy-posframe-display-functions-alist
           '((swiper           . nil)
             (counsel-git-grep . nil)
@@ -1847,6 +1848,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
             ;; instead of burying the buffer, kill it
             ("q" . sd/magit-kill-current-buffer))
     :config
+    ;; start off with cursor on Unstaged section
+    (setq magit-status-initial-section '(2))
     (setq magit-section-initial-visibility-alist
           '((untracked . hide)
             (unpushed  . show)))
