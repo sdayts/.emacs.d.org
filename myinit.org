@@ -1853,6 +1853,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (setq magit-section-initial-visibility-alist
           '((untracked . hide)
             (unpushed  . show)))
+    ;; make diff look nicer
+    (setq magit-diff-refine-hunk t)
+    (set-face-attribute 'diff-refine-removed nil :foreground "tan1" :strike-through t :background "black" :box nil)
+    (set-face-attribute 'diff-refine-added nil :foreground "aquamarine" :background "black" :box t :weight 'normal)
     ;; update magit heading line to yellow on black, the way I like it...
     (set-face-attribute 'magit-diff-hunk-heading-highlight nil :background "black" :foreground "yellow")
     ;; make changes look nice
