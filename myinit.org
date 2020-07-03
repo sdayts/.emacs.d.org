@@ -1718,7 +1718,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (setq ivy-posframe-display-functions-alist
           '((swiper           . nil)
             (counsel-git-grep . nil)
-            (t                . ivy-posframe-display-at-frame-center)))
+            (t                . nil)))
 
     (set-face-attribute 'ivy-posframe nil :background "black" )
     (set-face-attribute 'ivy-posframe-cursor nil :background "red" ))
