@@ -1340,7 +1340,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (set-face-foreground 'doom-modeline-highlight "yellow")
 
     (doom-modeline-def-modeline 'my-simple-line
-      '(vcs buffer-info buffer-position selection-info lsp matches))
+      '(vcs buffer-info buffer-position selection-info lsp matches workspace-name))
 
     (defun setup-custom-doom-modeline ()
       (doom-modeline-set-modeline 'my-simple-line 'default))
