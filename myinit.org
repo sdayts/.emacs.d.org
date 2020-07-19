@@ -40,6 +40,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   ;; set gc threshold high to limit number of invocations
   (setq gc-cons-threshold 100000000)
 
+  ;; enable recursive minibuffer
+  (setq enable-recursive-minibuffers t)
+
   ;; scroll faster
   (setq fast-but-imprecise-scrolling t)
 
