@@ -1352,6 +1352,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
     (add-hook 'doom-modeline-mode-hook 'setup-custom-doom-modeline))
 #+END_SRC
+** el-patch
+#+BEGIN_SRC emacs-lisp
+  (use-package el-patch
+    :disabled
+    :ensure t)
+#+END_SRC
 ** esup
 #+BEGIN_SRC emacs-lisp
 (use-package esup
@@ -1823,6 +1829,22 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (set-face-background 'lsp-face-highlight-textual "navy")
     (set-face-background 'lsp-face-highlight-read "blue")
     (set-face-background 'lsp-face-highlight-write "blue")
+
+    ;; my own private version of which uses xref-match face instead of a hard-coded 'hilight face.
+    (lsp-defun lsp--xref-make-item (filename (&Range :start (start &as &Position :character start-char :line start-line)
+                                                     :end (end &as &Position :character end-char)))
+      "Return a xref-item from a RANGE in FILENAME."
+      (let* ((line (lsp--extract-line-from-buffer start))
+             (len (length line)))
+        (add-face-text-property (max (min start-char len) 0)
+                                (max (min end-char len) 0)
+                                'xref-match t line) ;; sdayts, using xref-match instead of 'highlight
+        ;; LINE is nil when FILENAME is not being current visited by any buffer.
+        (xref-make (or line filename)
+                   (xref-make-file-location
+                    filename
+                    (lsp-translate-line (1+ start-line))
+                    (lsp-translate-column start-char)))))
     :custom
     (lsp-file-watch-threshold nil))
 #+END_SRC
@@ -2467,8 +2489,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (setq xref-prompt-for-identifier '(not xref-find-definitions
                                            xref-find-definitions-other-window
                                            xref-find-definitions-other-frame
-                                           xref-find-references)))
-
+                                           xref-find-references))
+    (set-face-attribute 'xref-match nil :background "gray0" :foreground "cyan" ))
 #+END_SRC
 ** yasnippet
 #+BEGIN_SRC emacs-lisp
