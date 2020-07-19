@@ -1668,15 +1668,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   (advice-add 'ivy-yank-word :before 'sd/move-to-begin-word)
 
-  (defun sd/counsel-git-grep-minimum-height()
+  (defun sd/counsel-minimum-height()
     "Set the height of the ivy minibuffer to the value of sd/ivy-height"
-    (if (member this-command '(counsel-yank-pop
-                               counsel-git-grep
-                               counsel-register
-                               swiper))
-        (set-window-text-height nil sd/ivy-height)))
+    (set-window-text-height nil sd/ivy-height))
 
-  (add-hook 'minibuffer-setup-hook #'sd/counsel-git-grep-minimum-height)
+  (add-hook 'minibuffer-setup-hook #'sd/counsel-minimum-height)
 
   (use-package ivy
     :ensure t
