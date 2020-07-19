@@ -40,6 +40,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   ;; set gc threshold high to limit number of invocations
   (setq gc-cons-threshold 100000000)
 
+  ;; scroll faster
+  (setq fast-but-imprecise-scrolling t)
+
   ;; fontify code in code blocks for org mode
   ;; somehow this does not work if I place this line
   ;; in the mode codfiguration section
