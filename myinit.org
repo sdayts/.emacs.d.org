@@ -311,6 +311,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   ;; setup minibuffer to my liking
   (add-hook 'minibuffer-setup-hook 'sd/minibuffer-setup)
+
+  ;; on emacs exit don't ask whether ok to kill processes
+  (setq confirm-kill-processes nil)
 #+END_SRC
 
 * Custom functions
