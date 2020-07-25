@@ -289,18 +289,19 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (global-set-key (kbd "C-c r") 'copy-to-register)
 
   ;; scroll text down
-  (global-unset-key (kbd "C-j"))
-  (global-set-key (kbd "C-j") 'scroll-up-command)
+  (global-unset-key (kbd "s-j"))
+  (global-set-key (kbd "s-j") 'scroll-up-command)
 
   ;; scroll text up
-  (global-unset-key (kbd "C-k"))
-  (global-set-key (kbd "C-k") 'scroll-down-command)
+  (global-unset-key (kbd "s-k"))
+  (global-set-key (kbd "s-k") 'scroll-down-command)
 
   ;; remove C-j/C-j from all prog modes
   (add-hook 'prog-mode-hook
             (function (lambda ()
-                        (local-unset-key '[C-j])
-                        (local-unset-key '[C-k]))))
+                        (local-unset-key '[s-j])
+                        (local-unset-key '[s-k])
+                      )))
 
   ;; stop emacs from making any sounds
   (setq ring-bell-function 'ignore)
