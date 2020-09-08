@@ -856,15 +856,17 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+BEGIN_SRC emacs-lisp
   (use-package avy
     :ensure t
-    :bind (("M-SPC" . avy-goto-word-1 ))
+    :bind (("M-SPC" . avy-goto-char-timer ))
     :config
     ;; match current window only
     (setq avy-all-windows nil
           avy-case-fold-search nil) ; case sensitive
-    ;; yellow on black for matching characters
+    ;; cyan on black for matching characters
     (custom-set-faces
      '(avy-lead-face
-       ((t (:inherit avy-lead-face :height 1.0 :foreground "Cyan" :background "black" :weight normal))))))
+       ((t (:inherit avy-lead-face :height 1.0 :foreground "Cyan" :background "black" :weight normal))))
+     '(avy-goto-char-timer-face
+       ((t (:inherit avy-goto-char-timer-face :height 1.0 :foreground "Cyan" :background "black" :weight normal))))))
 #+END_SRC
 ** beacon
 #+BEGIN_SRC emacs-lisp
