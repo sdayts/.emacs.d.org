@@ -1342,6 +1342,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (set-face-attribute 'diredp-flag-mark nil :background "black" :foreground "green" )
     (set-face-attribute 'diredp-deletion nil :background "black" :foreground "firebrick1" ))
 #+END_SRC
+** docker
+#+BEGIN_SRC emacs-lisp
+(use-package docker
+  :ensure t
+  :bind ("C-c d" . docker))
+#+END_SRC
 ** doom-modeline
 #+BEGIN_SRC emacs-lisp
   (set-face-attribute 'mode-line nil
