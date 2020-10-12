@@ -1284,8 +1284,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
       ;; unset dired's biding so that the global can take over
       (unbind-key "M-l" dired-mode-map)
       ;; in dired mode don't highlight modified dired buffers
-      (setq-local doom-modeline-buffer-modified 'doom-modeline-buffer-modified)
-      (set-face-foreground 'doom-modeline-buffer-modified "white"))
+      (face-remap-add-relative 'doom-modeline-buffer-modified '(:foreground "white")))
 
     (add-hook 'dired-mode-hook 'sd/dired-config)
 
