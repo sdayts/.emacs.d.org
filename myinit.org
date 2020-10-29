@@ -1178,6 +1178,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 ** company-lsp
  #+BEGIN_SRC emacs-lisp
    (use-package company-lsp
+     :disabled
      :after (lsp-mode company)
      :ensure t
      :init
@@ -1187,6 +1188,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 ** company-posframe
 #+BEGIN_SRC emacs-lisp
   (use-package company-posframe
+    :disabled
     :after (company)
     :ensure t
     :init
@@ -1225,6 +1227,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 ** counsel-dash
 #+BEGIN_SRC emacs-lisp
   (use-package counsel-dash
+    :disabled
     :ensure t
     :config
     (setq counsel-dash-docsets-path "~/.docsets")
@@ -2024,6 +2027,14 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (use-package org
     :ensure t
     :init
+    ;; stop asking about running embedded code
+    (setq org-confirm-babel-evaluate nil)
+    ;; add support for running c/c++ embedded code
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((emacs-lisp . nil)
+       (C . t)))
+
     (unbind-key "M-h" org-mode-map)
     (unbind-key "C-M-i" org-mode-map)
     ;; indent propertly in org babel mode
@@ -2581,6 +2592,14 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 * TODO
 ** emacs keybindings everywhere
 https://gist.github.com/cheapRoc/9670905
+** org babel
+
+(setq org-confirm-babel-evaluate nil)
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . nil)
+   (C . t)))
+
 * Tips
 #+BEGIN_SRC emacs-lisp
 (setq sd-tips
