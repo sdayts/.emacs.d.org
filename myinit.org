@@ -2024,8 +2024,14 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** org
 #+BEGIN_SRC emacs-lisp
+
+  (defun sd/org-goto-result()
+    (interactive)
+    (org-babel-goto-named-result ""))
+
   (use-package org
     :ensure t
+    :chords (("RR" . sd/org-goto-result))
     :init
     ;; stop asking about running embedded code
     (setq org-confirm-babel-evaluate nil)
@@ -2037,6 +2043,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
     (unbind-key "M-h" org-mode-map)
     (unbind-key "C-M-i" org-mode-map)
+
     ;; indent propertly in org babel mode
     (setq org-src-tab-acts-natively t)
     ;; support shift-selection-mode
