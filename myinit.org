@@ -2209,7 +2209,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+BEGIN_SRC emacs-lisp
   (use-package shell-pop
     :ensure t
-    :bind (("C-S-m" . shell-pop))
+    :chords (("PP" . shell-pop))
     :config
     ;; Don't ask to kill the shell buffer
     (add-hook 'shell-mode-hook (lambda() (set-process-query-on-exit-flag (get-process "shell") nil)) )
@@ -2379,7 +2379,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
       "Term mode hook to set it up."
       ;; colors
       (setq buffer-face-mode-face `(:background "black"))
-      (set-face-attribute 'vterm-color-default nil :background "black" )
+      ;;vterm-color-default is no longer available
+      ;(set-face-attribute 'vterm-color-default nil :background "black" )
       (buffer-face-mode 1)
       ;; eliminate fringes in vterm mode
       (setq left-fringe-width 0)
