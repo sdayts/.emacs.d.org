@@ -1122,7 +1122,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
             ("C-p" . company-select-previous))
     :config
     (global-company-mode)
-    (setq company-idle-delay 0.4)
+    (setq company-idle-delay 0)
     ;; number of candidates to display
     (setq company-tooltip-limit 20)
     (custom-set-faces
