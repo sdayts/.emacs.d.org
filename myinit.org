@@ -38,7 +38,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
                   file))
 
   ;; set gc threshold high to limit number of invocations
-  (setq gc-cons-threshold 100000000)
+;;  (setq gc-cons-threshold 100000000)
 
   ;; enable recursive minibuffer
   (setq enable-recursive-minibuffers t)
@@ -156,13 +156,13 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
         create-lockfiles nil              ; stop creating #lock files
         )
 
-  ;; save desktop on exit
   (when window-system
     (add-to-list 'default-frame-alist '(width . 132))
     (add-to-list 'default-frame-alist '(height . 32))
     (add-to-list 'default-frame-alist '(ns-appearance . dark))
     (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))
-  (desktop-save-mode 1)
+  ;; don't save desktop on exit
+  (desktop-save-mode nil)
 
   ;; toggle h-cpp
   (global-unset-key (kbd "C-<return>"))
@@ -2389,6 +2389,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
       (setq global-hl-line-mode nil))
 
   (use-package vterm
+    :disabled
     :ensure t
     :init
     (add-hook 'vterm-mode-hook #'sd/vterm-hook)
@@ -2492,22 +2493,22 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** whole-line-or-region
 #+BEGIN_SRC emacs-lisp
-  (defun sd/whole-line-or-region-kill-ring-save()
-    "When in rectangle mode, copy the rectangle"
-    (interactive)
-    (if rectangle-mark-mode
+    (defun sd/whole-line-or-region-kill-ring-save()
+      "When in rectangle mode, copy the rectangle"
+      (interactive)
+      (if rectangle-mark-mode
+          (progn
+            (message "Copying rectangle.")
+            (copy-rectangle-as-kill (region-beginning) (region-end)))
         (progn
-          (message "Copying rectangle.")
-          (copy-rectangle-as-kill (region-beginning) (region-end)))
-      (progn
-        (message "Copying region.")
-        (whole-line-or-region-kill-ring-save nil))))
+          (message "Copying region.")
+          (call-interactively 'whole-line-or-region-kill-ring-save))))
 
-    (use-package whole-line-or-region
-      :ensure t
-      :bind (("C-w" . whole-line-or-region-kill-region)
-             ("C-c c" . sd/whole-line-or-region-kill-ring-save))
-      :config)
+      (use-package whole-line-or-region
+        :ensure t
+        :bind (("C-w" . whole-line-or-region-kill-region)
+               ("C-c c" . sd/whole-line-or-region-kill-ring-save))
+        :config)
 #+END_SRC
 ** wrap-region
 #+BEGIN_SRC emacs-lisp
