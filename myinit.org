@@ -161,8 +161,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (add-to-list 'default-frame-alist '(height . 32))
     (add-to-list 'default-frame-alist '(ns-appearance . dark))
     (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))
-  ;; don't save desktop on exit
-  (desktop-save-mode nil)
 
   ;; toggle h-cpp
   (global-unset-key (kbd "C-<return>"))
@@ -1347,6 +1345,15 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (set-face-attribute 'diredp-flag-mark nil :background "black" :foreground "green" )
     (set-face-attribute 'diredp-deletion nil :background "black" :foreground "firebrick1" ))
 #+END_SRC
+** display-fill-column-indicator
+#+BEGIN_SRC emacs-lisp
+  (use-package display-fill-column-indicator
+    :init
+    (setq display-fill-column-indicator-column 80)
+    (set-face-attribute 'fill-column-indicator nil
+                        :foreground "systemOrangeColor")
+    (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode))
+#+END_SRC
 ** docker
 #+BEGIN_SRC emacs-lisp
 (use-package docker
@@ -1429,14 +1436,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :init
     (add-hook 'find-file-hook 'sd/protect-lcldev-buffers)
     :config)
-#+END_SRC
-** fill-column-indicator
-#+BEGIN_SRC emacs-lisp
-  (use-package fill-column-indicator
-    :ensure t
-    :init
-    (setq fci-rule-column 79)
-    (setq fci-rule-color "systemOrangeColor"))
 #+END_SRC
 ** find-where
 #+BEGIN_SRC emacs-lisp
