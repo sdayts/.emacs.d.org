@@ -1471,6 +1471,13 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :init
     (unbind-key "C-z" global-map))
 #+END_SRC
+** gcmh
+#+BEGIN_SRC emacs-lisp
+(use-package gcmh
+  :ensure t
+  :init
+  (gcmh-mode 1))
+#+END_SRC
 ** git-gutter-fringe+
 #+BEGIN_SRC emacs-lisp
     (use-package git-gutter-fringe+
@@ -2388,7 +2395,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
       (setq global-hl-line-mode nil))
 
   (use-package vterm
-    :disabled
     :ensure t
     :init
     (add-hook 'vterm-mode-hook #'sd/vterm-hook)
