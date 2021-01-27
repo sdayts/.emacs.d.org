@@ -1,6 +1,6 @@
 # -*- mode: snippet; require-final-newline: nil -*-
-# name: BAAL INFO
+# name: BALL INFO
 # key: li
 # binding: direct-keybinding
 # --
-BAAL_LOG_INFO << "$0";
+BALL_LOG_INFO << "$0";
