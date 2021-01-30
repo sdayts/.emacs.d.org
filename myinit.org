@@ -1474,6 +1474,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 ** gcmh
 #+BEGIN_SRC emacs-lisp
 (use-package gcmh
+  :disabled
   :ensure t
   :init
   (gcmh-mode 1))
@@ -1870,6 +1871,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (set-face-background 'lsp-face-highlight-textual "navy")
     (set-face-background 'lsp-face-highlight-read "blue")
     (set-face-background 'lsp-face-highlight-write "blue")
+    (setq read-process-output-max (* 1024 1024)) ;; performance optimization
+    (setq lsp-idle-delay 0.500)
+    (setq gc-cons-threshold 100000000)
+;;    (setq lsp-completion-provider :capf)
 
     ;; my own private version of which uses xref-match face instead of a hard-coded 'hilight face.
     (lsp-defun lsp--xref-make-item (filename (&Range :start (start &as &Position :character start-char :line start-line)
@@ -2613,7 +2618,13 @@ https://gist.github.com/cheapRoc/9670905
  'org-babel-load-languages
  '((emacs-lisp . nil)
    (C . t)))
-
+** look into high cpu usage
+https://github.com/emacs-lsp/lsp-mode/issues/1621
+setq gc-cons-threshold 600000000)
+(setq read-process-output-max (* 4096 1024))
+(setq lsp-prefer-capf t)
+(setq lsp-idle-delay 0.500)
+(setq lsp-print-performance t)
 * Tips
 #+BEGIN_SRC emacs-lisp
 (setq sd-tips
