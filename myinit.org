@@ -7,6 +7,9 @@ brew install/reinstall ccls
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 * Global settings
 #+BEGIN_SRC emacs-lisp
+  ;; native comp
+  (setq comp-speed 2)
+
   ;; set the default font
   (when (member "DejaVu Sans Mono" (font-family-list))
     (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
