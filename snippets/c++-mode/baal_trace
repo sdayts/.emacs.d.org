@@ -3,4 +3,4 @@
 # key: lt
 # binding: direct-keybinding
 # --
-BAAL_LOG_TRACE << "$0";
+BALL_LOG_TRACE << "$0";
