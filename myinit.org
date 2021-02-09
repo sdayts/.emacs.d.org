@@ -315,6 +315,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   ;; on emacs exit don't ask whether ok to kill processes
   (setq confirm-kill-processes nil)
+
+  ;; confirm before killing emacs
+  (setq confirm-kill-emacs 'yes-or-no-p)
 #+END_SRC
 
 * Custom functions
@@ -2368,7 +2371,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (venv-initialize-interactive-shells)
     (venv-initialize-eshell))
 
-  (venv-workon "p3")
+;  (venv-workon "p3")
 
   (setq lsp-python-executable-cmd "python3")
   (setq python-shell-interpreter "python3"
