@@ -1615,6 +1615,16 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   ;;  :bind      ("M-o" . helm-projectile)
     :after     (projectile))
 #+END_SRC
+** helpful
+#+BEGIN_SRC emacs-lisp
+  (use-package helpful
+    :config
+    :ensure t
+    :bind
+    (("C-h v" . helpful-variable)
+     ("C-h k" . helpful-key)
+     ("C-h f" . helpful-function)))
+#+END_SRC
 ** hilight-indent-guides
 #+BEGIN_SRC emacs-lisp
   (use-package highlight-indent-guides
@@ -2081,6 +2091,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :ensure t
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+END_SRC
+** package
+#+BEGIN_SRC emacs-lisp
+    (use-package package
+      :config
+      (setq package-native-compile t))
 #+END_SRC
 ** peep-dired
 #+BEGIN_SRC emacs-lisp
