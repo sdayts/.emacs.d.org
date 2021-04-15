@@ -263,12 +263,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (global-set-key (kbd "M-=") 'sd/mark-line)
 
   ;; go to beginning of the next defun
-  (global-unset-key (kbd "s-p"))
-  (global-set-key (kbd "s-p") 'sd/begin-of-prev-defun)
+  (global-unset-key (kbd "M-p"))
+  (global-set-key (kbd "M-p") 'sd/begin-of-prev-defun)
 
   ;; go to beginning of the prev defun
-  (global-unset-key (kbd "s-n"))
-  (global-set-key (kbd "s-n") 'sd/beginning-of-next-defun)
+  (global-unset-key (kbd "M-n"))
+  (global-set-key (kbd "M-n") 'sd/beginning-of-next-defun)
 
   ;; map goto line to shit-space
   (global-unset-key (kbd "S-SPC"))
@@ -1450,8 +1450,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :ensure t
     :chords (("FF" . flycheck-list-errors))
     :config
-    (define-key flycheck-mode-map (kbd "M-p") #'flycheck-previous-error)
-    (define-key flycheck-mode-map (kbd "M-n") #'flycheck-next-error))
+    (define-key flycheck-mode-map (kbd "s-p") #'flycheck-previous-error)
+    (define-key flycheck-mode-map (kbd "s-n") #'flycheck-next-error))
 #+END_SRC
 ** flyspell
 #+BEGIN_SRC emacs-lisp
