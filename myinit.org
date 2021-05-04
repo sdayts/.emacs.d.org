@@ -622,7 +622,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (save-excursion
       (shell-command-on-region (region-beginning)
                                (region-end)
-                               "python -m json.tool"
+                               "python3.9 -m json.tool"
                                (buffer-name)
                                t)))
 
@@ -631,7 +631,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (save-excursion
       (shell-command-on-region (point-min)
                                (point-max)
-                               "python -m json.tool"
+                               "python3.9 -m json.tool"
                                (buffer-name) t)))
 
   (defun sd/minibuffer-setup ()
