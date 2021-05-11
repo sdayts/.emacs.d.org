@@ -57,6 +57,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   ;; prevent accidental exits
   (global-unset-key (kbd "C-x C-c"))
 
+  ;; Paste the way I am used to
+  (global-unset-key (kbd "C-v"))
+  (global-set-key (kbd "C-v") 'yank)
+
   (global-unset-key (kbd "C-M-y"))
   (global-set-key (kbd "C-M-y") 'yank-rectangle)
 
@@ -69,8 +73,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (global-set-key (kbd "M-c") 'xah-copy-to-register-1)
 
   ;; Paste from register 1
-  (global-unset-key (kbd "C-v"))
-  (global-set-key (kbd "C-v") 'xah-paste-from-register-1)
+  (global-unset-key (kbd "M-v"))
+  (global-set-key (kbd "M-v") 'xah-paste-from-register-1)
 
   ;; Copy buffer name to clipboard
   (global-unset-key (kbd "C-M-c"))
