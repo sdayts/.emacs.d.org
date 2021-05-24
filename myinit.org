@@ -70,11 +70,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   ;; Copy region to register 1
   (global-unset-key (kbd "M-c"))
-  (global-set-key (kbd "M-c") 'xah-copy-to-register-1)
+  (global-set-key (kbd "M-c") 'sd/copy-word-under-cursor)
 
-  ;; Paste from register 1
-  (global-unset-key (kbd "M-v"))
-  (global-set-key (kbd "M-v") 'xah-paste-from-register-1)
+;;  ;; Paste from register 1
+;;  (global-unset-key (kbd "M-v"))
+;;  (global-set-key (kbd "M-v") 'xah-paste-from-register-1)
 
   ;; Copy buffer name to clipboard
   (global-unset-key (kbd "C-M-c"))
@@ -1546,6 +1546,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   :ensure t
   :bind ("C-z" . goto-last-change))
 #+END_SRC
+** grip-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package grip-mode
+    :ensure t
+    :config)
+#+END_SRC
 ** helm
 #+BEGIN_SRC emacs-lisp
   (use-package helm
@@ -1884,6 +1890,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (key-chord-mode 1)
 
   (key-chord-define-global "KK" 'kill-current-buffer)
+  (key-chord-define-global "jj" 'xah-copy-to-register-1)
+  (key-chord-define-global "kk" 'xah-paste-from-register-1)
+
 #+END_SRC
 ** lisp-mode
 #+BEGIN_SRC emacs-lisp
