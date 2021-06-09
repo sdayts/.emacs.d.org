@@ -294,6 +294,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (global-unset-key (kbd "s-k"))
   (global-set-key (kbd "s-k") 'scroll-down-command)
 
+  (global-unset-key [f5])
+  (global-set-key [f5] 'sd/vc-refresh-state-all)
+
   ;; remove C-j/C-j from all prog modes
   (add-hook 'prog-mode-hook
             (function (lambda ()
@@ -906,7 +909,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (beacon-mode 1)
     (setq beacon-blink-when-focused t)
     (setq beacon-color "cyan")
-    (setq beacon-size 20)
+    (setq beacon-size 100)
     (setq beacon-blink-duration 0.006))
 #+END_SRC
 ** cc-mode
