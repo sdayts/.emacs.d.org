@@ -672,6 +672,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
       (delete-region (region-beginning) (region-end)))
     (insert-register ?1 t))
 
+  (defun sd/go-to-column (column)
+    (interactive "nColumn: ")
+    (move-to-column column t))
+
 #+END_SRC
 * Highlighting related customizations
 #+BEGIN_SRC emacs-lisp
