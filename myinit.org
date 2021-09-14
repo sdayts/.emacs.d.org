@@ -2541,7 +2541,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
              (window-height . 0.75)
              (side . bottom)
              (slot . 1))
-            ("magit-log:.*"
+            ("magit-log.*"
                (display-buffer-in-side-window)
                (window-height . 0.75)
                (side . bottom)
