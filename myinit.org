@@ -2556,6 +2556,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
                (window-height . 0.5)
                (side . bottom)
                (slot . 1))
+            ("\\*Calendar*"
+               (display-buffer-in-side-window)
+               (side . bottom)
+               (slot . 2))
             ;; left side window
             ("\\*Help.*"
              (display-buffer-in-side-window)
