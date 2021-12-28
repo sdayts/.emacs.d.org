@@ -1911,46 +1911,47 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** lsp-mode
 #+BEGIN_SRC emacs-lisp
-    (use-package lsp-mode
-      :ensure t
-      :bind (
-             ("C-x r" . xref-find-references)
-             ( "C-."  . xref-find-definitions)
-             ("C-,"   . xref-pop-marker-stack)
-             ("C-M-?" . ccls-member-hierarchy)
-             ("M-."   . lsp-find-implementation))
-      :config
-      (add-to-list 'lsp-file-watch-ignored "[/\\\\]\\.ccls-cache$")
-      (add-to-list 'lsp-file-watch-ignored "[/\\\\]\\.lcldev")
-      (setq lsp-response-timeout 40
-            lsp-auto-guess-root t
-            lsp-prefer-flymake nil
-            lsp-enable-on-type-formatting nil)
-      (set-face-background 'lsp-face-highlight-textual "navy")
-      (set-face-background 'lsp-face-highlight-read "blue")
-      (set-face-background 'lsp-face-highlight-write "blue")
-      (setq read-process-output-max (* 1024 1024)) ;; performance optimization
-      (setq lsp-idle-delay 0.500)
-      (setq gc-cons-threshold 100000000)
-  ;;    (setq lsp-completion-provider :capf)
+  (use-package lsp-mode
+    :ensure t
+    :bind (
+           ("C-x r" . xref-find-references)
+           ( "C-."  . xref-find-definitions)
+           ("C-,"   . xref-pop-marker-stack)
+           ("C-M-?" . ccls-member-hierarchy)
+           ("M-."   . lsp-find-implementation))
+    :config
+    (add-to-list 'lsp-file-watch-ignored "[/\\\\]\\.ccls-cache$")
+    (add-to-list 'lsp-file-watch-ignored "[/\\\\]\\.lcldev")
+    (setq lsp-response-timeout 40
+          lsp-auto-guess-root t
+          lsp-prefer-flymake nil
+          lsp-enable-on-type-formatting nil)
+    (set-face-background 'lsp-face-highlight-textual "navy")
+    (set-face-background 'lsp-face-highlight-read "blue")
+    (set-face-background 'lsp-face-highlight-write "blue")
+    (setq read-process-output-max (* 1024 1024)) ;; performance optimization
+    (setq lsp-idle-delay 0.500)
+    (setq lsp-lens-enable nil)
+    (setq gc-cons-threshold 100000000)
+    ;;    (setq lsp-completion-provider :capf)
 
-      ;; my own private version of which uses xref-match face instead of a hard-coded 'hilight face.
-      (lsp-defun lsp--xref-make-item (filename (&Range :start (start &as &Position :character start-char :line start-line)
-                                                       :end (end &as &Position :character end-char)))
-        "Return a xref-item from a RANGE in FILENAME."
-        (let* ((line (lsp--extract-line-from-buffer start))
-               (len (length line)))
-          (add-face-text-property (max (min start-char len) 0)
-                                  (max (min end-char len) 0)
-                                  'xref-match t line) ;; sdayts, using xref-match instead of 'highlight
-          ;; LINE is nil when FILENAME is not being current visited by any buffer.
-          (xref-make (or line filename)
-                     (xref-make-file-location
-                      filename
-                      (lsp-translate-line (1+ start-line))
-                      (lsp-translate-column start-char)))))
-      :custom
-      (lsp-file-watch-threshold nil))
+    ;; my own private version of which uses xref-match face instead of a hard-coded 'hilight face.
+    (lsp-defun lsp--xref-make-item (filename (&Range :start (start &as &Position :character start-char :line start-line)
+                                                     :end (end &as &Position :character end-char)))
+      "Return a xref-item from a RANGE in FILENAME."
+      (let* ((line (lsp--extract-line-from-buffer start))
+             (len (length line)))
+        (add-face-text-property (max (min start-char len) 0)
+                                (max (min end-char len) 0)
+                                'xref-match t line) ;; sdayts, using xref-match instead of 'highlight
+        ;; LINE is nil when FILENAME is not being current visited by any buffer.
+        (xref-make (or line filename)
+                   (xref-make-file-location
+                    filename
+                    (lsp-translate-line (1+ start-line))
+                    (lsp-translate-column start-char)))))
+    :custom
+    (lsp-file-watch-threshold nil))
 #+END_SRC
 ** lsp-ivy
 #+BEGIN_SRC emacs-lisp
