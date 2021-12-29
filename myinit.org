@@ -1932,6 +1932,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (setq read-process-output-max (* 1024 1024)) ;; performance optimization
     (setq lsp-idle-delay 0.500)
     (setq lsp-lens-enable nil)
+    (setq lsp-headerline-breadcrumb-enable nil)
     (setq gc-cons-threshold 100000000)
     ;;    (setq lsp-completion-provider :capf)
 
