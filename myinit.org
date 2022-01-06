@@ -194,9 +194,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   ;; copy text selected via a mouse to system's clipboard
   (setq mouse-drag-copy-region t)
 
-  ;; open development notes
-  (global-set-key (kbd "<f9>") 'sd/open-dev-notes)
-
   ;; open org initialization file
   (global-set-key (kbd "C-<f9>") 'sd/open-org-init)
 
@@ -2136,6 +2133,24 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+END_SRC
+** org-roam
+#+begin_src emacs-lisp
+  (use-package org-roam
+    :ensure t
+    :after org
+    :init
+    (setq org-return-follows-link  t)
+    :config
+    (org-roam-setup)
+    (setq org-roam-directory (file-truename "~/notes/org-roam"))
+    (org-roam-db-autosync-mode)
+    :bind (("C-c n f" . org-roam-node-find)
+           (:map org-mode-map
+                 (("C-c n i" . org-roam-node-insert)
+                  ("C-c n t" . org-roam-tag-add)
+                  ("C-c n a" . org-roam-alias-add)
+                  ("<f9>" . org-roam-buffer-toggle)))))
+#+end_src
 ** package
 #+BEGIN_SRC emacs-lisp
     (use-package package
@@ -2520,57 +2535,63 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** window
 #+BEGIN_SRC emacs-lisp
-  (use-package window
-    :chords (("SS" . sd/switch-to-scratch))
-    :init
-    (setq display-buffer-alist
-          '(("magit:.*"
-             (display-buffer-in-side-window)
-             (window-height . 0.75)
-             (side . bottom)
-             (slot . -1))
-            (".*COMMIT_EDITMSG"
-             (display-buffer-in-side-window)
-             (window-height . 0.75)
-             (side . bottom)
-             (slot . 0))
-            (".*Flycheck errors.*"
-             (display-buffer-in-side-window)
-             (window-height . 0.25)
-             (side . bottom)
-             (slot . 0))
-            ("magit-diff:.*"
-             (display-buffer-in-side-window)
-             (window-height . 0.75)
-             (side . bottom)
-             (slot . 1))
-            ("magit-log.*"
+    (use-package window
+      :chords (("SS" . sd/switch-to-scratch))
+      :init
+      (setq display-buffer-alist
+            '(("magit:.*"
+               (display-buffer-in-side-window)
+               (window-height . 0.75)
+               (side . bottom)
+               (slot . -1))
+              (".*COMMIT_EDITMSG"
+               (display-buffer-in-side-window)
+               (window-height . 0.75)
+               (side . bottom)
+               (slot . 0))
+              (".*Flycheck errors.*"
+               (display-buffer-in-side-window)
+               (window-height . 0.25)
+               (side . bottom)
+               (slot . 0))
+              ("magit-diff:.*"
                (display-buffer-in-side-window)
                (window-height . 0.75)
                (side . bottom)
                (slot . 1))
-            ("\\*vc-diff\\*"
+              ("magit-log.*"
                (display-buffer-in-side-window)
                (window-height . 0.75)
                (side . bottom)
                (slot . 1))
-            ("\\*ivy-occur.*"
+              ("\\*vc-diff\\*"
+               (display-buffer-in-side-window)
+               (window-height . 0.75)
+               (side . bottom)
+               (slot . 1))
+              ("\\*ivy-occur.*"
                (display-buffer-in-side-window)
                (window-height . 0.5)
                (side . bottom)
                (slot . 1))
-            ("\\*Calendar*"
+              ("\\*Calendar*"
                (display-buffer-in-side-window)
                (side . bottom)
                (slot . 2))
-            ;; left side window
-            ("\\*Help.*"
-             (display-buffer-in-side-window)
-             (side . bottom)
-             (window-height . 0.5)
-             (slot . -1))))
-    (setq window-combination-resize t)
-    (setq even-window-sizes 'height-only))
+              ;; left side window
+              ("\\*Help.*"
+               (display-buffer-in-side-window)
+               (side . bottom)
+               (window-height . 0.5)
+               (slot . -1))
+              ;; ("\\*org-roam\\*"
+              ;;  (display-buffer-in-side-window)
+              ;;  (side . bottom)
+              ;;  (window-height . 0.25)
+              ;;  (slot . -1))
+  ))
+      (setq window-combination-resize t)
+      (setq even-window-sizes 'height-only))
 #+END_SRC
 ** whole-line-or-region
 #+BEGIN_SRC emacs-lisp
