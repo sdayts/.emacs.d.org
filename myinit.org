@@ -677,17 +677,17 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 * Highlighting related customizations
 #+BEGIN_SRC emacs-lisp
 
-  ; adopted from the excellent exordium, by Philippe Grenet. All the credit is his.
+  ;; adopted from the excellent exordium, by Philippe Grenet. All the credit is his.
   (defvar sd/highlighted-symbols ()
     "list of regexps for the currently highlighted symbols. This
-    variable is buffer-local.")
+      variable is buffer-local.")
 
   (make-variable-buffer-local 'sd/highlighted-symbols)
 
   (defun sd/highlight-symbol ()
     "Toggles highlighting of occurrences of the symbol under point
-  in the current buffer. Up to 4 different symbols can be
-  highlighted using different colors at one time."
+    in the current buffer. Up to 4 different symbols can be
+    highlighted using different colors at one time."
     (interactive)
     (let ((regex (find-tag-default-as-symbol-regexp)))
       (cond ((member regex sd/highlighted-symbols)
@@ -698,19 +698,19 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
              ;; Add highlight for this symbol.
              (setq sd/highlighted-symbols (cons regex sd/highlighted-symbols))
              (hi-lock-face-symbol-at-point)))
-      ; disable hl-mode when there are highlighted symbols as the
-      ; hl-line face background interferes witht he highlighting
+      ;; disable hl-mode when there are highlighted symbols as the
+      ;; hl-line face background interferes witht he highlighting
       (if sd/highlighted-symbols
-        (progn
-          (global-hl-line-mode 0)
-          (setq-default cursor-type '(bar . 7))
-          (set-cursor-color "red")
-          )
+          (progn
+            (global-hl-line-mode 0)
+            (setq-default cursor-type '(bar . 7))
+            (set-cursor-color "red")
+            )
         (progn
           (setq-default cursor-type '(bar . 1))
           (set-cursor-color "cyan")
           (global-hl-line-mode +1))
-  )))
+        )))
 
   (global-set-key (kbd "<f2>") 'sd/highlight-symbol)
 
@@ -718,10 +718,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (global-hl-line-mode +1)
   ;; enables us to turn off hl-line in certain modes
   (make-variable-buffer-local 'global-hl-line-mode)
-  ;; slightly prefer this color for the current line
-  ;; (set-face-background hl-line-face "#345858")
-  ;; (set-face-background hl-line-face "#345865")
   (set-face-background hl-line-face "gray26")
+
+  ;; for the sake of org-roam completions
+  (setq completion-ignore-case t)
 #+END_SRC
 * Color customizations
 #+BEGIN_SRC emacs-lisp
@@ -2135,22 +2135,23 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** org-roam
 #+begin_src emacs-lisp
-    (use-package org-roam
-      :ensure t
-      :after org
-      :init
-      (setq org-return-follows-link  t)
-      (setq org-roam-completion-everywhere t)
-      :config
-      (org-roam-setup)
-      (setq org-roam-directory (file-truename "~/notes/org-roam"))
-      (org-roam-db-autosync-mode)
-      :bind (("C-c n f" . org-roam-node-find)
-             (:map org-mode-map
-                   (("C-c n i" . org-roam-node-insert)
-                    ("C-c n t" . org-roam-tag-add)
-                    ("C-c n a" . org-roam-alias-add)
-                    ("<f9>" . org-roam-buffer-toggle)))))
+  (use-package org-roam
+    :ensure t
+    :after org
+    :init
+    (setq org-return-follows-link  t)
+    (setq org-roam-completion-everywhere t)
+    (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
+    (setq org-roam-directory (file-truename "~/notes/org-roam"))
+    :config
+    (org-roam-setup)
+    (org-roam-db-autosync-mode)
+    :bind (("C-c n f" . org-roam-node-find)
+           ("<f9>"    . org-roam-node-find)
+           (:map org-mode-map
+                 (("C-c n i" . org-roam-node-insert)
+                  ("C-c n t" . org-roam-tag-add)
+                  ("C-c n a" . org-roam-alias-add)))))
 #+end_src
 ** package
 #+BEGIN_SRC emacs-lisp
