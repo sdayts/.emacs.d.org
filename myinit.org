@@ -2135,21 +2135,22 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** org-roam
 #+begin_src emacs-lisp
-  (use-package org-roam
-    :ensure t
-    :after org
-    :init
-    (setq org-return-follows-link  t)
-    :config
-    (org-roam-setup)
-    (setq org-roam-directory (file-truename "~/notes/org-roam"))
-    (org-roam-db-autosync-mode)
-    :bind (("C-c n f" . org-roam-node-find)
-           (:map org-mode-map
-                 (("C-c n i" . org-roam-node-insert)
-                  ("C-c n t" . org-roam-tag-add)
-                  ("C-c n a" . org-roam-alias-add)
-                  ("<f9>" . org-roam-buffer-toggle)))))
+    (use-package org-roam
+      :ensure t
+      :after org
+      :init
+      (setq org-return-follows-link  t)
+      (setq org-roam-completion-everywhere t)
+      :config
+      (org-roam-setup)
+      (setq org-roam-directory (file-truename "~/notes/org-roam"))
+      (org-roam-db-autosync-mode)
+      :bind (("C-c n f" . org-roam-node-find)
+             (:map org-mode-map
+                   (("C-c n i" . org-roam-node-insert)
+                    ("C-c n t" . org-roam-tag-add)
+                    ("C-c n a" . org-roam-alias-add)
+                    ("<f9>" . org-roam-buffer-toggle)))))
 #+end_src
 ** package
 #+BEGIN_SRC emacs-lisp
