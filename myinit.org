@@ -2651,13 +2651,19 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** xref
 #+BEGIN_SRC emacs-lisp
+  (defun sd/recenter-advice (&rest _args)
+    "Invoke recenter as an advice function"
+    (recenter))
+
   (use-package xref
     :config
     (setq xref-prompt-for-identifier '(not xref-find-definitions
                                            xref-find-definitions-other-window
                                            xref-find-definitions-other-frame
                                            xref-find-references))
-    (set-face-attribute 'xref-match nil :background "gray0" :foreground "cyan" ))
+    (set-face-attribute 'xref-match nil :background "gray0" :foreground "cyan" )
+    ;; recenter after popping the xref stack
+    (advice-add #'xref-pop-marker-stack :after #'sd/recenter-advice))
 #+END_SRC
 ** yasnippet
 #+BEGIN_SRC emacs-lisp
