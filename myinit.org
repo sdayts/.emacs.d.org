@@ -677,6 +677,19 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (interactive "nColumn: ")
     (move-to-column column t))
 
+    (defun prot/display-buffer-at-bottom ()
+      "Move the current buffer to the bottom of the frame.  This is
+  useful to take a buffer out of a side window.
+
+  The window parameters of this function are provided mostly for
+  didactic purposes."
+      (interactive)
+      (let ((buffer (current-buffer)))
+        (with-current-buffer buffer
+          (delete-window)
+          (display-buffer-at-bottom
+           buffer `((window-parameters . ((mode-line-format . (" "
+                                                               mode-line-buffer-identification)))))))))
 #+END_SRC
 * Highlighting related customizations
 #+BEGIN_SRC emacs-lisp
@@ -1432,6 +1445,14 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
     (add-hook 'doom-modeline-mode-hook 'setup-custom-doom-modeline))
 #+END_SRC
+** ediff
+#+BEGIN_SRC emacs-lisp
+  (use-package ediff
+    :config
+    (setq ediff-split-window-function 'split-window-horizontally
+          ediff-merge-split-window-function 'split-window-horizontally
+          ediff-window-setup-function 'ediff-setup-windows-plain))
+#+END_SRC
 ** el-patch
 #+BEGIN_SRC emacs-lisp
   (use-package el-patch
@@ -1981,11 +2002,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (use-package magit
     :ensure t
     :chords (("MM" . magit-status))
-    :bind ( ("C-x g" . magit-status)
+    :bind ( ("C-x g"   . magit-status)
             ("C-x m l" . magit-log-all)
             :map magit-mode-map
             ;; instead of burying the buffer, kill it
-            ("q" . sd/magit-kill-current-buffer))
+            ("q" . sd/magit-kill-current-buffer)
+            ("<f8>" . prot/display-buffer-at-bottom))
     :config
     ;; start off with cursor on Unstaged section
     (setq magit-status-initial-section '(2))
