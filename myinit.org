@@ -1456,7 +1456,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (set-face-attribute 'ediff-fine-diff-A nil :background "black" :foreground "green")
     (set-face-attribute 'ediff-current-diff-B nil :background "gray18" :box t)
     (set-face-attribute 'ediff-fine-diff-B nil :background "black" :foreground "yellow")
-    (set-face-attribute 'ediff-current-diff-C nil :background "gray24")
+    (set-face-attribute 'ediff-current-diff-C nil :background "gray24" :box nil)
     (set-face-attribute 'ediff-fine-diff-C nil :background "black" :foreground "cyan" :weight 'normal :box t)
 
     (set-face-attribute 'ediff-even-diff-A nil :background "gray26")
