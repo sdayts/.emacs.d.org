@@ -2585,7 +2585,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
           '(
             (".*COMMIT_EDITMSG"
              (display-buffer-in-direction)
-             (direction . right)
+             (direction . bottom)
              (window-width . 0.5)
              (window-height . fit-window-to-buffer))
             (".*Flycheck errors.*"
@@ -2612,11 +2612,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
              (display-buffer-in-side-window)
              (side . bottom)
              (window-height . 0.5)
-             (slot . -1))
-            ("\\*org-roam\\*"
-             (display-buffer-in-side-window)
-             (side . bottom)
-             (window-height . 0.25)
              (slot . -1))
             ))
 
