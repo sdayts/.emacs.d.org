@@ -2311,6 +2311,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
             :map rectangle-mark-mode-map
             ("C-w" . kill-rectangle)))
 #+END_SRC
+** rotate
+#+BEGIN_SRC emacs-lisp
+  (use-package rotate
+    :ensure t)
+#+END_SRC
+
 ** savehist
 #+BEGIN_SRC emacs-lisp
   (use-package savehist
