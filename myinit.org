@@ -2314,6 +2314,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 ** rotate
 #+BEGIN_SRC emacs-lisp
   (use-package rotate
+    :bind (("M-<up>"   . rotate-frame-anticlockwise)
+           ("M-<down>" . rotate-frame-clockwise) )
     :ensure t)
 #+END_SRC
 
