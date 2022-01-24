@@ -690,6 +690,15 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
           (display-buffer-at-bottom
            buffer `((window-parameters . ((mode-line-format . (" "
                                                                mode-line-buffer-identification)))))))))
+
+
+  (defun sd/remove-hexadecimal-numbers-from-buffer()
+    "Remove all hexidecimal numbers from the current buffer"
+    (interactive)
+    (save-excursion
+      (goto-char (point-min))
+      (vr/replace "0x[[:xdigit:]]+" "" (point-min) (point-max))))
+
 #+END_SRC
 * Highlighting related customizations
 #+BEGIN_SRC emacs-lisp
