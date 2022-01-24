@@ -696,7 +696,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     "Remove all hexadecimal numbers from the current buffer"
     (interactive)
     (save-excursion
-      (goto-char (point-min))
       (vr/replace "0x[[:xdigit:]]+" "" (point-min) (point-max))))
 
 #+END_SRC
