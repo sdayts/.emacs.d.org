@@ -2491,11 +2491,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :config
     (setq vc-svn-diff-switches '("-x --ignore-eol-style" "-x -w")))
 #+END_SRC
-** vdiff
-#+BEGIN_SRC emacs-lisp
-  (use-package vdiff
-    :ensure t)
-#+END_SRC
 ** virtualenvwrapper
 #+BEGIN_SRC emacs-lisp
   (use-package virtualenvwrapper
@@ -2631,7 +2626,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
              (slot . -1))
             ))
 
-    ;; don't want magit buffers in a side window as vdiff doesn't play nice with side windows
+    ;; don't want magit buffers in a side window as ediff doesn't play nice with side windows
     (add-to-list 'display-buffer-alist
                  '((lambda(bufname _)
                      (with-current-buffer bufname
