@@ -295,6 +295,14 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (global-unset-key (kbd "s-k"))
   (global-set-key (kbd "s-k") 'scroll-down-command)
 
+  ;; previous-buffer
+  (global-unset-key (kbd "<end>"))
+  (global-set-key (kbd "<end>") 'previous-buffer)
+
+  ;; next-buffer
+  (global-unset-key (kbd "<home>"))
+  (global-set-key (kbd "<home>") 'next-buffer)
+
   (global-unset-key [f5])
   (global-set-key [f5] 'sd/vc-refresh-state-all)
 
