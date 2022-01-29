@@ -2665,6 +2665,16 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
                    (reusable-frames . visible)
                    (window-height . 0.5)))
 
+    (add-to-list 'display-buffer-alist
+                 '((lambda(bufname _)
+                     (with-current-buffer bufname
+                       (equal major-mode 'magit-revision-mode)))
+                   (display-buffer-reuse-window display-buffer-in-direction)
+                   (direction . bottom)
+                   (dedicated . t)
+                   (reusable-frames . visible)
+                   (window-height . 0.75)))
+
     (setq window-combination-resize t)
     (setq even-window-sizes 'height-only))
 #+END_SRC
