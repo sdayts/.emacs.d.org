@@ -2808,6 +2808,10 @@ setq gc-cons-threshold 600000000)
 (setq lsp-prefer-capf t)
 (setq lsp-idle-delay 0.500)
 (setq lsp-print-performance t)
+** tab-bar
+prevents tab-bar gui from showing up
+useful for simulating tmux
+(setq tab-bar-show nil)
 * Tips
 #+BEGIN_SRC emacs-lisp
 (setq sd-tips
