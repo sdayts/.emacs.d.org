@@ -306,6 +306,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (global-unset-key [f5])
   (global-set-key [f5] 'sd/vc-refresh-state-all)
 
+  (global-unset-key (kbd "C-x K"))
+  (global-set-key (kbd "C-x K") 'tab-bar-close-tab)
+
   ;; remove C-j/C-j from all prog modes
   (add-hook 'prog-mode-hook
             (function (lambda ()
@@ -327,6 +330,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   ;; confirm before killing emacs
   (setq confirm-kill-emacs 'yes-or-no-p)
+
+  ;; don't ask to kill a buffer with a running processes
+  (setq kill-buffer-query-functions (delq 'process-kill-buffer-query-function kill-buffer-query-functions))
 #+END_SRC
 
 * Custom functions
@@ -1513,6 +1519,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+BEGIN_SRC emacs-lisp
   (use-package eyebrowse
     :ensure t
+    :disabled
     :bind (("C-M-h" . eyebrowse-prev-window-config)
            ("C-M-l" . eyebrowse-next-window-config))
     :config
@@ -2096,7 +2103,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
            ("C-S-<down>" . move-text-down ))
     :config)
 #+END_SRC
-
+** multi-vterm
+#+begin_src emqacs-lisp
+  (use-package multi-vterm
+    :ensure t)
+#+end_src
 ** multiple-cursors
 #+BEGIN_SRC emacs-lisp
   (defvar multiple-cursors-mode-enabled-hook nil
@@ -2420,6 +2431,46 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (set-face-attribute 'swiper-match-face-3 nil :foreground "green"  :weight 'normal)
     (set-face-attribute 'swiper-match-face-4 nil :foreground "cyan"   :weight 'normal))
 #+END_SRC
+** tab-bar
+#+begin_src emacs-lisp
+  (defun sd/delete-vterm-tab-group-buffers (idx last-tab)
+    "Delete all vterm buffers which are part of the current tab group."
+    (let ((windows (window-list)))
+      (while windows
+        (let ((window (car windows)))
+          (let ((this-buffer (window-buffer window)))
+            (if (eq (buffer-local-value 'major-mode this-buffer) 'vterm-mode)
+                (kill-buffer this-buffer)))
+          (setq windows (cdr windows))))))
+
+  (defun sd/new-tabbar(tab-bar-name)
+    "Create new tabbar with a provided name"
+    (tab-bar-new-tab)
+    (tab-bar-rename-tab tab-bar-name)
+    (multi-vterm)
+    (split-window-vertically)
+    (multi-vterm)
+    (split-window-horizontally)
+    (multi-vterm)
+    (windmove-down)
+    (split-window-horizontally)
+    (multi-vterm)
+    (windmove-right))
+
+  (defun sd/new-tabbar-linux()
+    (interactive)
+    (sd/new-tabbar "linux"))
+
+  (global-unset-key (kbd "C-x l"))
+  (global-set-key (kbd "C-x l") 'sd/new-tabbar-linux)
+
+  (use-package tab-bar
+    :bind ( ("C-M-h" . tab-bar-switch-to-prev-tab)
+            ("C-M-l" . tab-bar-switch-to-next-tab))
+    :config
+    (setq tab-bar-show nil)
+    (add-hook 'tab-bar-tab-pre-close-functions #'sd/delete-vterm-tab-group-buffers))
+#+end_src
 ** term
 #+BEGIN_SRC emacs-lisp
   (defun sd/term-hook ()
@@ -2529,27 +2580,28 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 ** vterm
 #+BEGIN_SRC emacs-lisp
   (defun sd/vterm-hook ()
-      "Term mode hook to set it up."
-      ;; colors
-      (setq buffer-face-mode-face `(:background "black"))
-      ;;vterm-color-default is no longer available
-      ;(set-face-attribute 'vterm-color-default nil :background "black" )
-      (buffer-face-mode 1)
-      ;; eliminate fringes in vterm mode
-      (setq left-fringe-width 0)
-      (setq right-fringe-width 0)
-      ;; disable hl-line in vterm
-      (setq global-hl-line-mode nil))
+    "Term mode hook to set it up."
+    ;; colors
+    (setq buffer-face-mode-face `(:background "black"))
+    (buffer-face-mode 1)
+    ;; eliminate fringes in vterm mode
+    (setq left-fringe-width 0)
+    (setq right-fringe-width 0)
+    (setq-local cursor-type '(box . 7))
+    ;; disable hl-line in vterm
+    (setq global-hl-line-mode nil))
 
   (use-package vterm
     :ensure t
     :init
     (add-hook 'vterm-mode-hook #'sd/vterm-hook)
     :config
-    (unbind-key "M-h" vterm-mode-map)
-    (unbind-key "M-j" vterm-mode-map)
-    (unbind-key "M-k" vterm-mode-map)
-    (unbind-key "M-l" vterm-mode-map))
+    (unbind-key "M-h"   vterm-mode-map)
+    (unbind-key "M-j"   vterm-mode-map)
+    (unbind-key "M-k"   vterm-mode-map)
+    (unbind-key "M-l"   vterm-mode-map)
+    (unbind-key "C-M-l" vterm-mode-map)
+    (unbind-key "C-M-h" vterm-mode-map))
 #+END_SRC
 ** wgrep
 #+BEGIN_SRC emacs-lisp
