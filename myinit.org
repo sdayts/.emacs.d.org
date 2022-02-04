@@ -1989,7 +1989,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (setq lsp-lens-enable nil)
     (setq lsp-headerline-breadcrumb-enable nil)
     (setq gc-cons-threshold 100000000)
-    ;;    (setq lsp-completion-provider :capf)
+    (setq lsp-enable-symbol-highlighting nil)
 
     ;; my own private version of which uses xref-match face instead of a hard-coded 'hilight face.
     (lsp-defun lsp--xref-make-item (filename (&Range :start (start &as &Position :character start-char :line start-line)
