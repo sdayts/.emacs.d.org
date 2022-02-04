@@ -1948,16 +1948,13 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 ** key-chord
 #+BEGIN_SRC emacs-lisp
   (use-package key-chord
-      :ensure t
-      :config)
+    :ensure t
+    :config)
 
   ;; turn on the key-chord mode
   (key-chord-mode 1)
 
   (key-chord-define-global "KK" 'kill-current-buffer)
-  (key-chord-define-global "jj" 'xah-copy-to-register-1)
-  (key-chord-define-global "kk" 'xah-paste-from-register-1)
-
 #+END_SRC
 ** lisp-mode
 #+BEGIN_SRC emacs-lisp
