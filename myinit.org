@@ -2440,41 +2440,57 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
                 (kill-buffer this-buffer)))
           (setq windows (cdr windows))))))
 
-  (defun sd/vterm-r-window()
+  (defun sd/vterm-r-window(login-string)
     (interactive)
     (split-window-horizontally)
     (windmove-right)
     (multi-vterm)
+    (vterm-send-string login-string)
     (windmove-left))
 
-  (defun sd/vterm-b-window()
+  (defun sd/vterm-b-window(login-string)
     (interactive)
     (split-window-vertically)
     (windmove-down)
     (multi-vterm)
+    (vterm-send-string login-string)
     (windmove-up))
 
   (defun sd/new-tabbar(tab-bar-name)
     "Create new tabbar with a provided name"
     (tab-bar-new-tab)
     (tab-bar-rename-tab tab-bar-name)
+    (setq login-string (concat
+                        "dev "
+                        (f-read-text (concat "~/."
+                                             tab-bar-name
+                                             "_default_machine")
+                                     'utf-8)))
     ;; top left vterm
     (multi-vterm)
+    (vterm-send-string login-string)
     ;; top right vterm
-    (sd/vterm-r-window)
+    (sd/vterm-r-window login-string)
     ;; bottom left vterm
-    (sd/vterm-b-window)
+    (sd/vterm-b-window login-string)
     ;;  bottom right vterm
     (windmove-right)
-    (sd/vterm-b-window)
+    (sd/vterm-b-window login-string)
     (windmove-down))
 
   (defun sd/new-tabbar-linux()
     (interactive)
     (sd/new-tabbar "linux"))
 
+  (defun sd/new-tabbar-sun()
+    (interactive)
+    (sd/new-tabbar "sun"))
+
   (global-unset-key (kbd "C-x l"))
   (global-set-key (kbd "C-x l") 'sd/new-tabbar-linux)
+
+  (global-unset-key (kbd "C-x s"))
+  (global-set-key (kbd "C-x s") 'sd/new-tabbar-sun)
 
   (use-package tab-bar
     :bind ( ("C-M-h" . tab-bar-switch-to-prev-tab)
