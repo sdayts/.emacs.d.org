@@ -2601,7 +2601,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (setq right-fringe-width 0)
     (setq-local cursor-type '(box . 7))
     ;; disable hl-line in vterm
-    (setq global-hl-line-mode nil))
+    (setq global-hl-line-mode nil)
+    (display-line-numbers-mode 0))
 
   (use-package vterm
     :ensure t
