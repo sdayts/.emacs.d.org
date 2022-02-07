@@ -88,10 +88,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (global-unset-key (kbd "<f6>"))
   (global-set-key (kbd "<f6>") 'describe-key)
 
-  ;; Map F6 to scroll-lock-mode
-  (global-unset-key (kbd "<f8>"))
-  (global-set-key (kbd "<f8>") 'scroll-lock-mode)
-
   ;; display the fully qualified path in the frame title
   (setq frame-title-format
         '((:eval (if (buffer-file-name)
@@ -2620,8 +2616,19 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (setq global-hl-line-mode nil)
     (display-line-numbers-mode 0))
 
+  (defun sd/sendVTermAttribute()
+    (interactive)
+    (setq attibute-string (f-read-text (concat
+                                        "~/.default_machines_attributes/"
+                                        "." ( string-trim (doom-modeline-segment--workspace-name)) )
+                                       'utf-8))
+    (vterm-send-string attibute-string))
+
   (use-package vterm
     :ensure t
+    :bind( :map vterm-mode-map
+           ("<f8>" . sd/sendVTermAttribute))
+
     :init
     (add-hook 'vterm-mode-hook #'sd/vterm-hook)
     :config
