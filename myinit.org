@@ -2036,8 +2036,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
             ("C-x m l" . magit-log-all)
             :map magit-mode-map
             ;; instead of burying the buffer, kill it
-            ("q" . sd/magit-kill-current-buffer)
-            ("<f8>" . prot/display-buffer-at-bottom))
+            ("q" . sd/magit-kill-current-buffer))
     :config
     ;; start off with cursor on Unstaged section
     (setq magit-status-initial-section '(2))
