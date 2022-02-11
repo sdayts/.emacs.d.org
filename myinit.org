@@ -2476,7 +2476,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (split-window-vertically)
     (windmove-down)
     (multi-vterm)
-    (vterm-send-string login-string)
+    (if login-string
+        (vterm-send-string login-string))
     (windmove-up))
 
   (defun sd/new-tabbar(tab-bar-name)
@@ -2509,11 +2510,28 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (interactive)
     (sd/new-tabbar "sun"))
 
+  (defun sd/new-tabbar-local()
+    (interactive)
+    (tab-bar-new-tab)
+    (tab-bar-rename-tab "local")
+    (multi-vterm)
+    ;; top right vterm
+    (sd/vterm-r-window nil)
+    ;; bottom left vterm
+    (sd/vterm-b-window nil)
+    ;;  bottom right vterm
+    (windmove-right)
+    (sd/vterm-b-window nil)
+    (windmove-down))
+
   (global-unset-key (kbd "C-x l"))
   (global-set-key (kbd "C-x l") 'sd/new-tabbar-linux)
 
   (global-unset-key (kbd "C-x s"))
   (global-set-key (kbd "C-x s") 'sd/new-tabbar-sun)
+
+  (global-unset-key (kbd "C-x a a"))
+  (global-set-key (kbd "C-x a a") 'sd/new-tabbar-local)
 
   (use-package tab-bar
     :bind ( ("C-M-h" . tab-bar-switch-to-prev-tab)
