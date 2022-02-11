@@ -2651,10 +2651,39 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
                                        'utf-8))
     (vterm-send-string attibute-string))
 
+  (define-advice counsel-yank-pop (:around (fun &rest args))
+    (if (equal major-mode 'vterm-mode)
+        (let ((counsel-yank-pop-action-fun (symbol-function
+                                            'counsel-yank-pop-action))
+              (last-command-yank-p (eq last-command 'yank)))
+          (cl-letf (((symbol-function 'counsel-yank-pop-action)
+                     (lambda (s)
+                       (let ((inhibit-read-only t)
+                             (last-command (if (memq last-command
+                                                     '(counsel-yank-pop
+                                                       ivy-previous-line
+                                                       ivy-next-line))
+                                               'yank
+                                             last-command))
+                             (yank-undo-function (when last-command-yank-p
+                                                   (lambda (_start _end)
+                                                     (vterm-undo)))))
+                         (cl-letf (((symbol-function 'insert-for-yank)
+                                    'vterm-insert))
+                           (funcall counsel-yank-pop-action-fun s))))))
+            (apply fun args)))
+      (apply fun args)))
+
   (use-package vterm
     :ensure t
+    :after org
     :bind( :map vterm-mode-map
-           ("<f8>" . sd/sendVTermAttribute))
+           ("<f8>"    . sd/sendVTermAttribute)
+           ("C-M-z"   . zoom-window-zoom)
+           ("C-v"     . vterm-yank)
+           ("<f6>"    . describe-key)
+           :map vterm-copy-mode-map
+           ("C-c C-o" . org-open-at-point))
 
     :init
     (add-hook 'vterm-mode-hook #'sd/vterm-hook)
