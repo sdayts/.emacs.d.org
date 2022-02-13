@@ -2437,6 +2437,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 ** sh-script
 #+BEGIN_SRC emacs-lisp
   (use-package sh-script
+    :bind( :map sh-mode-map
+           ("<return>" . sd/newline))
+
     :config
     ;; unbind c++-mode-map keys which interfer with global mappings
     (unbind-key "C-c C-c" sh-mode-map)
