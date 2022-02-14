@@ -1483,6 +1483,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
     (add-hook 'doom-modeline-mode-hook 'setup-custom-doom-modeline))
 #+END_SRC
+** elisp-mode
+#+begin_src elisp
+   (use-package elisp-mode
+     :bind( :map lisp-interaction-mode-map
+            ("<return>" . sd/newline)))
+#+end_src
 ** ediff
 #+BEGIN_SRC emacs-lisp
   ;; Check for org mode and existence of buffer
@@ -1757,9 +1763,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** help-mode
 #+begin_src emacs-lisp
-   (use-package help-mode
-     :bind( :map help-mode-map
-            ("<return>" . sd/newline)))
+    (use-package help-mode
+      :bind( :map help-mode-map
+             ("<return>" . sd/newline)))
 #+end_src
 ** helpful
 #+BEGIN_SRC emacs-lisp
