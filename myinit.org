@@ -1986,8 +1986,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** json-mode
 #+BEGIN_SRC emacs-lisp
-(use-package json-mode
-    :ensure t)
+  (use-package json-mode
+    :ensure
+    :bind ( :map json-mode-map
+            ("<return>" . sd/newline)))
+
 #+END_SRC
 ** key-chord
 #+BEGIN_SRC emacs-lisp
@@ -2257,7 +2260,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
            (:map org-mode-map
                  (("C-c n i"  . org-roam-node-insert)
                   ("C-c n t"  . org-roam-tag-add)
-                  ("<f9>"     . org-roam-tag-add)
+                  ("C-<f9>"     . org-roam-tag-add)
                   ("C-c n a"  . org-roam-alias-add)
                   ("<return>" . sd/newline)))))
 #+end_src
@@ -2884,8 +2887,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
       (use-package whole-line-or-region
         :ensure t
-        :bind (("C-w" . whole-line-or-region-kill-region)
-               ("C-c c" . sd/whole-line-or-region-kill-ring-save))
+        :bind (("C-w" . whole-line-or-region-kill-region))
         :config)
 #+END_SRC
 ** wrap-region
