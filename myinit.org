@@ -1755,6 +1755,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   ;;  :bind      ("M-o" . helm-projectile)
     :after     (projectile))
 #+END_SRC
+** help-mode
+#+begin_src emacs-lisp
+  (use-package help
+    :bind
+    (("<return>" . sd/newline)))
+#+end_src
 ** helpful
 #+BEGIN_SRC emacs-lisp
   (use-package helpful
@@ -2087,7 +2093,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
             ("C-x m l" . magit-log-all)
             :map magit-mode-map
             ;; instead of burying the buffer, kill it
-            ("q" . sd/magit-kill-current-buffer))
+            ("q" . sd/magit-kill-current-buffer)
+            :map magit-diff-mode-map
+            ("<return>"   . sd/newline)
+            ("C-<return>" . magit-diff-visit-file))
     :config
     ;; start off with cursor on Unstaged section
     (setq magit-status-initial-section '(2))
