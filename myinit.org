@@ -1757,9 +1757,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** help-mode
 #+begin_src emacs-lisp
-  (use-package help
-    :bind
-    (("<return>" . sd/newline)))
+   (use-package help-mode
+     :bind( :map help-mode-map
+            ("<return>" . sd/newline)))
 #+end_src
 ** helpful
 #+BEGIN_SRC emacs-lisp
