@@ -2375,10 +2375,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** rectangle-mark-mode
 #+BEGIN_SRC emacs-lisp
-    (use-package rect
-      :bind(("C-M-<down>" . rectangle-mark-mode)
-            :map rectangle-mark-mode-map
-            ("C-w" . kill-rectangle)))
+  (use-package rect
+    :bind(("C-M-<down>" . rectangle-mark-mode)
+          :map rectangle-mark-mode-map
+          ("C-w" . kill-rectangle)
+          ("<return>" . sd/newline)))
 #+END_SRC
 ** rotate
 #+BEGIN_SRC emacs-lisp
