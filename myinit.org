@@ -3010,26 +3010,6 @@ setq gc-cons-threshold 600000000)
 (setq lsp-prefer-capf t)
 (setq lsp-idle-delay 0.500)
 (setq lsp-print-performance t)
-** tab-bar
-prevents tab-bar gui from showing up
-useful for simulating tmux
-(setq tab-bar-show nil)
-
-(bind-key (kbd "<return>") #'sd/newline text-mode-map)
-
-
-
-(defun sd/newline (&optional arg interactive)
-  "When region is selected, copy. If not do the usual newline."
-  (interactive)
-  (if (use-region-p)
-      (sd/whole-line-or-region-kill-ring-save)
-    (call-interactively 'newline)))
-
-
-
-(global-set-key (kbd "<return>") 'newline)
-
 * Tips
 #+BEGIN_SRC emacs-lisp
 (setq sd-tips
