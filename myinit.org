@@ -1445,9 +1445,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** docker
 #+BEGIN_SRC emacs-lisp
-(use-package docker
-  :ensure t
-  :bind ("C-c d" . docker))
+  (use-package docker
+    :ensure t
+    :disabled
+    :bind ("C-c d" . docker))
 #+END_SRC
 ** doom-modeline
 #+BEGIN_SRC emacs-lisp
@@ -1483,11 +1484,20 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
     (add-hook 'doom-modeline-mode-hook 'setup-custom-doom-modeline))
 #+END_SRC
+** dtache
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-c d") dtache-action-map)
+
+  (use-package dtache
+    :ensure t
+    :hook (after-init . dtache-setup)
+    :bind (([remap async-shell-command] . dtache-shell-command)))
+#+end_src
 ** elisp-mode
 #+begin_src elisp
-   (use-package elisp-mode
-     :bind( :map lisp-interaction-mode-map
-            ("<return>" . sd/newline)))
+  (use-package elisp-mode
+    :bind( :map lisp-mode-shared-map
+           ("<return>" . sd/newline)))
 #+end_src
 ** ediff
 #+BEGIN_SRC emacs-lisp
