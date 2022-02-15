@@ -1495,6 +1495,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :hook (after-init . dtache-setup)
     :bind (([remap async-shell-command] . dtache-shell-command))
     :config
+    (define-key dtache-action-map "o" #'dtache-open-session)
     (global-set-key (kbd "C-c d") dtache-action-map))
 #+end_src
 ** elisp-mode
