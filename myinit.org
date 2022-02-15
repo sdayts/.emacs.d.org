@@ -1763,9 +1763,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** help-mode
 #+begin_src emacs-lisp
-    (use-package help-mode
-      :bind( :map help-mode-map
-             ("<return>" . sd/newline)))
+  (use-package help-mode
+    :bind( :map help-mode-map
+           ("<return>" . sd/newline)
+           ("C-<return>" . push-button)))
 #+end_src
 ** helpful
 #+BEGIN_SRC emacs-lisp
@@ -2101,6 +2102,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
             ;; instead of burying the buffer, kill it
             ("q" . sd/magit-kill-current-buffer)
             :map magit-diff-mode-map
+            ("<return>"   . sd/newline)
+            ("C-<return>" . magit-diff-visit-file)
+            :map magit-status-mode-map
             ("<return>"   . sd/newline)
             ("C-<return>" . magit-diff-visit-file))
     :config
