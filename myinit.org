@@ -7,7 +7,6 @@ https://github.com/jimeh/build-emacs-for-macos/blob/master/README.md
 brew install findutils
 brew install coreutils
 brew install/reinstall ccls
-brew install dbus dbus-glib
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 * Global settings
 #+BEGIN_SRC emacs-lisp
@@ -899,6 +898,13 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
      :ensure t
      :config (key-chord-mode 1))
  #+END_SRC
+** alert
+#+begin_src emacs-lisp
+  (use-package alert
+    :ensure t
+    :config
+    (setq alert-default-style 'notifier))
+#+end_src
 ** ace-jump-mode
 #+BEGIN_SRC emacs-lisp
   ;; might want to consider switching to ivyy
@@ -1490,11 +1496,24 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** dtache
 #+begin_src emacs-lisp
+  (defun sd/dtache-state-transition-alert-notification (session)
+    "Send an `alert' notification when SESSION becomes inactive."
+    (let ((status (car (dtache--session-status session)))
+          (host (car (dtache--session-host session))))
+      (alert (dtache--session-command session)
+       :title (pcase status
+                ('success (format "Dtache finished [%s]" host))
+                ('failure (format "Dtache failed [%s]" host)))
+       :severity (pcase status
+                  ('success 'moderate)
+                  ('failure 'high)))))
+
   (use-package dtache
     :ensure t
     :hook (after-init . dtache-setup)
     :bind (([remap async-shell-command] . dtache-shell-command))
     :config
+    (setq dtache-notification-function #'sd/dtache-state-transition-alert-notification)
     (define-key dtache-action-map "o" #'dtache-open-session)
     (global-set-key (kbd "C-c d") dtache-action-map))
 #+end_src
