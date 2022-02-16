@@ -1810,7 +1810,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :bind
     (("C-h v" . helpful-variable)
      ("C-h k" . helpful-key)
-     ("C-h f" . helpful-function)))
+     ("C-h f" . helpful-function)
+     :map helpful-mode-map
+     ("<return>" . sd/newline)))
 #+END_SRC
 ** hilight-indent-guides
 #+BEGIN_SRC emacs-lisp
