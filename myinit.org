@@ -2299,6 +2299,13 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** org-roam
 #+begin_src emacs-lisp
+  (defun sd/org-return (&optional indent arg interactive)
+    "When region is selected, copy. If not org-return."
+    (interactive)
+    (if (use-region-p)
+        (sd/whole-line-or-region-kill-ring-save)
+      (org-return indent arg interactive)))
+
   (use-package org-roam
     :ensure t
     :after org
@@ -2317,7 +2324,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
                   ("C-c n t"  . org-roam-tag-add)
                   ("C-<f9>"     . org-roam-tag-add)
                   ("C-c n a"  . org-roam-alias-add)
-                  ("<return>" . sd/newline)))))
+                  ("<return>" . sd/org-return)))))
 #+end_src
 ** package
 #+BEGIN_SRC emacs-lisp
