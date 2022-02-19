@@ -1521,6 +1521,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   ^^^^^^^^-------------------------------
   _o_: Open            _s_: Shell
   _a_: Attach
+  _t_: Tail
   _v_: View
   _d_: Detach
   _r_: Rerun
@@ -1536,6 +1537,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     ("D" dtache-delete-session)
     ("s" dtache-shell-command)
     ("v" dtache-view-session)
+    ("t" dtache-tail-session)
     ("q" nil "quit"))
 
   (use-package dtache
@@ -1876,9 +1878,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   ;; NOTE: required hydra and posframe
   (use-package hydra-posframe
     :load-path "~/.emacs.d/hydra-posframe"
-    :init
-    (set-face-background 'hydra-posframe-face "black")
     :config
+    (set-face-background 'hydra-posframe-face "black")
     (hydra-posframe-enable))
 #+end_src
 ** ibuffer
