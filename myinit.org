@@ -7,6 +7,7 @@ https://github.com/jimeh/build-emacs-for-macos/blob/master/README.md
 brew install findutils
 brew install coreutils
 brew install/reinstall ccls
+cd ~/.emacs.d;git clone https://github.com/Ladicle/hydra-posframe.git
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 * Global settings
 #+BEGIN_SRC emacs-lisp
@@ -1501,12 +1502,41 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (let ((status (car (dtache--session-status session)))
           (host (car (dtache--session-host session))))
       (alert (dtache--session-command session)
-       :title (pcase status
-                ('success (format "Dtache finished [%s]" host))
-                ('failure (format "Dtache failed [%s]" host)))
-       :severity (pcase status
-                  ('success 'moderate)
-                  ('failure 'high)))))
+             :title (pcase status
+                      ('success (format "Dtache finished [%s]" host))
+                      ('failure (format "Dtache failed [%s]" host)))
+             :severity (pcase status
+                         ('success 'moderate)
+                         ('failure 'high)))))
+
+  (defun sd/dtache-start-lsyncd()
+    "Start lsyncd session"
+    (interactive)
+    (dtache-shell-command "sudo /usr/local/bin/lsyncd -nodaemon ~/lsyncd/settings"))
+
+  (defhydra hydra-dtache-menu (:color pink
+                                      :hint nil)
+    "
+  ^Dtache Session^     ^Command^
+  ^^^^^^^^-------------------------------
+  _o_: Open            _s_: Shell
+  _a_: Attach
+  _v_: View
+  _d_: Detach
+  _r_: Rerun
+  _K_: Kill
+  _D_: Delete
+  ^ ^
+  "
+    ("o" dtache-open-session)
+    ("a" dtache-attach-session)
+    ("d" dtache-detach-session)
+    ("r" dtache-rerun-session)
+    ("K" dtache-kill-session)
+    ("D" dtache-delete-session)
+    ("s" dtache-shell-command)
+    ("v" dtache-view-session)
+    ("q" nil "quit"))
 
   (use-package dtache
     :ensure t
@@ -1515,7 +1545,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :config
     (setq dtache-notification-function #'sd/dtache-state-transition-alert-notification)
     (define-key dtache-action-map "o" #'dtache-open-session)
-    (global-set-key (kbd "C-c d") dtache-action-map))
+    (global-set-key (kbd "C-c d") 'hydra-dtache-menu/body))
 #+end_src
 ** elisp-mode
 #+begin_src elisp
@@ -1841,6 +1871,16 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :ensure t
     :config)
 #+END_SRC
+** hydra-posframe
+#+begin_src emacs-lisp
+  ;; NOTE: required hydra and posframe
+  (use-package hydra-posframe
+    :load-path "~/.emacs.d/hydra-posframe"
+    :init
+    (set-face-background 'hydra-posframe-face "black")
+    :config
+    (hydra-posframe-enable))
+#+end_src
 ** ibuffer
 #+BEGIN_SRC emacs-lisp
   (use-package ibuffer
