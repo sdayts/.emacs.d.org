@@ -1979,12 +1979,21 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   (add-hook 'minibuffer-setup-hook #'sd/counsel-minimum-height)
 
+  (defun sd/ivy-return ()
+    "When region is selected, copy. If not ivy-occur-press-and-switch."
+    (interactive)
+    (if (use-region-p)
+        (sd/whole-line-or-region-kill-ring-save)
+      (ivy-occur-press-and-switch)))
+
   (use-package ivy
     :ensure t
     :diminish ivy-mode
     :bind(("<f10>" . ivy-resume)
           :map ivy-minibuffer-map
-          ("M-SPC" . ivy-avy))
+          ("M-SPC" . ivy-avy)
+          :map ivy-occur-grep-mode-map
+          ("<return>" . sd/ivy-return))
     :init
     :config
     (setq ivy-use-selectable-prompt t)
