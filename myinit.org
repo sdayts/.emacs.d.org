@@ -1679,8 +1679,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** fortran
 #+BEGIN_SRC emacs-lisp
-  ;; dictionary installed via:
-  ;; brew install aspell
   (use-package fortran
     :bind( :map fortran-mode-map
            ("<return>" . sd/newline)))
