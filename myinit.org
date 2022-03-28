@@ -3,6 +3,8 @@
 * Prerequisites
 ** Build system
 https://github.com/jimeh/build-emacs-for-macos/blob/master/README.md
+Example:
+./build-emacs-for-macos --native-comp --no-titlebar emacs-28.0.91
 ** System packages/settings
 brew install findutils
 brew install coreutils
@@ -13,6 +15,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+BEGIN_SRC emacs-lisp
   ;; native comp
   (setq comp-speed 2)
+
+;  (setenv "LIBRARY_PATH" "/usr/local/Cellar/gcc/11.2.0_3/lib/gcc/11")
 
   ;; set the default font
   (when (member "DejaVu Sans Mono" (font-family-list))
