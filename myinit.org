@@ -2226,6 +2226,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (use-package make-mode
     :defer t
     :init
+    :bind( :map makefile-mode-map
+           ("<return>" . sd/newline))
     :config
     (unbind-key "C-M-i" makefile-mode-map))
 #+END_SRC
