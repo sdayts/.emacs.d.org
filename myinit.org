@@ -5,6 +5,9 @@
 https://github.com/jimeh/build-emacs-for-macos/blob/master/README.md
 Example:
 ./build-emacs-for-macos --native-comp --no-titlebar emacs-28.0.91
+
+TODO: look into:
+brew install --HEAD --with-native-comp --with-rsvg --with-metal
 ** System packages/settings
 brew install findutils
 brew install coreutils
