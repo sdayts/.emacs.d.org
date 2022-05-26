@@ -316,6 +316,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (global-unset-key (kbd "C-x K"))
   (global-set-key (kbd "C-x K") 'tab-bar-close-tab)
 
+  (global-unset-key (kbd "<f12>"))
+  (global-set-key (kbd "<f12>") 'sd/newline)
+
   ;; remove C-j/C-j from all prog modes
   (add-hook 'prog-mode-hook
             (function (lambda ()
@@ -2745,7 +2748,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+BEGIN_SRC emacs-lisp
   (use-package transpose-frame
     :ensure t
-    :bind("<f12>" . flop-frame)
     :config)
 #+END_SRC
 ** try
