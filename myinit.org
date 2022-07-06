@@ -1304,6 +1304,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :config
     (company-posframe-mode 1))
 #+END_SRC
+** conf-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package conf-mode
+    :bind( :map conf-mode-map
+           ("<return>" . sd/newline)))
+#+END_SRC
 ** counsel
 #+BEGIN_SRC emacs-lisp
   (use-package counsel
