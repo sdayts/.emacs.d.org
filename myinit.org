@@ -1471,6 +1471,15 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :disabled
     :bind ("C-c d" . docker))
 #+END_SRC
+** dockerfile-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package dockerfile-mode
+    :ensure t
+    :mode
+    ("Dockerfile\\'" . dockerfile-mode)
+    :bind( :map dockerfile-mode-map
+           ("<return>" . sd/newline)))
+#+END_SRC
 ** doom-modeline
 #+BEGIN_SRC emacs-lisp
   (set-face-attribute 'mode-line nil
