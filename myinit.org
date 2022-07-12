@@ -1308,7 +1308,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+BEGIN_SRC emacs-lisp
   (use-package conf-mode
     :bind( :map conf-mode-map
-           ("<return>" . sd/newline)))
+           ("<return>" . sd/newline))
+    :config
+    (add-to-list 'auto-mode-alist '("\\.pkgcfg\\'" . conf-mode)))
 #+END_SRC
 ** counsel
 #+BEGIN_SRC emacs-lisp
