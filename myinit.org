@@ -1310,8 +1310,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :bind( :map conf-mode-map
            ("<return>" . sd/newline))
     :config
-    (add-to-list 'auto-mode-alist '("\\.pkgcfg\\'" . conf-mode)
-    (add-to-list 'auto-mode-alist '("\\.sql\\'" . conf-mode))))
+    (add-to-list 'auto-mode-alist '("\\.pkgcfg\\'" . conf-mode))
+    (add-to-list 'auto-mode-alist '("\\.sql\\'" . conf-mode)))
 #+END_SRC
 ** counsel
 #+BEGIN_SRC emacs-lisp
