@@ -260,7 +260,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   ;; leave one space around the point
   (global-unset-key (kbd "C-M-d"))
-  (global-set-key (kbd "C-M-d") 'just-one-space)
+  (global-set-key (kbd "C-M-d") (lambda () (interactive) (just-one-space 0)))
 
   ;; move to first non-blank character of the line
   (global-unset-key (kbd "C-b"))
