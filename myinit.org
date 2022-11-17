@@ -25,10 +25,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (when (member "DejaVu Sans Mono" (font-family-list))
     (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
 
-  (if (file-readable-p "/usr/local/share/emacs/site-lisp/doxymacs")
+  (if (file-readable-p "~/share/emacs/site-lisp")
       (progn
         ;; load doxymacs installed via: brew install doxymacs
-        (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/doxymacs/")
+        (add-to-list 'load-path "~/share/emacs/site-lisp")
         ;; load doxymacs
         (require 'doxymacs)))
 
