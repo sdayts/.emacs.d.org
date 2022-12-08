@@ -2,7 +2,8 @@
 # name: try
 # key: try
 # --
-try {
+try
+{
     $0
 } catch (${1:exception})
 {
