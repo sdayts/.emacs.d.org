@@ -5,6 +5,7 @@
 https://github.com/jimeh/build-emacs-for-macos/blob/master/README.md
 Example:
 ./build-emacs-for-macos --native-comp --no-titlebar emacs-28.0.91
+./build-emacs-for-macos --native-comp --no-titlebar emacs-28.2
 
 TODO: look into:
 brew install --HEAD --with-native-comp --with-rsvg --with-metal
@@ -21,7 +22,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   ;; native comp
   (setq comp-speed 2)
 
-  (setenv "LIBRARY_PATH" "/usr/local/opt/gcc/lib/gcc/11:/usr/local/opt/libgccjit/lib/gcc/11:/usr/local/opt/gcc/lib/gcc/11/gcc/x86_64-apple-darwin20/11")
+  (setenv "LIBRARY_PATH" "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib:/usr/local/opt/gcc/lib/gcc/11:/usr/local/opt/libgccjit/lib/gcc/11:/usr/local/opt/gcc/lib/gcc/11/gcc/x86_64-apple-darwin20/11")
 
   ;; set the default font
   (when (member "DejaVu Sans Mono" (font-family-list))
