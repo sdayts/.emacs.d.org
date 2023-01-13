@@ -13,6 +13,7 @@ brew install findutils
 brew install coreutils
 brew install trash
 brew install/reinstall ccls
+ext_proxy brew install aspell
 cd ~/.emacs.d;git clone https://github.com/Ladicle/hydra-posframe.git
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 * Global settings
