@@ -2114,7 +2114,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (set-face-background 'lsp-face-highlight-read "blue")
     (set-face-background 'lsp-face-highlight-write "blue")
     (setq read-process-output-max (* 1024 1024)) ;; performance optimization
-    (setq lsp-idle-delay 0.500)
+    (setq lsp-idle-delay 0.1)
     (setq lsp-lens-enable nil)
     (setq lsp-headerline-breadcrumb-enable nil)
     (setq gc-cons-threshold 100000000)
