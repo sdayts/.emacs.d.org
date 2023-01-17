@@ -2349,6 +2349,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (setq org-roam-completion-everywhere t)
     (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
     (setq org-roam-directory (file-truename "~/notes/org-roam"))
+    (setq org-roam-node-display-template
+          (concat "${title:*} "
+                  (propertize "${tags:10}" 'face 'org-tag)))
     :config
     (org-roam-setup)
     (org-roam-db-autosync-mode)
