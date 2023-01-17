@@ -2351,7 +2351,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (setq org-roam-directory (file-truename "~/notes/org-roam"))
     (setq org-roam-node-display-template
           (concat "${title:*} "
-                  (propertize "${tags:10}" 'face 'org-tag)))
+                  (propertize "${tags:10}" 'face 'org-tag))) ; include tags in searches
     :config
     (org-roam-setup)
     (org-roam-db-autosync-mode)
