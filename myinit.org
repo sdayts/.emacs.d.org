@@ -2737,7 +2737,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (unbind-key "C-x r u" undo-tree-map)
     (unbind-key "C-x r U" undo-tree-map)
     (unbind-key "C-x r" undo-tree-map)
-    (unbind-key "C-?" undo-tree-map))
+    (unbind-key "C-?" undo-tree-map)
+    :config
+    (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo"))))
 #+END_SRC
 ** use-package-chors
 #+BEGIN_SRC emacs-lisp
