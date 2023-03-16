@@ -1512,6 +1512,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (setq doom-modeline-height 10)
     (setq column-number-mode t)
     (setq doom-modeline-vcs-max-length 20)
+    (setq doom-modeline-buffer-file-name-style 'truncate-nil)
     (set-face-foreground 'doom-modeline-buffer-file "green")
     (set-face-foreground 'doom-modeline-buffer-modified "red")
     (set-face-foreground 'doom-modeline-buffer-major-mode "yellow")
