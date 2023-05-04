@@ -1314,6 +1314,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
              ("\\.sql\\'"        . conf-mode)
              ("\\.gitignore\\'"  . conf-mode)
              ("\\Jenkinsfile\\'" . conf-mode)
+             ("\\.rc\\'"         . conf-mode)
+             ("control\\'"       . conf-mode)
              ("\\.cap\\'"        . conf-mode)
              ("\\.defs\\'"       . conf-mode)
              ("\\.dep\\'"        . conf-mode)
