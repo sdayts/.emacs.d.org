@@ -1309,12 +1309,18 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** conf-mode
 #+BEGIN_SRC emacs-lisp
-  (use-package conf-mode
-    :bind( :map conf-mode-map
-           ("<return>" . sd/newline))
-    :config
-    (add-to-list 'auto-mode-alist '("\\.pkgcfg\\'" . conf-mode))
-    (add-to-list 'auto-mode-alist '("\\.sql\\'" . conf-mode)))
+    (use-package conf-mode
+      :mode (("\\.pkgcfg\\'"     . conf-mode)
+             ("\\.sql\\'"        . conf-mode)
+             ("\\.gitignore\\'"  . conf-mode)
+             ("\\Jenkinsfile\\'" . conf-mode)
+             ("\\.cap\\'"        . conf-mode)
+             ("\\.defs\\'"       . conf-mode)
+             ("\\.dep\\'"        . conf-mode)
+             ("\\.opts\\'"       . conf-mode)
+             ("\\.pub\\'"        . conf-mode))
+      :bind( :map conf-mode-map
+             ("<return>" . sd/newline)))
 #+END_SRC
 ** counsel
 #+BEGIN_SRC emacs-lisp
