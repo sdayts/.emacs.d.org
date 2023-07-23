@@ -211,6 +211,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   ;; open org initialization file
   (global-set-key (kbd "C-<f9>") 'sd/open-org-init)
 
+  ;; open bookmarks
+  (global-set-key (kbd "<f8>") 'sd/open-bookmarks)
+
   ;; use ff-find-related-file as a poor substitute for rtags index db, but that
   ;; is needed right now
   (global-unset-key (kbd "C-M-."))
@@ -488,6 +491,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (interactive)
     "Open initialization file and move to the end of the buffer."
     (sd/open-file-move-to-end "~/.emacs.d/myinit.org"))
+
+  (defun sd/open-bookmarks()
+    (interactive)
+    "Open initialization file and move to the end of the buffer."
+    (find-file "~/notes/bookmarks.org"))
 
                                   ;;;###autoload
   (defun sd/open-dev-notes()
@@ -2504,7 +2512,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
            ("M-<down>" . rotate-frame-clockwise) )
     :ensure t)
 #+END_SRC
-
 ** savehist
 #+BEGIN_SRC emacs-lisp
   (use-package savehist
