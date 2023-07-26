@@ -23,8 +23,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   ;; native comp
   (setq comp-speed 2)
 
-  (setenv "LIBRARY_PATH" "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib:/usr/local/opt/gcc/lib/gcc/11:/usr/local/opt/libgccjit/lib/gcc/11:/usr/local/opt/gcc/lib/gcc/11/gcc/x86_64-apple-darwin20/11")
-
   ;; set the default font
   (when (member "DejaVu Sans Mono" (font-family-list))
     (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
