@@ -6,6 +6,7 @@ https://github.com/jimeh/build-emacs-for-macos/blob/master/README.md
 Example:
 ./build-emacs-for-macos --native-comp --no-titlebar emacs-28.0.91
 ./build-emacs-for-macos --native-comp --no-titlebar emacs-28.2
+[[https://git.savannah.gnu.org/cgit/emacs.git][Emacs branches]]
 
 TODO: look into:
 brew install --HEAD --with-native-comp --with-rsvg --with-metal
