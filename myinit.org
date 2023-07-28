@@ -2327,7 +2327,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
      'org-babel-load-languages
      '((emacs-lisp . nil)
        (C . t)))
-
+    (setq org-imenu-depth 10)
     (unbind-key "M-h" org-mode-map)
     (unbind-key "C-M-i" org-mode-map)
 
