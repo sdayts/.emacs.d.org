@@ -2311,7 +2311,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** org
 #+BEGIN_SRC emacs-lisp
-
   (defun sd/org-goto-result()
     (interactive)
     (org-babel-goto-named-result ""))
@@ -2343,7 +2342,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     ;; (setq org-log-done 'note)
     (setq org-todo-keyword-faces
           '(("IN-PROGRESS" . "orange1")))
-    )
+    ;; this fixes an issue with [[https://github.com/abo-abo/swiper/issues/3015][org mode overlays]]
+    (setq org-fold-core-style 'overlays))
 #+END_SRC
 ** org-bullets
 #+BEGIN_SRC emacs-lisp
