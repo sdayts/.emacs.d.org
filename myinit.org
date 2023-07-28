@@ -910,7 +910,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (defalias 's   'sort-lines)
   (defalias 'n   'narrow-to-defun)
   (defalias 'w   'widen)
-  (defalias 'ms 'magit-stage)
+  (defalias 'ms 'magit-stage-buffer-file)
 #+END_SRC
 * Modes
  #+BEGIN_SRC emacs-lisp
