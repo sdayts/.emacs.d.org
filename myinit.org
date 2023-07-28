@@ -585,13 +585,15 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     "Go to the beginning of the next defun"
     (interactive)
     (let ((current-prefix-arg -1))
-      (call-interactively 'beginning-of-defun)))
+      (call-interactively 'beginning-of-defun)
+      (beacon-blink)))
 
   (defun sd/begin-of-prev-defun ()
     "Go to the beginning of the prev defun"
     (interactive)
     (let ((current-prefix-arg 1))
-      (call-interactively 'beginning-of-defun)))
+      (call-interactively 'beginning-of-defun)
+      (beacon-blink)))
 
   (defun sd/mark-line (&optional arg)
     (interactive "p")
@@ -998,7 +1000,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (setq beacon-blink-when-focused t)
     (setq beacon-color "cyan")
     (setq beacon-size 100)
-    (setq beacon-blink-duration 0.006))
+    (setq beacon-blink-duration 0.01))
 #+END_SRC
 ** cc-mode
 #+BEGIN_SRC emacs-lisp
