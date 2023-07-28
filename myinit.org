@@ -992,8 +992,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (use-package beacon
     :ensure t
     :bind (("C-l" . beacon-blink))
-    :config
+    :init
     (beacon-mode 1)
+    :config
     (setq beacon-blink-when-focused t)
     (setq beacon-color "cyan")
     (setq beacon-size 100)
