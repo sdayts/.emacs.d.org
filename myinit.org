@@ -6,10 +6,11 @@ https://github.com/jimeh/build-emacs-for-macos/blob/master/README.md
 Example:
 ./build-emacs-for-macos --native-comp --no-titlebar emacs-28.0.91
 ./build-emacs-for-macos --native-comp --no-titlebar emacs-28.2
+./build-emacs-for-macos --native-comp emacs-29.1
 [[https://git.savannah.gnu.org/cgit/emacs.git][Emacs branches]]
 
-TODO: look into alternative method of building emacs
-brew install --force emacs-plus@29 --with-native-comp --with-xwidgets --with-no-titlebar
+Newest way to install emacs:
+brew install emacs-plus@29 --with-native-comp --with-xwidgets --with-imagemagick
 ** System packages/settings
 brew install findutils
 brew install coreutils
@@ -2239,6 +2240,23 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
                 (lambda ()
                   (make-local-variable 'before-save-hook)
                   (remove-hook 'before-save-hook 'whitespace-cleanup t))))
+#+END_SRC
+** markdown-xwidget
+#+BEGIN_SRC emacs-lisp
+  (require 'quelpa-use-package)
+
+  (use-package markdown-xwidget
+    :after markdown-mode
+    :quelpa (markdown-xwidget
+               :fetcher github
+               :repo "cfclrk/markdown-xwidget"
+               :files (:defaults "resources"))
+    :bind (:map markdown-mode-command-map
+                ("x" . markdown-xwidget-preview-mode))
+    :custom
+    (markdown-xwidget-github-theme "light-high-contrast")
+    (markdown-xwidget-mermaid-theme "default")
+    (markdown-xwidget-code-block-theme "default"))
 #+END_SRC
 ** modern-cpp-font-lock
 #+BEGIN_SRC emacs-lisp
