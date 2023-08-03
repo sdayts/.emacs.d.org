@@ -244,9 +244,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   ;; start scrolling when within 3 lines of either top or bottom of the window
   (setq scroll-margin 3)
 
-  ;; conveniently map repeat to F7
+  ;; conveniently map repeat to F7 and M-.
   (global-unset-key (kbd "<f7>"))
   (global-set-key (kbd "<f7>") 'repeat)
+  (global-unset-key (kbd "M-."))
+  (global-set-key (kbd "M-.") 'repeat)
 
   ;; man pages
   (global-unset-key (kbd "C-c m"))
@@ -2131,8 +2133,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
            ("C-x r" . xref-find-references)
            ( "C-."  . xref-find-definitions)
            ("C-,"   . xref-pop-marker-stack)
-           ("C-M-?" . ccls-member-hierarchy)
-           ("M-."   . lsp-find-implementation))
+           ("C-M-?" . ccls-member-hierarchy))
     :config
     (add-to-list 'lsp-file-watch-ignored "[/\\\\]\\.ccls-cache$")
     (add-to-list 'lsp-file-watch-ignored "[/\\\\]\\.lcldev")
