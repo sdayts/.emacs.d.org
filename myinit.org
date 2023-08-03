@@ -78,13 +78,16 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (global-unset-key (kbd "C-M-y"))
   (global-set-key (kbd "C-M-y") 'yank-rectangle)
 
-  ;; Paste the way I am used to
   (global-unset-key (kbd "C-M-j"))
   (global-set-key (kbd "C-M-j") 'sd/smart-join-line)
 
   ;; Copy region to register 1
   (global-unset-key (kbd "M-c"))
   (global-set-key (kbd "M-c") 'sd/copy-word-under-cursor)
+
+  ;; Copy region to register 1
+  (global-unset-key (kbd "M-w"))
+  (global-set-key (kbd "M-w") 'sd/copy-line)
 
 ;;  ;; Paste from register 1
 ;;  (global-unset-key (kbd "M-v"))
@@ -156,7 +159,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   ;; Duplicate line
   (global-unset-key (kbd "C-c C-v"))
-  (global-set-key (kbd "C-c C-v") 'sd/duplicate-line-or-region)
+  (global-set-key (kbd "C-c C-v") 'duplicate-dwim)
 
   ;; Split current line
   (global-unset-key (kbd "C-M-o"))
@@ -683,6 +686,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (set (make-local-variable 'face-remapping-alist)
          '((default :background "black"))))
 
+  (defun sd/copy-line (arg)
+    "Copy lines (as many as prefix argument) in the kill ring"
+    (interactive "p")
+    (kill-ring-save (line-beginning-position)
+                    (line-beginning-position (+ 1 arg)))
+    (message "%d line%s copied" arg (if (= 1 arg) "" "s")))
 
   (defun xah-copy-to-register-1 ()
     "Copy current line or text selection to register 1.
@@ -2258,6 +2267,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (markdown-xwidget-mermaid-theme "default")
     (markdown-xwidget-code-block-theme "default"))
 #+END_SRC
+** misc
+#+BEGIN_SRC emacs-lisp
+  (use-package misc
+    :init
+    (setq duplicate-line-final-position -1))
+#+END_SRC
 ** modern-cpp-font-lock
 #+BEGIN_SRC emacs-lisp
   (use-package modern-cpp-font-lock
@@ -2499,12 +2514,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (use-package python
       :bind( :map python-mode-map
                   ("C-c C-c" . sd/python-shell-send-buffer-switch-focus)
-                  ("C-c C-v" . sd/duplicate-line-or-region)
+                  ("C-c C-v" . duplicate-dwim)
                   ("<return>" . sd/newline))
       :init
       (add-hook 'python-mode-hook #'lsp)
       (add-hook 'python-mode-hook #'flycheck-mode))
-
 #+END_SRC
 ** recentf
 #+BEGIN_SRC emacs-lisp
