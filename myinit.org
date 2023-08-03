@@ -1014,6 +1014,13 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (setq beacon-size 100)
     (setq beacon-blink-duration 0.01))
 #+END_SRC
+** calc
+#+begin_src emacs-lisp
+  (use-package calc
+    :config
+    (setq calc-window-height 25)
+    (unbind-key "M-k" calc-mode-map))
+#+end_src
 ** cc-mode
 #+BEGIN_SRC emacs-lisp
   ;; from https://github.com/philippe-grenet/exordium/blob/master/modules/init-bde-style.el
