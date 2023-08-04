@@ -2715,6 +2715,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (sd/vterm-b-window nil)
     (windmove-down))
 
+  (global-unset-key (kbd "C-x b"))
+  (global-set-key (kbd "C-x b") 'tab-bar-new-tab)
+
   (global-unset-key (kbd "C-x l"))
   (global-set-key (kbd "C-x l") 'sd/new-tabbar-linux)
 
