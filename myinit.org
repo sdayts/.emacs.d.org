@@ -686,7 +686,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   (defun sd/minibuffer-setup ()
     (set (make-local-variable 'face-remapping-alist)
-         '((default :background "black"))))
+         '((default :background "black" :height 1.5))))
 
   (defun sd/copy-line (arg)
     "Copy lines (as many as prefix argument) in the kill ring"
