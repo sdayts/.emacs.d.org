@@ -330,6 +330,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (global-unset-key (kbd "<f12>"))
   (global-set-key (kbd "<f12>") 'sd/newline)
 
+  (global-unset-key (kbd "M-SPC"))
+  (global-set-key (kbd "M-SPC") 'sd/comment-line-or-region)
+
   ;; remove C-j/C-j from all prog modes
   (add-hook 'prog-mode-hook
             (function (lambda ()
@@ -2807,7 +2810,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+BEGIN_SRC emacs-lisp
   (use-package use-package-chords
     :ensure t
-    :chords (("vv" . sd/comment-line-or-region))
+    :chords
     :config
     (key-chord-mode 1))
 #+END_SRC
