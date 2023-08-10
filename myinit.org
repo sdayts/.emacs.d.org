@@ -2120,12 +2120,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+BEGIN_SRC emacs-lisp
   (use-package key-chord
     :ensure t
-    :config)
-
-  ;; turn on the key-chord mode
-  (key-chord-mode 1)
-
-  (key-chord-define-global "KK" 'kill-current-buffer)
+    :config
+    ;; turn on the key-chord mode
+    (key-chord-mode 1)
+    (key-chord-define-global "KK" 'kill-current-buffer))
 #+END_SRC
 ** lisp-mode
 #+BEGIN_SRC emacs-lisp
