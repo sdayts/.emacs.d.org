@@ -2273,7 +2273,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :bind (:map markdown-mode-command-map
                 ("x" . markdown-xwidget-preview-mode))
     :custom
-    (markdown-xwidget-github-theme "light-high-contrast")
+    (markdown-xwidget-github-theme "dark-dimmed")
     (markdown-xwidget-mermaid-theme "default")
     (markdown-xwidget-code-block-theme "default"))
 #+END_SRC
