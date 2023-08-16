@@ -950,7 +950,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (use-package ace-jump-mode
     :disabled
     :ensure t
-    :bind (("M-SPC" . ace-jump-word-mode ))
+    :bind
     :init
     ;; disable gray background
     (setq ace-jump-mode-gray-background nil)
