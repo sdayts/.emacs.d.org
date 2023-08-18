@@ -2606,6 +2606,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 ** shell-pop
 #+BEGIN_SRC emacs-lisp
   (use-package shell-pop
+    :disabled
     :ensure t
     :chords (("PP" . shell-pop))
     :config
@@ -2914,6 +2915,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (use-package vterm
     :ensure t
     :after org
+    :chords (("PP" . vterm))
     :bind( :map vterm-mode-map
            ("<f8>"    . sd/sendVTermAttribute)
            ("C-M-z"   . zoom-window-zoom)
@@ -3006,6 +3008,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
             ("\\*Calendar*"
              (display-buffer-in-side-window)
              (side . bottom)
+             (slot . 2))
+            ("\\*vterm*"
+             (display-buffer-in-side-window)
+             (side . bottom)
+             (window-height . 0.6)
              (slot . 2))
             ;; left side window
             ("\\*Help.*"
