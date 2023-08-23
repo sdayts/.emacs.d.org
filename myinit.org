@@ -16,7 +16,8 @@ brew install findutils
 brew install coreutils
 brew install trash
 brew install/reinstall ccls
-ext_proxy brew install aspell
+brew install aspell
+brew install ripgrep
 cd ~/.emacs.d;git clone https://github.com/Ladicle/hydra-posframe.git
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 * Global settings
@@ -233,7 +234,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (global-unset-key (kbd "C-M-i"))
   ;; counsel-project-ag does not seem to work anymore, switching to native counsel command
   ;; (global-set-key (kbd "C-M-i") 'counsel-projectile-ag)
-  (global-set-key (kbd "C-M-i") 'counsel-git-grep)
+  (global-set-key (kbd "C-M-i") 'sd/vc-grep)
 
   ;; activate which-function mode
   (which-function-mode 1)
@@ -787,6 +788,15 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
             (insert " "))
         (insert
          (replace-regexp-in-string "[^\]\[(){}\'\.]+" new str)))))
+
+  (defun sd/vc-grep ()
+    "Use counsel-rg for non-git repositories.
+     Use counsel-git-grep on git repositories"
+    (interactive)
+    (if (memq (vc-backend (buffer-file-name)) '(SVN CVS RCS SCCS))
+        (counsel-rg)
+      (counsel-git-grep)))
+
 #+END_SRC
 * Highlighting related customizations
 #+BEGIN_SRC emacs-lisp
