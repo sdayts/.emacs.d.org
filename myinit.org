@@ -1408,7 +1408,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (setq ivy-initial-inputs-alist nil)
     (setq counsel-git-cmd "rg --files")
     (setq counsel-rg-base-command
-          "rg -i -M 120 --no-heading --line-number --color never %s .")
+          "rg -i -M 240 --no-heading --line-number --color never %s .")
     ;; don't use find for file occur
     (setq counsel-find-file-occur-use-find nil)
     (setq counsel-find-file-occur-cmd
