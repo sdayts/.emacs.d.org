@@ -794,7 +794,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
      Use counsel-git-grep on git repositories"
     (interactive)
     (if (memq (vc-backend (buffer-file-name)) '(SVN CVS RCS SCCS))
-        (counsel-rg)
+        (counsel-projectile-rg)
       (counsel-git-grep)))
 
 #+END_SRC
