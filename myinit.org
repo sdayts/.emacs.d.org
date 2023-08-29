@@ -1202,6 +1202,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
                ;; ("<f1>"  . rtags-display-summary)
                ("M-m"   . counsel-imenu)
                ("<return>" . sd/newline)
+               ( "M-<right>" . sd/comment-line-or-region)
                ;; ("C-M-f" . rtags-find-symbol)
                ;; ("C-M-v" . rtags-find-virtuals-at-point)
                )
