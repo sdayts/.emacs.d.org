@@ -2390,6 +2390,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   (use-package org
     :ensure t
+    :hook (prog-mode . turn-on-orgtbl)
+    :hook (text-mode . turn-on-orgtbl)
     :chords (("RR" . sd/org-goto-result))
     :init
     ;; stop asking about running embedded code
@@ -3025,6 +3027,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
              (side . bottom)
              (window-height . 0.6)
              (slot . 2))
+            ("\\*Edit Formulas\\*"
+             (display-buffer-in-side-window)
+             (window-height . 0.5)
+             (side . bottom)
+             (slot . 1))
             ;; left side window
             ("\\*Help.*"
              (display-buffer-in-side-window)
