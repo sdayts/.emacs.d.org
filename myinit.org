@@ -2391,7 +2391,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (use-package org
     :ensure t
     :hook (prog-mode . turn-on-orgtbl)
-    :hook (text-mode . turn-on-orgtbl)
     :chords (("RR" . sd/org-goto-result))
     :init
     ;; stop asking about running embedded code
