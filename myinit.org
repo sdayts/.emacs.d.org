@@ -1660,6 +1660,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :disabled
     :ensure t)
 #+END_SRC
+** eros
+#+BEGIN_SRC emacs-lisp
+  (use-package eros
+    :ensure t
+    :hook ((emacs-lisp-mode org-mode lisp-interaction-mode) . eros-mode))
+#+END_SRC
 ** esup
 #+BEGIN_SRC emacs-lisp
 (use-package esup
