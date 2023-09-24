@@ -2835,6 +2835,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 ** treesit
 #+BEGIN_SRC emacs-lisp
   (use-package treesit
+    :disabled
     :init
     (setq treesit-language-source-alist
           '((bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
