@@ -1277,6 +1277,13 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
       (interactive)
       (ccls-inheritance-hierarchy t))
 
+    ;; copy of function from ccls package, so that root is correctly determined for c++-ts-mode c-ts-mode modes
+    (defun ccls--suggest-project-root ()
+      (and (memq major-mode '(c-mode c++-mode cuda-mode objc-mode c++-ts-mode c-ts-mode))
+           (when-let (dir (cl-some  #'(lambda (file) (locate-dominating-file default-directory file))
+                                    ccls-root-files))
+             (expand-file-name dir))))
+
     (defalias 'b 'sd/base)
     (defalias 'd 'sd/derived)
 
@@ -1284,7 +1291,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (setq ccls-args '("--log-file=/Users/sdayts/workspaces/ccls-cache/logs/ccls.log"))
     ;;   (setq ccls-cache-dir "/Users/sdayts/workspaces/ccls-cache/.ccls-cache")
     ;;   (setq ccls-extra-init-params '(:completion (:detailedLabel t)))
-    :hook ((c-mode c++-mode objc-mode c++-ts-mode) .
+    :hook ((c-mode c++-mode objc-mode c++-ts-mode c-ts-mode) .
            (lambda () (require 'ccls) (lsp))))
 #+END_SRC
 ** company
@@ -2828,7 +2835,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 ** treesit
 #+BEGIN_SRC emacs-lisp
   (use-package treesit
-    :disabled
     :init
     (setq treesit-language-source-alist
           '((bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
