@@ -2075,7 +2075,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (setq ivy-use-virtual-buffers t)
     ;; remove annoying ^ prefix
     (setq ivy-initial-inputs-alist nil)
-    (set-face-attribute 'ivy-current-match nil :background "black" :foreground "green" :weight 'normal  :box '(:line-width 1 :color "RoyalBlue4"))
+    (set-face-attribute 'ivy-current-match nil :background "RoyalBlue4" :foreground "yellow" :weight 'normal  :box '(:line-width 1 :color "RoyalBlue4"))
     (set-face-attribute 'ivy-minibuffer-match-face-2 nil :background "black" :foreground "yellow"  :weight 'normal)
     (set-face-attribute 'ivy-minibuffer-match-face-3 nil :background "black" :foreground "green"  :weight 'normal)
     (set-face-attribute 'ivy-minibuffer-match-face-4 nil :background "black" :foreground "cyan"  :weight 'normal)
