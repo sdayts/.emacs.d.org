@@ -127,6 +127,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   ;; suppress splash screen
   (setq inhibit-startup-message t)
 
+  ;; don't put any text in the scratch buffer
+  (setq initial-scratch-message nil)
+
   ;; disable scrollbar, menu bar and tool bar
   (scroll-bar-mode -1)
   (menu-bar-mode t)
@@ -797,6 +800,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
         (counsel-projectile-rg)
       (counsel-git-grep)))
 
+  (defun sd/region-to-string (beginning end)
+    (interactive "r")
+    (let* ((selection (buffer-substring-no-properties beginning end)))
+          (delete-region beginning end)
+          (insert (prin1-to-string selection))))
 #+END_SRC
 * Highlighting related customizations
 #+BEGIN_SRC emacs-lisp
@@ -953,7 +961,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+BEGIN_SRC emacs-lisp
   (defalias 'dl  'sd/region-delete-blank-lines)
   (defalias 'a   'align-regexp)
-  (defalias 's   'sort-lines)
+  (defalias 's   'sd/region-to-string)
   (defalias 'n   'narrow-to-defun)
   (defalias 'w   'widen)
   (defalias 'ms 'magit-stage-buffer-file)
