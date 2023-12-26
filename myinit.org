@@ -961,7 +961,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+BEGIN_SRC emacs-lisp
   (defalias 'dl  'sd/region-delete-blank-lines)
   (defalias 'a   'align-regexp)
-  (defalias 's   'sd/region-to-string)
+  (defalias '\"  'sd/region-to-string)
+  (defalias 's   'sort-lines)
   (defalias 'n   'narrow-to-defun)
   (defalias 'w   'widen)
   (defalias 'ms 'magit-stage-buffer-file)
