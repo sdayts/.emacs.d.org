@@ -361,6 +361,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   ;; don't ask to kill a buffer with a running processes
   (setq kill-buffer-query-functions (delq 'process-kill-buffer-query-function kill-buffer-query-functions))
+
+  (global-unset-key [f11])
+  (global-set-key [f11] 'sd/bbg-open)
 #+END_SRC
 
 * Custom functions
@@ -805,6 +808,13 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (let* ((selection (buffer-substring-no-properties beginning end)))
           (delete-region beginning end)
           (insert (prin1-to-string selection))))
+
+  (defun sd/bbg-open()
+    (interactive)
+    (shell-command (format "open \"bbg://screens/%s\""
+                           (buffer-substring (region-beginning) (region-end))))
+    (deactivate-mark))
+
 #+END_SRC
 * Highlighting related customizations
 #+BEGIN_SRC emacs-lisp
