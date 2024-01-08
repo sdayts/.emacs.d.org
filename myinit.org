@@ -337,6 +337,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (global-unset-key (kbd "M-SPC"))
   (global-set-key (kbd "M-SPC") 'sd/comment-line-or-region)
 
+  (global-unset-key (kbd "C-c a"))
+  (global-set-key (kbd "C-c a") 'org-agenda)
+
   ;; remove C-j/C-j from all prog modes
   (add-hook 'prog-mode-hook
             (function (lambda ()
