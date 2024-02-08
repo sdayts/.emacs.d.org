@@ -1038,6 +1038,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
      :ensure t
      :config (key-chord-mode 1))
  #+END_SRC
+** ascii-table
+#+begin_src emacs-lisp
+  (use-package ascii-table
+    :ensure t
+    :config)
+#+end_src
 ** alert
 #+begin_src emacs-lisp
   (use-package alert
