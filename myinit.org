@@ -3131,79 +3131,79 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** window
 #+BEGIN_SRC emacs-lisp
-        (use-package window
-          :chords (("SS" . sd/switch-to-scratch))
-          :bind ( ("M-r" . recenter) )
-          :init
-          (setq display-buffer-alist
-                '(
-                  (".*Flycheck errors.*"
-                   (display-buffer-in-side-window)
-                   (window-height . 0.25)
-                   (side . bottom)
-                   (slot . 0))
-                  ("\\*vc-diff\\*"
-                   (display-buffer-in-side-window)
-                   (window-height . 0.75)
-                   (side . bottom)
-                   (slot . 1))
-                  ("\\*ivy-occur.*"
-                   (display-buffer-in-side-window)
-                   (window-height . 0.5)
-                   (side . bottom)
-                   (slot . 1))
-                  ("\\*Calendar*"
-                   (display-buffer-in-side-window)
-                   (side . bottom)
-                   (slot . 2))
-                  ("\\*vterm*"
-                   (display-buffer-in-side-window)
-                   (side . bottom)
-                   (window-height . 0.6)
-                   (slot . 2))
-                  ("\\*Edit Formulas\\*"
-                   (display-buffer-in-side-window)
-                   (window-height . 0.5)
-                   (side . bottom)
-                   (slot . 1))
-                  ;; left side window
-                  ("\\*Help.*"
-                   (display-buffer-in-direction)
-                   (side . bottom)
-                   (window-height . 0.5)
-                   (slot . -1))
-                  (".*COMMIT_EDITMSG.*"
-                   (display-buffer-reuse-window display-buffer-in-direction)
-                   (direction . bottom)
-                   (dedicated . t)
-                   (window-height . 0.4))
-                  ((derived-mode . magit-status-mode)
-                   (display-buffer-reuse-window display-buffer-in-direction)
-                   (direction . bottom)
-                   (dedicated . t)
-                   (reusable-frames . visible)
-                   (window-height . 0.5))
-                  ((derived-mode . magit-diff-mode)
-                   (display-buffer-reuse-window display-buffer-in-direction)
-                   (direction . bottom)
-                   (dedicated . t)
-                   (reusable-frames . visible)
-                   (window-height . 0.65))
-                  ((derived-mode . magit-log-mode)
-                   (display-buffer-reuse-window display-buffer-in-direction)
-                   (direction . right)
-                   (dedicated . t)
-                   (reusable-frames . visible)
-                   (window-height . 0.5))
-                  ((derived-mode . magit-revision-mode)
-                   (display-buffer-reuse-window display-buffer-in-direction)
-                   (direction . bottom)
-                   (dedicated . t)
-                   (reusable-frames . visible)
-                   (window-height . 0.75))
-                  ))
-          (setq window-combination-resize t)
-          (setq even-window-sizes 'height-only))
+  (use-package window
+    :chords (("SS" . sd/switch-to-scratch))
+    :bind ( ("M-r" . recenter) )
+    :init
+    (setq display-buffer-alist
+          '(
+            (".*Flycheck errors.*"
+             (display-buffer-in-side-window)
+             (window-height . 0.25)
+             (side . bottom)
+             (slot . 0))
+            ("\\*vc-diff\\*"
+             (display-buffer-in-side-window)
+             (window-height . 0.75)
+             (side . bottom)
+             (slot . 1))
+            ("\\*ivy-occur.*"
+             (display-buffer-in-side-window)
+             (window-height . 0.5)
+             (side . bottom)
+             (slot . 1))
+            ("\\*Calendar*"
+             (display-buffer-in-side-window)
+             (side . bottom)
+             (slot . 2))
+            ("\\*vterm*"
+             (display-buffer-in-side-window)
+             (side . bottom)
+             (window-height . 0.6)
+             (slot . 2))
+            ("\\*Edit Formulas\\*"
+             (display-buffer-in-side-window)
+             (window-height . 0.5)
+             (side . bottom)
+             (slot . 1))
+            ;; left side window
+            ("\\*Help.*"
+             (display-buffer-in-direction)
+             (side . bottom)
+             (window-height . 0.5)
+             (slot . -1))
+            (".*COMMIT_EDITMSG.*"
+             (display-buffer-reuse-window display-buffer-in-direction)
+             (direction . bottom)
+             (dedicated . t)
+             (window-height . 0.4))
+            ((derived-mode . magit-status-mode)
+             (display-buffer-reuse-window display-buffer-in-direction)
+             (direction . bottom)
+             (dedicated . t)
+             (reusable-frames . visible)
+             (window-height . 0.5))
+            ((derived-mode . magit-diff-mode)
+             (display-buffer-reuse-window display-buffer-in-direction)
+             (direction . bottom)
+             (dedicated . t)
+             (reusable-frames . visible)
+             (window-height . 0.65))
+            ((derived-mode . magit-log-mode)
+             (display-buffer-reuse-window display-buffer-in-direction)
+             (direction . right)
+             (dedicated . t)
+             (reusable-frames . visible)
+             (window-height . 0.5))
+            ((derived-mode . magit-revision-mode)
+             (display-buffer-reuse-window display-buffer-in-direction)
+             (direction . bottom)
+             (dedicated . t)
+             (reusable-frames . visible)
+             (window-height . 0.75))
+            ))
+    (setq window-combination-resize t)
+    (setq even-window-sizes 'height-only))
 #+END_SRC
 ** whole-line-or-region
 #+BEGIN_SRC emacs-lisp
