@@ -2074,12 +2074,14 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   ^^^^^^^^-----------------------------
   _d_: Diff Current Buffer/File
   _h_: File history
+  _l_: Magit Log Current
   _s_: Stage Buffer File
 
   "
     ("d" magit-diff-buffer-file :color blue)
     ("h" magit-log-buffer-file :color blue)
     ("s" magit-stage-buffer-file :color blue)
+    ("l" magit-log-current :color blue)
     ("q" nil "quit"))
 
 
