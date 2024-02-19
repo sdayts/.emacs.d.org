@@ -2038,15 +2038,15 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   _s_: Scratch Buffer             _i_: IBuffer
 
   "
-    ("a" (find-file "/Users/sdayts/notes/agenda.org")        "agenda.org"     :color blue)
-    ("A" org-agenda-list                                     "Display Agenda" :color blue)
-    ("I" (find-file "/Users/sdayts/.emacs.d.org/myinit.org") "config"         :color blue)
-    ("m" magit-status                                                         :color blue)
-    ("v" vterm                                                                :color blue)
-    ("d" dired-jump                                                           :color blue)
-    ("i" ibuffer                                                              :color blue)
-    ("k" kill-current-buffer                                                  :color blue)
-    ("s" sd/switch-to-scratch                                                 :color blue)
+    ("a" (find-file "/Users/sdayts/notes/agenda.org")         :color blue)
+    ("A" org-agenda-list                                      :color blue)
+    ("I" (find-file "/Users/sdayts/.emacs.d.org/myinit.org")  :color blue)
+    ("m" magit-status                                         :color blue)
+    ("v" vterm                                                :color blue)
+    ("d" dired-jump                                           :color blue)
+    ("i" ibuffer                                              :color blue)
+    ("k" kill-current-buffer                                  :color blue)
+    ("s" sd/switch-to-scratch                                 :color blue)
     ("q" nil "quit"))
 
   (global-set-key (kbd "M-SPC") 'sd/hydra-main/body)
