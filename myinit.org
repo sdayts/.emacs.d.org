@@ -2030,10 +2030,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (defhydra sd/hydra-main (:color pink
                            :hint nil)
     "
-  ^Places^                        ^Shortcuts^       ^Actions^                   ^Bookmarks^
+  ^Places^                        ^Shortcuts^       ^Actions^                   ^Bookmarks^        ^Hydras^
   ^^^^^^^^--------------------------------------------------------------------------------------------------------------
-  _a_: Agenda                     _m_: Magit        _k_: Kill current buffer    _j_: Jira
-  _A_: Display Agenda             _v_: Vterm
+  _a_: Agenda                     _m_: Magit        _k_: Kill current buffer    _j_: Jira          _b_: Buffer Hydra
+  _A_: Display Agenda             _v_: Vterm                                                   _M_: Magit Hydra
   _I_: Init Configuration File    _d_: Dired
   _s_: Scratch Buffer             _i_: IBuffer
 
@@ -2048,9 +2048,39 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     ("k" kill-current-buffer                                  :color blue)
     ("s" sd/switch-to-scratch                                 :color blue)
     ("j" (browse-url "https://jira.prod.bloomberg.com/secure/RapidBoard.jspa?rapidView=22506&projectKey=LDRVCDIST&quickFilter=145887") :color blue)
+    ("b" sd/hydra-buffer/body                                 :color blue)
+    ("M" sd/hydra-magit/body                                  :color blue)
     ("q" nil "quit"))
 
   (global-set-key (kbd "M-SPC") 'sd/hydra-main/body)
+
+  (defhydra sd/hydra-buffer (:color pink
+                           :hint nil)
+    "
+  ^Buffer^
+  ^^^^^^^^------------------------
+  _a_: Align Regexp
+  _s_: Sort Lines
+
+  "
+    ("a" align-regexp :color blue)
+    ("s" sort-lines :color blue)
+    ("q" nil "quit"))
+
+  (defhydra sd/hydra-magit (:color pink
+                           :hint nil)
+    "
+  ^Magit^
+  ^^^^^^^^------------------------
+  _h_: File history
+  _s_: Stage Buffer File
+
+  "
+    ("h" magit-log-buffer-file :color blue)
+    ("s" magit-stage-buffer-file :color blue)
+    ("q" nil "quit"))
+
+
 
 #+END_SRC
 ** hydra-posframe
