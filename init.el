@@ -27,3 +27,5 @@
           :url "https://github.com/quelpa/quelpa-use-package.git"))
 
 (org-babel-load-file (expand-file-name "~/.emacs.d/myinit.org"))
+(put 'narrow-to-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
