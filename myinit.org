@@ -334,9 +334,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (global-unset-key (kbd "<f12>"))
   (global-set-key (kbd "<f12>") 'sd/newline)
 
-  (global-unset-key (kbd "M-SPC"))
-  (global-set-key (kbd "M-SPC") 'sd/comment-line-or-region)
-
   (global-unset-key (kbd "C-c a"))
   (global-set-key (kbd "C-c a") 'org-agenda)
 
@@ -1052,13 +1049,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (defalias 'ms 'magit-stage-buffer-file)
 #+END_SRC
 * Modes
- #+BEGIN_SRC emacs-lisp
-   ;; Somehow need to do this first.
-   ;; Without this, cannot use :chords
-   (use-package use-package-chords
-     :ensure t
-     :config (key-chord-mode 1))
- #+END_SRC
 ** ascii-table
 #+begin_src emacs-lisp
   (use-package ascii-table
@@ -1565,7 +1555,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 ** dired
 #+BEGIN_SRC emacs-lisp
   (use-package dired
-    :chords (("LL" . dired-jump))
     :bind ( :map dired-mode-map
                  ("C-M-i" . 'counsel-git-grep)
                  ("M-i" . swiper)
@@ -1805,7 +1794,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 ** files
 #+BEGIN_SRC emacs-lisp
   (use-package files
-    :chords (("RR" . revert-buffer))
     :init
     (add-hook 'find-file-hook 'sd/protect-lcldev-buffers)
     :config)
@@ -1820,7 +1808,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
     :ensure t
-    :chords (("FF" . flycheck-list-errors))
     :config
     (define-key flycheck-mode-map (kbd "s-p") #'flycheck-previous-error)
     (define-key flycheck-mode-map (kbd "s-n") #'flycheck-next-error))
@@ -2036,9 +2023,34 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** hydra
 #+BEGIN_SRC emacs-lisp
-(use-package hydra
-    :ensure t
-    :config)
+  (use-package hydra
+      :ensure t
+      :config)
+
+  (defhydra sd/hydra-main (:color pink
+                           :hint nil)
+    "
+  ^Places^                        ^Shortcuts^       ^Actions^
+  ^^^^^^^^---------------------------------------------------------------------
+  _a_: Agenda                     _m_: Magit        _k_: Kill current buffer
+  _A_: Display Agenda             _v_: Vterm
+  _I_: Init Configuration File    _d_: Dired
+  _s_: Scratch Buffer             _i_: IBuffer
+
+  "
+    ("a" (find-file "/Users/sdayts/notes/agenda.org")        "agenda.org"     :color blue)
+    ("A" org-agenda-list                                     "Display Agenda" :color blue)
+    ("I" (find-file "/Users/sdayts/.emacs.d.org/myinit.org") "config"         :color blue)
+    ("m" magit-status                                                         :color blue)
+    ("v" vterm                                                                :color blue)
+    ("d" dired-jump                                                           :color blue)
+    ("i" ibuffer                                                              :color blue)
+    ("k" kill-current-buffer                                                  :color blue)
+    ("s" sd/switch-to-scratch                                                 :color blue)
+    ("q" nil "quit"))
+
+  (global-set-key (kbd "M-SPC") 'sd/hydra-main/body)
+
 #+END_SRC
 ** hydra-posframe
 #+begin_src emacs-lisp
@@ -2053,7 +2065,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+BEGIN_SRC emacs-lisp
   (use-package ibuffer
     :bind (("C-'" . ibuffer))
-    :chords (("II" . ibuffer))
     :init
     (setq ibuffer-saved-filter-groups
           (quote (("default"
@@ -2259,15 +2270,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
             ("<return>" . sd/newline)))
 
 #+END_SRC
-** key-chord
-#+BEGIN_SRC emacs-lisp
-  (use-package key-chord
-    :ensure t
-    :config
-    ;; turn on the key-chord mode
-    (key-chord-mode 1)
-    (key-chord-define-global "KK" 'kill-current-buffer))
-#+END_SRC
 ** lisp-mode
 #+BEGIN_SRC emacs-lisp
   (use-package lisp-mode
@@ -2346,7 +2348,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   (use-package magit
     :ensure t
-    :chords (("MM" . magit-status))
     :bind ( ("C-x g"   . magit-status)
             ("C-x m l" . magit-log-all)
             :map magit-mode-map
@@ -2503,7 +2504,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (use-package org
     :ensure t
     :hook (prog-mode . turn-on-orgtbl)
-    :chords (("RR" . sd/org-goto-result))
     :init
     ;; stop asking about running embedded code
     (setq org-confirm-babel-evaluate nil)
@@ -2737,7 +2737,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (use-package shell-pop
     :disabled
     :ensure t
-    :chords (("PP" . shell-pop))
     :config
     ;; Don't ask to kill the shell buffer
     (add-hook 'shell-mode-hook (lambda() (set-process-query-on-exit-flag (get-process "shell") nil)) )
@@ -2977,14 +2976,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :config
     (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo"))))
 #+END_SRC
-** use-package-chors
-#+BEGIN_SRC emacs-lisp
-  (use-package use-package-chords
-    :ensure t
-    :chords
-    :config
-    (key-chord-mode 1))
-#+END_SRC
 ** vc-svn
 #+BEGIN_SRC emacs-lisp
   (use-package vc-svn
@@ -3067,7 +3058,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (use-package vterm
     :ensure t
     :after org
-    :chords (("PP" . vterm))
     :bind( :map vterm-mode-map
            ("<f8>"    . sd/sendVTermAttribute)
            ("C-M-z"   . zoom-window-zoom)
@@ -3132,7 +3122,6 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 ** window
 #+BEGIN_SRC emacs-lisp
   (use-package window
-    :chords (("SS" . sd/switch-to-scratch))
     :bind ( ("M-r" . recenter) )
     :init
     (setq display-buffer-alist
