@@ -2030,10 +2030,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (defhydra sd/hydra-main (:color pink
                            :hint nil)
     "
-  ^Places^                        ^Shortcuts^       ^Actions^                   ^Bookmarks^        ^Hydras^
-  ^^^^^^^^--------------------------------------------------------------------------------------------------------------
-  _a_: Agenda                     _m_: Magit        _k_: Kill current buffer    _j_: Jira          _b_: Buffer Hydra
-  _A_: Display Agenda             _v_: Vterm                                                   _M_: Magit Hydra
+  ^Places^                        ^Shortcuts^       ^Actions^                   ^Bookmarks^              ^Hydras^
+  ^^^^^^^^--------------------------------------------------------------------------------------------------------------------------
+  _a_: Agenda                     _m_: Magit        _k_: Kill current buffer    _j_: Jira                _b_: Buffer Hydra
+  _A_: Display Agenda             _v_: Vterm                                  _t_: Triage Schedule     _M_: Magit Hydra
   _I_: Init Configuration File    _d_: Dired
   _s_: Scratch Buffer             _i_: IBuffer
 
@@ -2047,8 +2047,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     ("i" ibuffer                                              :color blue)
     ("k" kill-current-buffer                                  :color blue)
     ("s" sd/switch-to-scratch                                 :color blue)
-    ("j" (browse-url "https://jira.prod.bloomberg.com/secure/RapidBoard.jspa?rapidView=22506&projectKey=LDRVCDIST&quickFilter=145887") :color blue)
+    ("j" (browse-url "https://bburl/rurKC")                   :color blue)
     ("b" sd/hydra-buffer/body                                 :color blue)
+    ("t" (browse-url "https://bburl/iNG7J")                   :color blue)
     ("M" sd/hydra-magit/body                                  :color blue)
     ("q" nil "quit"))
 
