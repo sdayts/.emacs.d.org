@@ -285,6 +285,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (global-unset-key (kbd "M-="))
   (global-set-key (kbd "M-=") 'sd/mark-from-point-to-end-of-line)
 
+  ;; mark to the beginning of line
+  (global-unset-key (kbd "M--"))
+  (global-set-key (kbd "M--") 'sd/mark-from-point-to-beginning-of-line)
+
   ;; mark whole lines
 ;  (global-unset-key (kbd "M-="))
 ;  (global-set-key (kbd "M-=") 'sd/mark-line)
@@ -595,6 +599,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     "Marks everything from point to end of line"
     (interactive)
     (set-mark (line-end-position))
+    (activate-mark))
+
+  (defun sd/mark-from-point-to-beginning-of-line ()
+    "Marks everything from point to beginning of line"
+    (interactive)
+    (set-mark (line-beginning-position))
     (activate-mark))
 
   (defun sd/beginning-of-next-defun ()
