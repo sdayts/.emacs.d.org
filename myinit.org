@@ -303,7 +303,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
   ;; map goto line to shit-space
   (global-unset-key (kbd "S-SPC"))
-  (global-set-key (kbd "S-SPC") 'goto-line)
+  (global-set-key (kbd "S-SPC") 'consult-goto-line)
 
   ;; choose a snippet
   (global-unset-key (kbd "s-m"))
@@ -1493,6 +1493,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
       :bind( :map conf-mode-map
              ("<return>" . sd/newline)))
 #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package consult
+    :ensure t
+  )
+#+END_SRC
+
 ** counsel
 #+BEGIN_SRC emacs-lisp
   (use-package counsel
