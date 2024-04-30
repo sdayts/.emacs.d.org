@@ -1332,8 +1332,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     ;; (add-hook 'c-mode-hook 'irony-mode)
 
     ;; highlight preprocessor directives
-    (set-face-attribute 'font-lock-preprocessor-face nil :background "black" :foreground "yellow" :box '(:line-width 1 :color "green") :weight 'normal)
-
+    (set-face-attribute 'font-lock-preprocessor-face nil :background "gray21" :foreground "green" :box '(:line-width 2 :color "dark cyan") :weight 'normal)
+    ;; color BSLS_PLATFORM_OS_LINUX as a type
+    (font-lock-add-keywords 'c++-mode
+                        '(("BSLS_PLATFORM_OS_LINUX" . 'font-lock-type-face)))
     ;; See http://cc-mode.sourceforge.net/html-manual/Syntactic-Symbols.html#Syntactic-Symbols
     (c-add-style
      "bde"
