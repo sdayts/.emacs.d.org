@@ -1388,6 +1388,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
     (setq ccls-executable "/usr/local/bin/ccls")
     (setq ccls-args '("--log-file=/Users/sdayts/workspaces/ccls-cache/logs/ccls.log"))
+    ;; syntax highlight code surrounded by preprocessor
+    (setq ccls-enable-skipped-ranges nil)
     ;;   (setq ccls-cache-dir "/Users/sdayts/workspaces/ccls-cache/.ccls-cache")
     ;;   (setq ccls-extra-init-params '(:completion (:detailedLabel t)))
     :hook ((c-mode c++-mode objc-mode c++-ts-mode c-ts-mode) .
