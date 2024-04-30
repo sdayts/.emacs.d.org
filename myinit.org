@@ -1331,6 +1331,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     ;; (add-hook 'c++-mode-hook 'irony-mode)
     ;; (add-hook 'c-mode-hook 'irony-mode)
 
+    ;; highlight preprocessor directives
+    (set-face-attribute 'font-lock-preprocessor-face nil :background "black" :foreground "yellow" :box '(:line-width 1 :color "green") :weight 'normal)
+
     ;; See http://cc-mode.sourceforge.net/html-manual/Syntactic-Symbols.html#Syntactic-Symbols
     (c-add-style
      "bde"
