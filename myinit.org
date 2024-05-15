@@ -1060,6 +1060,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (defalias 'ms 'magit-stage-buffer-file)
 #+END_SRC
 * Modes
+** 0xc
+#+begin_src emacs-lisp
+  (use-package 0xc
+    :ensure t)
+#+end_src
 ** ascii-table
 #+begin_src emacs-lisp
   (use-package ascii-table
