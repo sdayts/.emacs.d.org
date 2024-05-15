@@ -2,4 +2,4 @@
 # name: hex
 # key: hex
 # --
-bsl::hex << $0<< bsl::dec
+bsl::hex << $1 << bsl::dec$0
