@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: hex
+# key: hex
+# --
+bsl::hex << $0<< bsl::dec
