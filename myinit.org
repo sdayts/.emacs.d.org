@@ -3237,6 +3237,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
              (window-height . 0.5)
              (side . right)
              (slot . 1))
+            ("\\*0xc*"
+             (display-buffer-in-side-window)
+             (window-height . 0.1)
+             (side . bottom)
+             (slot . -1))
             ((derived-mode . magit-status-mode)
              (display-buffer-reuse-window display-buffer-in-direction)
              (direction . bottom)
