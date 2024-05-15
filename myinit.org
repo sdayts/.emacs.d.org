@@ -2065,6 +2065,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   _A_: Display Agenda             _v_: Vterm                                  _t_: Triage Schedule     _M_: Magit Hydra
   _I_: Init Configuration File    _d_: Dired
   _s_: Scratch Buffer             _i_: IBuffer
+                                _x_: Hex <-> Dec
 
   "
     ("a" (find-file "/Users/sdayts/notes/agenda.org")         :color blue)
@@ -2074,6 +2075,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     ("v" vterm                                                :color blue)
     ("d" dired-jump                                           :color blue)
     ("i" ibuffer                                              :color blue)
+    ("x" 0xc-live-convert                                     :color blue)
     ("k" kill-current-buffer                                  :color blue)
     ("s" sd/switch-to-scratch                                 :color blue)
     ("j" (browse-url "https://bburl/rurKC")                   :color blue)
