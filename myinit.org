@@ -897,6 +897,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
                (ediff-files (nth 0 marked-files)
                             (nth 0 other-marked-files)))
               (t (error "mark exactly 2 files, at least 1 locally")))))
+
+    (defun sd/roam-commit-and-push ()
+      "Commit and push staged files with a comment of `Roam`"
+      (interactive)
+      (magit-commit-create (list "-m" "Roam"))
+      (call-interactively #'magit-push-current-to-pushremote))
 #+END_SRC
 * Highlighting related customizations
 #+BEGIN_SRC emacs-lisp
@@ -2066,6 +2072,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   _I_: Init Configuration File    _d_: Dired
   _s_: Scratch Buffer             _i_: IBuffer
                                 _x_: Hex <-> Dec
+                                _r_: Push Roam
 
   "
     ("a" (find-file "/Users/sdayts/notes/agenda.org")         :color blue)
@@ -2076,6 +2083,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     ("d" dired-jump                                           :color blue)
     ("i" ibuffer                                              :color blue)
     ("x" 0xc-live-convert                                     :color blue)
+    ("r" sd/roam-commit-and-push                              :color blue)
     ("k" kill-current-buffer                                  :color blue)
     ("s" sd/switch-to-scratch                                 :color blue)
     ("j" (browse-url "https://bburl/rurKC")                   :color blue)
