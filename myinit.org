@@ -2574,7 +2574,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (save-excursion
       (shell-command-on-region (mark) (point) "xmllint --encode utf-8 --format -" (buffer-name) t)))
 
+  (add-to-list 'auto-mode-alist '("\\.xsd\\'" . nxml-mode))
   (use-package nxml-mode
+    :bind ( :map nxml-mode-map
+            ("<return>" . sd/newline))
     :config
     (unbind-key "C-c C-u" nxml-mode-map)
     (unbind-key "M-h" nxml-mode-map)
