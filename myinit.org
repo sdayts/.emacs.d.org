@@ -2577,7 +2577,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (add-to-list 'auto-mode-alist '("\\.xsd\\'" . nxml-mode))
   (use-package nxml-mode
     :bind ( :map nxml-mode-map
-            ("<return>" . sd/newline))
+            ("<return>" . sd/newline)
+            ( "M-<right>" . sd/comment-line-or-region))
     :config
     (unbind-key "C-c C-u" nxml-mode-map)
     (unbind-key "M-h" nxml-mode-map)
