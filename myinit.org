@@ -12,11 +12,13 @@ Example:
 Newest way to install emacs:
 brew tap d12frosted/emacs-plus
 brew install emacs-plus@29 --with-native-comp --with-xwidgets --with-imagemagick
+brew install emacs-plus@30 --with-native-comp --with-xwidgets --with-imagemagick --with-poll
+
 ** System packages/settings
 brew install findutils
 brew install coreutils
 brew install trash
-brew install/reinstall ccls
+brew install ccls
 brew install aspell
 brew install ripgrep
 cd ~/.emacs.d;git clone https://github.com/Ladicle/hydra-posframe.git
