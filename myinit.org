@@ -1890,14 +1890,23 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   :init
   (gcmh-mode 1))
 #+END_SRC
+** git-gutter+
+#+BEGIN_SRC emacs-lisp
+  (use-package git-gutter+
+    :ensure    nil
+    :after magit
+    :load-path "~/.emacs.d/local-packages/git-gutter-plus")
+#+END_SRC
 ** git-gutter-fringe+
 #+BEGIN_SRC emacs-lisp
-    (use-package git-gutter-fringe+
-      :ensure    t
-      :bind (("C-M-p" . git-gutter+-previous-hunk )
-             ("C-M-n" . git-gutter+-next-hunk ))
-      :init
-      (global-git-gutter+-mode t))
+  (use-package git-gutter-fringe+
+    :ensure    nil
+    :load-path "~/.emacs.d/local-packages/git-gutter-fringe-plus"
+    :after git-gutter+
+    :bind (("C-M-p" . git-gutter+-previous-hunk )
+           ("C-M-n" . git-gutter+-next-hunk ))
+    :init
+    (global-git-gutter+-mode t))
 #+END_SRC
 ** git-timemachine
 #+BEGIN_SRC emacs-lisp
