@@ -3251,6 +3251,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
              (side . bottom)
              (window-height . 0.5)
              (slot . -1))
+            ("\\*help.*"
+             (display-buffer-in-direction)
+             (side . bottom)
+             (window-height . 0.5)
+             (slot . -1))
             (".*COMMIT_EDITMSG.*"
              (display-buffer-reuse-window display-buffer-in-direction)
              (direction . bottom)
