@@ -1313,7 +1313,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
         '+)))
 
   ;; associate .h file with c++ mode
-  (add-to-list 'auto-mode-alist '("\\.[hc]\\'" . c++-mode))
+  (add-to-list 'auto-mode-alist '("\\.[hcp]\\'" . c++-mode))
 
   (use-package cc-mode
     :ensure t
@@ -1333,8 +1333,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (add-hook 'c++-mode-hook (lambda ()
                              ;; treat an underscore as word constituent
                              (modify-syntax-entry ?_ "w")
-                             ;; turn on fci mode
-                             (fci-mode)))
+                             ;; turn on fill column indicator mode
+                             (display-fill-column-indicator-mode)))
   (setq c-default-style
           '((java-mode . "java")
             (awk-mode  . "awk")
@@ -1413,8 +1413,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (defalias 'b 'sd/base)
     (defalias 'd 'sd/derived)
 
-    (setq ccls-executable "/usr/local/bin/ccls")
-    (setq ccls-args '("--log-file=/Users/sdayts/workspaces/ccls-cache/logs/ccls.log"))
+    (setq ccls-executable "/opt/homebrew/bin/ccls")
+    (setq ccls-args '("--log-file=~/logs/ccls.log"))
     ;; syntax highlight code surrounded by preprocessor
     (setq ccls-enable-skipped-ranges nil)
     ;;   (setq ccls-cache-dir "/Users/sdayts/workspaces/ccls-cache/.ccls-cache")
@@ -2094,9 +2094,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
                                 _r_: Push Roam
 
   "
-    ("a" (find-file "/Users/sdayts/notes/agenda.org")         :color blue)
+    ("a" (find-file "~/notes/agenda.org")                     :color blue)
     ("A" org-agenda-list                                      :color blue)
-    ("I" (find-file "/Users/sdayts/.emacs.d.org/myinit.org")  :color blue)
+    ("I" (find-file "~/.emacs.d.org/myinit.org")              :color blue)
     ("m" magit-status                                         :color blue)
     ("v" vterm                                                :color blue)
     ("d" dired-jump                                           :color blue)
