@@ -1414,7 +1414,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (defalias 'd 'sd/derived)
 
     (setq ccls-executable "/opt/homebrew/bin/ccls")
-    (setq ccls-args '("--log-file=~/logs/ccls.log"))
+    (setq ccls-args '("--log-file=/Users/sdayts/logs/ccls.log"))
     ;; syntax highlight code surrounded by preprocessor
     (setq ccls-enable-skipped-ranges nil)
     ;;   (setq ccls-cache-dir "/Users/sdayts/workspaces/ccls-cache/.ccls-cache")
