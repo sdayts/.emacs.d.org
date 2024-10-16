@@ -1435,6 +1435,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (setq company-idle-delay 0)
     ;; number of candidates to display
     (setq company-tooltip-limit 20)
+    (setq company-tooltip-minimum 20)
     (custom-set-faces
      '(company-preview
        ((t (:foreground "cyan" :background "black" :underline t))))
