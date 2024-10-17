@@ -2357,6 +2357,13 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     ;; as well
     (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
 #+END_SRC
+** js-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package js-mode
+    :bind ( :map js-mode-map
+            ("<return>" . sd/newline)))
+#+END_SRC
+
 ** json-mode
 #+BEGIN_SRC emacs-lisp
   (use-package json-mode
