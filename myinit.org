@@ -2361,7 +2361,9 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+BEGIN_SRC emacs-lisp
   (use-package js-mode
     :bind ( :map js-mode-map
-            ("<return>" . sd/newline)))
+            ("<return>" . sd/newline))
+    :init
+    (add-to-list 'auto-mode-alist '("\\.js\\'" . js-mode)))
 #+END_SRC
 
 ** json-mode
