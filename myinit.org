@@ -2607,43 +2607,44 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+END_SRC
 ** org
 #+BEGIN_SRC emacs-lisp
-  (defun sd/org-goto-result()
-    (interactive)
-    (org-babel-goto-named-result ""))
+    (defun sd/org-goto-result()
+      (interactive)
+      (org-babel-goto-named-result ""))
 
-  (use-package org
-    :ensure t
-    :init
-    ;; stop asking about running embedded code
-    (setq org-confirm-babel-evaluate nil)
-    ;; add support for running c/c++ embedded code
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((emacs-lisp . nil)
-       (C . t)))
-    (setq org-imenu-depth 10)
-    (unbind-key "M-h" org-mode-map)
-    (unbind-key "C-M-i" org-mode-map)
+    (use-package org
+      :ensure t
+      :init
+      ;; stop asking about running embedded code
+      (setq org-confirm-babel-evaluate nil)
+      ;; add support for running c/c++ embedded code
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '((emacs-lisp . nil)
+         (C . t)))
+      (setq org-imenu-depth 10)
+      (unbind-key "M-h" org-mode-map)
+      (unbind-key "C-M-i" org-mode-map)
 
-    ;; agenda settings
-    (setq org-agenda-files (list "~/notes/agenda.org"))
-    (setq org-agenda-window-setup 'current-window)
+      ;; agenda settings
+      (setq org-agenda-files (list "~/notes/agenda.org"))
+      (setq org-agenda-window-setup 'current-window)
 
-    ;; indent propertly in org babel mode
-    (setq org-src-tab-acts-natively t)
-    ;; support shift-selection-mode
-    (setq org-support-shift-select 'always)
-    ;; timestamp TODO items
-    ;; (setq org-log-done 'time)
-    (setq org-log-done 'nil)
+      ;; indent propertly in org babel mode
+      (setq org-src-tab-acts-natively t)
+      ;; support shift-selection-mode
+      (setq org-support-shift-select 'always)
+      ;; timestamp TODO items
+      ;; (setq org-log-done 'time)
+      (setq org-log-done 'nil)
 
-    ;; insert notes for DONE items
-    ;; (setq org-log-done 'note)
-    (setq org-todo-keyword-faces
-          '(("IN-PROGRESS" . "yellow")
-            ("BLOCKED"     . "red")))
-    ;; this fixes an issue with [[https://github.com/abo-abo/swiper/issues/3015][org mode overlays]]
-    (setq org-fold-core-style 'overlays))
+      ;; insert notes for DONE items
+      ;; (setq org-log-done 'note)
+      (setq org-todo-keyword-faces
+            '(("IN-PROGRESS" . "yellow")
+              ("BLOCKED"     . "red")
+              ("UNUSED"      . "green")))
+      ;; this fixes an issue with [[https://github.com/abo-abo/swiper/issues/3015][org mode overlays]]
+      (setq org-fold-core-style 'overlays))
 #+END_SRC
 ** org-bullets
 #+BEGIN_SRC emacs-lisp
