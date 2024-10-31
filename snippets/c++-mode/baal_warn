@@ -3,4 +3,4 @@
 # key: lw
 # binding: direct-keybinding
 # --
-BAAL_LOG_WARN << "$0";
+BALL_LOG_WARN << "$0";
