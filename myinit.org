@@ -2093,6 +2093,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   _s_: Scratch Buffer             _i_: IBuffer
                                 _x_: Hex <-> Dec
                                 _r_: Push Roam
+                                _u_: Open Url
 
   "
     ("a" (find-file "~/notes/agenda.org")                     :color blue)
@@ -2109,6 +2110,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     ("j" (browse-url "https://bburl/rurKC")                   :color blue)
     ("b" sd/hydra-buffer/body                                 :color blue)
     ("t" (browse-url "https://bburl/iNG7J")                   :color blue)
+    ("u" browse-url-at-point                                  :color blue)
     ("M" sd/hydra-magit/body                                  :color blue)
     ("q" nil "quit"))
 
