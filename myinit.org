@@ -695,7 +695,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (save-excursion
       (shell-command-on-region (region-beginning)
                                (region-end)
-                               "python3.9 -m json.tool"
+                               "python3.13 -m json.tool"
                                (buffer-name)
                                t)))
 
@@ -704,7 +704,7 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     (save-excursion
       (shell-command-on-region (point-min)
                                (point-max)
-                               "python3.9 -m json.tool"
+                               "python3.13 -m json.tool"
                                (buffer-name) t)))
 
   (defun sd/minibuffer-setup ()
@@ -3105,8 +3105,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 
 ;  (venv-workon "p3")
 
-  (setq lsp-python-executable-cmd "python3")
-  (setq python-shell-interpreter "python3"
+  (setq lsp-python-executable-cmd "python3.13")
+  (setq python-shell-interpreter "python3.13"
         python-shell-interpreter-args "-i")
 #+END_SRC
 ** visual-regexp
