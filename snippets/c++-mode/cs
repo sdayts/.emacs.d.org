@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: const bsl::string&
+# key: cs
+# --
+
+const bsl::string&$0
