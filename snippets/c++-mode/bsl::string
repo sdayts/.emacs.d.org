@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: bsl::string&
+# key: s
+# --
+
+bsl::string $0
