@@ -22,6 +22,7 @@ brew install ccls
 brew install aspell
 brew install ripgrep
 cd ~/.emacs.d;git clone https://github.com/Ladicle/hydra-posframe.git
+(package-vc-install '(ultra-scroll :vc-backend Git :url  "https://github.com/jdtsmith/ultra-scroll"))
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 * Global settings
 #+BEGIN_SRC emacs-lisp
@@ -3075,6 +3076,16 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 #+BEGIN_SRC emacs-lisp
   (use-package try
     :ensure t)
+#+END_SRC
+** ultra-scroll
+#+BEGIN_SRC emacs-lisp
+(use-package ultra-scroll
+  ;:load-path "~/code/emacs/ultra-scroll" ; if you git clone'd instead of package-vc-install
+  :init
+  (setq scroll-conservatively 101 ; important!
+        scroll-margin 0)
+  :config
+  (ultra-scroll-mode 1))
 #+END_SRC
 ** undo-tree
 #+BEGIN_SRC emacs-lisp
