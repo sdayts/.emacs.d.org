@@ -1139,6 +1139,12 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (use-package all-the-icons
       :ensure t)
 #+END_SRC
+** annotation
+#+BEGIN_SRC emacs-lisp
+  (use-package annotate
+    :ensure t
+    :config)
+#+END_SRC
 ** avy
 #+BEGIN_SRC emacs-lisp
   (use-package avy
