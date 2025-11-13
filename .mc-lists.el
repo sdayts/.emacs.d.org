@@ -14,6 +14,7 @@
         c-indent-line-or-region
         counsel-yank-pop
         eval-last-sexp
+        eval-print-last-sexp
         indent-for-tab-command
         ivy-wgrep-change-to-wgrep-mode
         markdown-outdent-or-delete
@@ -31,19 +32,24 @@
         org-shiftcontrolright
         org-shiftmetaright
         org-todo
+        org-yank
         rtags-find-references-at-point
         sd/comment-line-or-region
         sd/copy-word-under-cursor
         sd/duplicate-line-or-region
         sd/forward-or-backward-sexp
         sd/mark-from-point-to-end-of-line
+        sd/org-return
         sd/smart-join-line
         sd/whole-line-or-region-kill-ring-save
         transpose-words
         undefined
+        undo-tree-visualize
         wdired-finish-edit
         wgrep-finish-edit
         whole-line-or-region-kill-region
+        yaml-electric-backspace
+        yaml-electric-dash-and-dot
         yank
         yas-expand
         ))
@@ -57,6 +63,7 @@
         dabbrev-expand
         dired-narrow-fuzzy
         ff-find-other-file
+        iedit-switch-to-mc-mode
         isearch-forward-regexp
         mouse-drag-mode-line
         mouse-select-window
@@ -64,6 +71,7 @@
         org-table-copy-down
         rtags-find-symbol
         rtags-imenu
+        sd/newline
         sd/rtags-find-symbol-at-point
         sp-slurp-hybrid-sexp
         swiper-mc

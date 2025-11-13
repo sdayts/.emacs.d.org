@@ -2651,7 +2651,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
       (setq org-todo-keyword-faces
             '(("IN-PROGRESS" . "yellow")
               ("BLOCKED"     . "red")
-              ("UNUSED"      . "green")))
+              ("UNUSED"      . "green")
+              ("IN-TESTING"   . "systemOrangeColor")))
       ;; this fixes an issue with [[https://github.com/abo-abo/swiper/issues/3015][org mode overlays]]
       (setq org-fold-core-style 'overlays))
 #+END_SRC
