@@ -2649,10 +2649,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
       ;; insert notes for DONE items
       ;; (setq org-log-done 'note)
       (setq org-todo-keyword-faces
-            '(("IN-PROGRESS" . "yellow")
-              ("BLOCKED"     . "red")
-              ("UNUSED"      . "green")
-              ("IN-TESTING"   . "systemOrangeColor")))
+            '(("IN-PROGRESS"          . "yellow")
+              ("BLOCKED"              . "red")
+              ("UNUSED"               . "green")
+              ("IN-TESTING"           . "systemOrangeColor")
+              ("RELESE-IN-PROGRESS"   . "cyan")))
       ;; this fixes an issue with [[https://github.com/abo-abo/swiper/issues/3015][org mode overlays]]
       (setq org-fold-core-style 'overlays))
 #+END_SRC
