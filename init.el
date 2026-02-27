@@ -7,6 +7,8 @@
 	     '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives
 	     '("org-archive" . "https://orgmode.org/elpa/") t)
+(add-to-list 'package-archives
+             '("nongnu" . "https://elpa.nongnu.org/nongnu/"))
 
 (package-initialize)
 

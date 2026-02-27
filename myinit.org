@@ -1429,6 +1429,22 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :hook ((c-mode c++-mode objc-mode c++-ts-mode c-ts-mode) .
            (lambda () (require 'ccls) (lsp))))
 #+END_SRC
+** claude-code
+#+BEGIN_SRC emacs-lisp
+(use-package claude-code :ensure t
+  :vc (:url "https://github.com/stevemolitor/claude-code.el" :rev :newest)
+  :config
+  ;; optional IDE integration with Monet
+  (add-hook 'claude-code-process-environment-functions #'monet-start-server-function)
+  (monet-mode 1)
+
+  (claude-code-mode)
+  :bind-keymap ("C-c c" . claude-code-command-map)
+
+  ;; Optionally define a repeat map so that "M" will cycle thru Claude auto-accept/plan/confirm modes after invoking claude-code-cycle-mode / C-c M.
+  :bind
+  (:repeat-map my-claude-code-map ("M" . claude-code-cycle-mode)))
+#+END_SRC
 ** company
 #+BEGIN_SRC emacs-lisp
   (use-package company
@@ -1745,6 +1761,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
       (doom-modeline-set-modeline 'my-simple-line 'default))
 
     (add-hook 'doom-modeline-mode-hook 'setup-custom-doom-modeline))
+#+END_SRC
+** eat
+#+BEGIN_SRC emacs-lisp
+(use-package eat :ensure t)
 #+END_SRC
 ** elisp-mode
 #+begin_src elisp
@@ -2238,6 +2258,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :config
     )
 #+END_SRC
+** inheritenv
+#+BEGIN_SRC emacs-lisp
+(use-package inheritenv
+  :vc (:url "https://github.com/purcell/inheritenv" :rev :newest))
+#+END_SRC
 ** ivy
 #+BEGIN_SRC emacs-lisp
   (defconst sd/ivy-height 25)
@@ -2547,6 +2572,11 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
     :diminish modern-c++-font-lock-mode
     :ensure t)
   (modern-c++-font-lock-global-mode t)
+#+END_SRC
+** monet
+#+BEGIN_SRC emacs-lisp
+(use-package monet
+  :vc (:url "https://github.com/stevemolitor/monet" :rev :newest))
 #+END_SRC
 ** move-text
 #+BEGIN_SRC emacs-lisp
