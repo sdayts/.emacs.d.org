@@ -972,10 +972,10 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
   (setq-default cursor-type '(bar . 1))
   ;; set background colors
   ;; (set-background-color "#2F4F4F")
-  (set-background-color "gray12")
+  (set-background-color "gray11")
   ;; color of border of buffer separator
   ;; (set-face-background 'fringe "#2F4F4F")
-  (set-face-background 'fringe "gray12")
+  (set-face-background 'fringe "gray11")
   ;; color of comments
   (set-face-foreground 'font-lock-comment-face "#FA8278")
   ;; color of keyword
